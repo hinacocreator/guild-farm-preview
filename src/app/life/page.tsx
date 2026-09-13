@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/PageHeader";
-import { PageOutline } from "@/components/PageOutline";
-import { ADay } from "@/components/sections/ADay";
 import { ClosingCta } from "@/components/sections/ClosingCta";
-import { Experience } from "@/components/sections/Experience";
-import { Schedule } from "@/components/sections/Schedule";
+import { LifeChapters } from "@/components/sections/life/LifeChapters";
+import { LifeDay } from "@/components/sections/life/LifeDay";
+import { LifeFarm } from "@/components/sections/life/LifeFarm";
+import { LifeMonth } from "@/components/sections/life/LifeMonth";
+import { LifeWeek } from "@/components/sections/life/LifeWeek";
+import { life } from "@/content/life";
 import { pages } from "@/content/pages";
 
+/** <title> と説明文は src/content/pages.ts の値をそのまま使っています */
 const page = pages.life;
 
 export const metadata: Metadata = {
@@ -21,32 +24,48 @@ export const metadata: Metadata = {
 };
 
 /**
- * /life/ 暮らし・過ごし方。
+ * /life/ 暮らし・過ごし方（Phase 3-B 本実装）。
  *
- * Phase 3-A（骨組み）の状態です。
- * ・ページヘッダーと、扱うセクションの一覧（見出し＋1行要約）まで。
- * ・既存セクション ADay / Schedule（下部に Places を含む）/ Experience は、
- *   コピーを失わないためそのまま置いています。
- *   本実装では設計書 content-design.md 第5章（L-01〜L-09）に沿って、
- *   7列のスケジュール表ではなく「生活の物語」として組み直します。
+ * このページの役割は「ここで暮らしたら自分の1日はどうなるか」を想像できるようにすること。
+ * 時間割の表ではなく、1日 → 1週間 → 1ヶ月 → 畑 → 畑のほかの時間、という順の読み物です。
  *
- * ■ 文章 … src/content/pages.ts の life
+ * ■ 文章 … src/content/life.ts（このページに出る文字は全部ここにあります）
+ * ■ セクション … src/components/sections/life/
+ *
+ * ▼ Phase 3-A からの変更
+ *   ・PageOutline（見出しの一覧）を外しました。本文が入ったので不要です。
+ *   ・旧 ADay / Schedule / Places / Experience は使っていません。
+ *     7列の曜日グリッドは廃止し、曜日は縦に並べた軽い一覧にしています。
+ *     旧セクションの文章は src/content/copy.ts にデータとして残っています。
+ *
+ * ⚠ このページに書かないもの
+ *   料金の数字・受け入れ時期・部屋の広さ・設備の一覧 → /plans/
+ *   持ち物・申し込みの手順 → /flow/
+ *   具体的な時刻（出典にないため）／個人名（「地域の農家さん」等と書きます）
  */
 export default function LifePage() {
   return (
     <>
       <PageHeader
-        label={page.label}
-        title={page.title}
-        sub={page.sub}
-        lead={page.lead}
+        label={life.header.label}
+        title={life.header.title}
+        sub={life.header.sub}
+        lead={life.header.lead}
       />
-      <PageOutline items={page.outline} />
-      {/* 既存セクション（Phase 2 のコピーをそのまま残しています） */}
-      <ADay />
-      <Schedule />
-      <Experience />
-      <ClosingCta />
+
+      <LifeDay />
+      <LifeWeek />
+      <LifeMonth />
+      <LifeFarm />
+      <LifeChapters />
+
+      <ClosingCta
+        title={life.closing.title}
+        body={life.closing.body}
+        cta={life.closing.cta}
+        note={life.closing.note}
+        next={life.closing.next}
+      />
     </>
   );
 }

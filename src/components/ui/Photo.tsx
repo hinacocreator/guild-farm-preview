@@ -6,6 +6,12 @@ type PhotoProps = {
   image: ImageAsset;
   /** CSSのaspect-ratio。例："4 / 5"、"3 / 2"、"1 / 1" */
   ratio?: string;
+  /**
+   * スマホ（768px未満）だけで使う比率。
+   * 縦長の写真をスマホでそのまま出すとページが長くなりすぎるときに、
+   * 横長に切り替えて高さを抑えるために使います（PCは ratio のまま）。
+   */
+  ratioMobile?: string;
   /** レスポンシブの読み込みサイズ指定（省略時はビューポート幅） */
   sizes?: string;
   /** 最初の画面に出る写真だけ true にする（LCP最適化） */
@@ -28,6 +34,7 @@ type PhotoProps = {
 export function Photo({
   image,
   ratio = "4 / 5",
+  ratioMobile,
   sizes = "100vw",
   priority = false,
   className,
@@ -39,9 +46,18 @@ export function Photo({
       className={cn(
         "relative overflow-hidden bg-sand",
         corners === "rounded" && "rounded-[1.25rem]",
+        /* スマホだけ別比率にするときは、CSS変数を2つ使って切り替えます */
+        ratioMobile && "aspect-[var(--ratio-m)] md:aspect-[var(--ratio-d)]",
         className,
       )}
-      style={{ aspectRatio: ratio }}
+      style={
+        ratioMobile
+          ? ({
+              "--ratio-m": ratioMobile,
+              "--ratio-d": ratio,
+            } as React.CSSProperties)
+          : { aspectRatio: ratio }
+      }
     >
       <Image
         src={image.src}

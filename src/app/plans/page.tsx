@@ -1,61 +1,80 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/PageHeader";
-import { PageOutline } from "@/components/PageOutline";
 import { ClosingCta } from "@/components/sections/ClosingCta";
-import { Faq } from "@/components/sections/Faq";
-import { House } from "@/components/sections/House";
-import { Plans } from "@/components/sections/Plans";
-import { Value } from "@/components/sections/Value";
-import { pages } from "@/content/pages";
-
-const page = pages.plans;
+import { PlansConditions } from "@/components/sections/plans/PlansConditions";
+import { PlansEnvironment } from "@/components/sections/plans/PlansEnvironment";
+import { PlansFaq } from "@/components/sections/plans/PlansFaq";
+import { PlansFields } from "@/components/sections/plans/PlansFields";
+import { PlansHouse } from "@/components/sections/plans/PlansHouse";
+import { PlansIncluded } from "@/components/sections/plans/PlansIncluded";
+import { PlansOptions } from "@/components/sections/plans/PlansOptions";
+import { PlansUpgrade } from "@/components/sections/plans/PlansUpgrade";
+import { plans } from "@/content/plans";
 
 export const metadata: Metadata = {
-  title: { absolute: page.metaTitle },
-  description: page.description,
-  alternates: { canonical: page.path },
+  title: { absolute: plans.meta.metaTitle },
+  description: plans.meta.description,
+  alternates: { canonical: plans.meta.path },
   openGraph: {
-    title: page.metaTitle,
-    description: page.description,
-    url: page.path,
+    title: plans.meta.metaTitle,
+    description: plans.meta.description,
+    url: plans.meta.path,
   },
 };
 
 /**
  * /plans/ プラン・料金。
  *
- * Phase 3-A（骨組み）の状態です。
- * ・ページヘッダーと、扱うセクションの一覧（見出し＋1行要約）まで。
- * ・既存セクション Value（料金と含まれるもの）/ Plans（2プラン）/ House（部屋）/ Faq は、
- *   コピーを失わないためそのまま置いています。
- *   本実装では設計書 content-design.md 第6章（P-01〜P-11）に沿って組み直します。
+ * ■ 役割
+ *   検討に必要な実務情報を一か所に集めるページです。
+ *   料金の数字を表示してよいのは、サイト内でこのページだけです
+ *   （金額そのものは src/config/site.ts の price が正の値です）。
+ *   金額の隣には必ず「その料金でどんな暮らしができるのか」を置いています。
  *
- * ※ Faq は本来 /flow/ に置く予定のセクションですが、既存のFAQに
- *   「1ヶ月滞在（85,300円）…」という金額入りの回答が含まれているため、
- *   料金の数字を出してよいこのページに置いています。
- *   本実装では P-11（料金・設備の4問）と F-05（それ以外の6問）に分けてください。
+ * ■ 並び（設計書 content-design.md 第6章 P-01〜P-12 に対応）
+ *   P-01        PageHeader        この料金で、できる暮らし。
+ *   P-02/03 01  PlansOptions      2つの滞在プラン（金額＋その期間の過ごし方）
+ *   P-04    02  PlansIncluded     この料金に、含まれるもの。
+ *   P-05    03  PlansUpgrade      部屋を、変えることもできます。（三津浜）
+ *   P-06    04  PlansConditions   両方のプランに共通すること。
+ *   P-07    05  PlansHouse        住むのは、こんな家です。（写真6枚・設備・所在地）
+ *   P-08    06  PlansFields       通う畑は、3か所。
+ *   P-09/10 07  PlansEnvironment  働きながら、住む。／車がなくても、暮らせます。
+ *   P-11    08  PlansFaq          料金と設備について、よくある質問
+ *   P-12        ClosingCta        次に読む → /flow/
  *
- * ※ 料金の数字を表示してよいのは、サイト内でこのページだけです。
- *   金額そのものは src/config/site.ts の price が正の値です。
+ * ■ 文章 … src/content/plans.ts（このページの文字はすべてここ）
+ *   ※ 旧セクション（Value / Plans / House / Faq）のコピーは
+ *     src/content/copy.ts にそのまま残しています（データは消していません）。
  *
- * ■ 文章 … src/content/pages.ts の plans
+ * ■ このページに書かないもの
+ *   思想・考え方（→ /about/ ・/owner/）／1日・1週間・1ヶ月の過ごし方の全文（→ /life/）
+ *   ／持ち物・アクセス・料金以外のFAQ（→ /flow/）
  */
 export default function PlansPage() {
   return (
     <>
       <PageHeader
-        label={page.label}
-        title={page.title}
-        sub={page.sub}
-        lead={page.lead}
+        label={plans.header.label}
+        title={plans.header.title}
+        sub={plans.header.sub}
+        lead={plans.header.lead}
       />
-      <PageOutline items={page.outline} />
-      {/* 既存セクション（Phase 2 のコピーをそのまま残しています） */}
-      <Value />
-      <Plans />
-      <House />
-      <Faq />
-      <ClosingCta />
+      <PlansOptions />
+      <PlansIncluded />
+      <PlansUpgrade />
+      <PlansConditions />
+      <PlansHouse />
+      <PlansFields />
+      <PlansEnvironment />
+      <PlansFaq />
+      <ClosingCta
+        title={plans.closing.title}
+        body={plans.closing.body}
+        cta={plans.closing.cta}
+        note={plans.closing.note}
+        next={plans.closing.next}
+      />
     </>
   );
 }

@@ -1,38 +1,43 @@
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { copy } from "@/content/copy";
+import { TextLink } from "@/components/ui/TextLink";
+import { plans } from "@/content/plans";
 
 /**
- * FAQ。
- * JavaScriptを使わず、HTML標準の <details>/<summary> で開閉しています。
- * （キーボード操作・スクリーンリーダー・JS無効の環境でもそのまま動きます）
+ * P-11　料金と設備について、よくある質問。/plans/ 専用（旧 Faq.tsx の後継）。
  *
- * ・質問と回答 … src/content/copy.ts の copy.faq.items（q / a）を編集してください。
- * ・右端の「＋」は、開くと線が回転して「−」になります（CSSのみ）。
+ * JavaScriptを使わず、HTML標準の <details>/<summary> で開閉しています
+ * （キーボード操作・スクリーンリーダー・JS無効の環境でもそのまま動きます）。
+ *
+ * ■ 質問と回答 … src/content/plans.ts の faq
+ *
+ * ⚠ ここに置くのは、料金・期間・設備の質問だけです。
+ *   未経験・共同生活・向き不向き・雨天・受け入れ時期は /flow/ の担当です
+ *   （src/content/flow.ts の faq）。同じ質問を2ページに置かないでください。
  */
-export function Faq() {
+export function PlansFaq() {
   return (
     <section
       id="faq"
-      className="scroll-mt-16 bg-paper py-24 md:scroll-mt-20 md:py-36"
+      className="scroll-mt-16 bg-paper py-16 md:scroll-mt-20 md:py-32"
     >
       <Container width="narrow">
         <SectionHeading
-          index={copy.faq.index}
-          label={copy.faq.label}
-          title={copy.faq.title}
+          index={plans.faq.index}
+          label={plans.faq.label}
+          title={plans.faq.title}
         />
 
         <p className="reveal mt-8 max-w-[38em] text-[0.95rem] leading-[2.05] text-ink-soft">
-          {copy.faq.lead}
+          {plans.faq.lead}
         </p>
 
         <div className="mt-12 border-t border-sand md:mt-16">
-          {copy.faq.items.map((item) => (
+          {plans.faq.items.map((item) => (
             <details
               key={item.q}
               className="reveal group border-b border-sand"
-              name="faq"
+              name="plans-faq"
             >
               <summary className="flex cursor-pointer list-none items-start gap-5 py-6 transition-colors duration-300 hover:text-clay md:gap-8 md:py-7 [&::-webkit-details-marker]:hidden">
                 <h3 className="heading-item flex-1 text-ink transition-colors duration-300 group-hover:text-clay">
@@ -54,6 +59,12 @@ export function Faq() {
               </p>
             </details>
           ))}
+        </div>
+
+        <div className="reveal mt-10 md:mt-12">
+          <TextLink href={plans.faq.link.href} size="lg">
+            {plans.faq.link.label}
+          </TextLink>
         </div>
       </Container>
     </section>
