@@ -48,9 +48,17 @@ export function HomeValues() {
             label={home.values.label}
             title={home.values.title}
           />
-          <p className="wrap-phrase reveal mt-6 text-[0.9rem] leading-[2] text-ink-faint md:text-[0.95rem]">
-            {home.values.sub}
-          </p>
+          {/* 導入文。home.values.paragraphs の1要素＝1段落 */}
+          <div className="mt-6 space-y-4 md:mt-7">
+            {home.values.paragraphs.map((paragraph) => (
+              <p
+                key={paragraph}
+                className="wrap-phrase reveal text-[0.9rem] leading-[2] text-ink-faint md:text-[0.95rem]"
+              >
+                {paragraph}
+              </p>
+            ))}
+          </div>
         </div>
 
         <ul className="mt-12 grid grid-cols-2 items-start gap-x-4 gap-y-10 md:mt-20 md:grid-cols-12 md:gap-x-8 md:gap-y-16">

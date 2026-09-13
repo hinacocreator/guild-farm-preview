@@ -25,7 +25,7 @@ import { home } from "@/content/home";
  * ■ 並び（設計書 content-design.md 第2章 H-01〜H-09 に対応）
  *   H-01 Hero        HERO ………………… /life/ ・/about/
  *   H-02 HomeIntro   旅行ではなく、暮らしてみる。…… /about/
- *   H-03 HomeValues  この1週間、この1ヶ月に、起きること。…… /life/
+ *   H-03 HomeValues  自分のペースで、農のある暮らしを。…… /life/
  *   H-04 HomeDay     ここでの、1日。……… /life/
  *   H-05 HomeOwner   この場所を、はじめた人。…… /owner/
  *   H-06 HomeFuture  畳1畳の畑から。…… /about/#future
