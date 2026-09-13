@@ -43,8 +43,23 @@
 }
 
 @layer base {
+  /* 日本語フォントの実体名。
+     src/app/layout.tsx の <link>（Google Fonts の CSS）で読み込んだ
+     ファミリー名を、ここで変数に入れています。
+     ※ 以前は next/font が同名の変数を自動生成していましたが、
+       日本語グリフが配信されないため CSS リンク方式に切り替えました。
+       変数名（--font-zen-kaku / --font-shippori）は変えていないので、
+       上の @theme の --font-jp / --font-serif-jp はそのまま使えます。 */
+  :root {
+    --font-zen-kaku: "Zen Kaku Gothic New";
+    --font-shippori: "Shippori Mincho";
+  }
+
   html {
-    scroll-behavior: smooth;
+    /* ⚠ scroll-behavior: smooth は入れないでください。
+       これが付いていると、HOMEの「GUILD Farmとは →」から /about/#future へ飛んだとき、
+       Next.js が行うアンカーへの移動が効かず、ページの先頭に着地してしまいます
+       （ページ内リンクは今のところ無いので、なめらかスクロールは使っていません）。 */
     -webkit-text-size-adjust: 100%;
   }
 
@@ -55,6 +70,9 @@
     font-feature-settings: "palt" 1;
     line-height: 1.95;
     letter-spacing: 0.04em;
+    /* 禁則処理。小さなカナ（ュ ャ ョ っ など）や長音記号「ー」を行頭に送りません。
+       日本語の組版の基本なので、本文・見出しを問わず全体に効かせています。 */
+    line-break: strict;
     text-underline-offset: 0.25em;
   }
 
@@ -94,6 +112,24 @@
   font-weight: 500;
   line-height: 1.45;
   letter-spacing: 0.045em;
+
+  /* 見出しの改行位置。スマホの幅では日本語が不自然な位置で折り返され、
+     「自分の暮らしを考え／る」「農的社会コミ／ュニティ。」のように
+     1文字だけ次の行に落ちてしまっていたため、次の2つを足しています。
+     ・line-break: strict … 小さなカナ（ュ ャ ョ など）や長音記号を行頭に送らない
+     ・word-break: auto-phrase … 文節の切れ目で折り返す（対応ブラウザのみ。
+       非対応のブラウザでは無視され、これまでどおりの折り返しになります）
+     読点（、）での改行は src/lib/jp.tsx の phrase() が担当しています。 */
+  line-break: strict;
+  word-break: auto-phrase;
+}
+
+/* 本文のうち「短くて目立つ一文」を、語の途中で折り返さないためのクラス。
+   （例: 最終CTAの本文が「暮らしてみてく／ださい。」と割れていました）
+   word-break: auto-phrase に対応していないブラウザでは無視されます。
+   長い段落に付けると行末の余りが大きくなるので、数行の文にだけ使ってください。 */
+.wrap-phrase {
+  word-break: auto-phrase;
 }
 
 /* h1 用の流体サイズ */

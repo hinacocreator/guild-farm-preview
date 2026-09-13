@@ -85,7 +85,7 @@ export const siteConfig = {
   contact: {
     email: "guildfarm.dogo@gmail.com",
     /** メールの件名に自動で入る文字列 */
-    subject: "GUILD Farmの入居について",
+    subject: "GUILD Farmの滞在について",
     /**
      * Googleフォームなどを使う場合は、ここにURLを入れてください。
      * 入っていればサイト内のCTAは全てそのURLへ、空ならメール（mailto:）に飛びます。
@@ -100,8 +100,10 @@ export const siteConfig = {
     },
   },
 
-  /** サイト内のCTAボタンの既定の文言 */
-  ctaLabel: "入居について相談する",
+  /** サイト内のCTAボタンの既定の文言（全ページ共通。「入居」は使いません） */
+  ctaLabel: "滞在について相談する",
+  /** 画面が狭いとき（スマホのヘッダー）に使う短縮版 */
+  ctaLabelShort: "相談する",
 } as const;
 
 /**
@@ -117,14 +119,16 @@ export const contactHref: string =
 /** 「85,300円」のように、カンマ区切りの金額文字列を作ります */
 export const monthlyPriceText = `${siteConfig.price.monthly.toLocaleString("ja-JP")}円`;
 
-/** ヘッダーのナビゲーション。順番を変えるとそのまま表示順が変わります。 */
+/**
+ * ヘッダー・フッター共通のナビゲーション。順番を変えるとそのまま表示順が変わります。
+ * ・label … 日本語ラベル（メニューの主役）
+ * ・en    … 併記する英字ラベル（.label-en で小さく添える）
+ * ・href  … next.config.ts の trailingSlash: true に合わせて末尾スラッシュ付きで書きます
+ */
 export const navItems = [
-  { label: "About", href: "#about" },
-  { label: "A Day", href: "#a-day" },
-  { label: "Price", href: "#value" },
-  { label: "Plans", href: "#plans" },
-  { label: "House", href: "#house" },
-  { label: "Life", href: "#experience" },
-  { label: "FAQ", href: "#faq" },
-  { label: "Flow", href: "#flow" },
+  { label: "GUILD Farmとは", en: "About", href: "/about/" },
+  { label: "松井について", en: "Owner", href: "/owner/" },
+  { label: "暮らし・過ごし方", en: "Life", href: "/life/" },
+  { label: "プラン・料金", en: "Plans", href: "/plans/" },
+  { label: "入居までの流れ", en: "Flow", href: "/flow/" },
 ] as const;

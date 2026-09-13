@@ -1,13 +1,23 @@
 import { CtaButton } from "@/components/ui/CtaButton";
+import { TextLink } from "@/components/ui/TextLink";
 import { images } from "@/config/images";
-import { copy } from "@/content/copy";
+import { home } from "@/content/home";
 import { phrase } from "@/lib/jp";
 
 /**
- * HERO。
+ * H-01 HERO（HOME専用）。
+ *
  * スマホと横長画面で写真のトリミングが変わるよう、2枚を出し分けています
  * （public/images/hero-mobile.jpg ＝ 縦長 9:16 ／ hero.jpg ＝ 横長 16:9）。
  * 実際に読み込まれるのは表示される側の1枚だけです。
+ *
+ * ■ 文章 … src/content/home.ts の hero
+ * ■ 写真 … src/config/images.ts の hero / heroMobile
+ *
+ * ⚠ 金額は出しません。以前ここにあった「85,300円に含まれるもの →」のリンクは
+ *   削除しました（金額は /plans/ だけに出す方針。文言は copy.ts に残しています）。
+ * ⚠ id="top" は、スマホ固定CTAバー（StickyCtaBar）が
+ *   「HEROを過ぎたか」を判定するのに使っています。変えないでください。
  */
 export function Hero() {
   return (
@@ -41,36 +51,34 @@ export function Hero() {
       {/* 写真を差し替えても文字が読めるよう、軽い影を敷いています */}
       <div className="relative mx-auto w-full max-w-[1400px] px-5 pb-20 pt-32 [text-shadow:0_1px_24px_rgba(0,0,0,0.5)] md:px-10 md:pb-28">
         <p className="label-en text-[0.68rem] text-paper/90">
-          {copy.hero.eyebrow}
+          {home.hero.eyebrow}
         </p>
 
         <h1 className="heading-jp heading-hero mt-6 max-w-[16em] text-paper">
-          {phrase(copy.hero.title)}
+          {phrase(home.hero.title)}
         </h1>
 
-        <div className="mt-7 max-w-xl space-y-1 text-[0.95rem] leading-[2.1] text-paper/90 md:text-[1.05rem]">
-          {copy.hero.body.map((line) => (
+        <p className="mt-6 text-[0.95rem] leading-[2] text-paper md:text-[1.1rem]">
+          {phrase(home.hero.sub)}
+        </p>
+
+        {/* wrap-phrase … 文節の切れ目で折り返します（globals.css）。
+            HEROの説明文が語の途中で割れないようにするためです。 */}
+        <div className="wrap-phrase mt-6 max-w-xl space-y-1 text-[0.9rem] leading-[2.1] text-paper/85 md:text-[1rem]">
+          {home.hero.body.map((line) => (
             <p key={line}>{line}</p>
           ))}
         </div>
 
         <div className="mt-10 flex flex-col items-start gap-6 md:mt-12 md:flex-row md:items-center md:gap-10">
-          <CtaButton size="lg">{copy.hero.cta}</CtaButton>
+          {/* 主CTAは問い合わせではなく /life/。まず暮らしを見てもらいます */}
+          <CtaButton size="lg" href={home.hero.cta.href}>
+            {home.hero.cta.label}
+          </CtaButton>
 
-          <a
-            href={copy.hero.secondary.href}
-            className="group inline-flex items-center gap-2.5 text-[0.9rem] tracking-[0.05em] text-paper/90 transition-opacity duration-300 hover:opacity-70"
-          >
-            <span className="border-b border-paper/40 pb-1">
-              {copy.hero.secondary.label}
-            </span>
-            <span
-              aria-hidden="true"
-              className="transition-transform duration-300 group-hover:translate-x-1"
-            >
-              →
-            </span>
-          </a>
+          <TextLink href={home.hero.secondary.href} tone="dark" size="lg">
+            {home.hero.secondary.label}
+          </TextLink>
         </div>
       </div>
 
@@ -80,7 +88,7 @@ export function Hero() {
         className="absolute bottom-6 right-5 hidden items-center gap-3 md:right-10 md:flex"
       >
         <span className="label-en text-[0.6rem] text-paper/60">
-          {copy.hero.scroll}
+          {home.hero.scroll}
         </span>
         <span className="h-10 w-px bg-paper/40" />
       </div>

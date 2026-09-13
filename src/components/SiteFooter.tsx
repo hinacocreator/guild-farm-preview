@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { contactHref, navItems, siteConfig } from "@/config/site";
 import { copy } from "@/content/copy";
@@ -6,7 +7,7 @@ import { copy } from "@/content/copy";
  * フッター。
  * 表示している内容は、すべて設定ファイルから読んでいます。
  *
- * ■ ナビの項目   … src/config/site.ts の navItems
+ * ■ ナビの項目   … src/config/site.ts の navItems（日本語ラベルを表示しています）
  * ■ 住所         … src/config/site.ts の location.address
  * ■ Instagram    … src/config/site.ts の social.instagram
  * ■ 見出しの文言 … src/content/copy.ts の footer
@@ -34,15 +35,15 @@ export function SiteFooter() {
           {/* メニュー */}
           <nav aria-label="フッター" className="md:col-span-3">
             <p className="label-en text-[0.65rem] text-paper/60">Menu</p>
-            <ul className="mt-5 grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-3 md:grid-cols-2">
+            <ul className="mt-5 grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-3 md:grid-cols-1">
               {navItems.map((item) => (
                 <li key={item.href}>
-                  <a
+                  <Link
                     href={item.href}
-                    className="label-en text-[0.68rem] text-paper/75 transition-opacity duration-300 hover:opacity-60"
+                    className="text-[0.82rem] text-paper/80 transition-opacity duration-300 hover:opacity-60"
                   >
                     {item.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

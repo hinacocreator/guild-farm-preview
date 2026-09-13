@@ -1,25 +1,31 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Shippori_Mincho, Zen_Kaku_Gothic_New } from "next/font/google";
+import { Fraunces } from "next/font/google";
+import { SiteFooter } from "@/components/SiteFooter";
+import { SiteHeader } from "@/components/SiteHeader";
+import { StickyCtaBar } from "@/components/StickyCtaBar";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
-/** 本文・見出しの日本語：読みやすいゴシック体 */
-const zenKaku = Zen_Kaku_Gothic_New({
-  weight: ["400", "500", "700"],
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-zen-kaku",
-});
+/**
+ * 日本語の書体（Zen Kaku Gothic New / Shippori Mincho）は
+ * Google Fonts の CSS リンクで読み込んでいます（下の <link> を参照）。
+ *
+ * next/font/google を使わない理由:
+ *   next/font は subsets を指定して必要な文字だけ自己ホストする仕組みですが、
+ *   日本語（subset "japanese"）は数千グリフあるため実用的なサイズになりません。
+ *   subsets:["latin"] のままだと日本語グリフが配信されず、
+ *   端末のフォールバック書体（Windowsならゴシック体）で表示されてしまい、
+ *   明朝の見出しが再現できませんでした。
+ *   Google Fonts の CSS は unicode-range でファイルが細かく分割されていて、
+ *   ページに実際に出てくる文字のぶんだけがダウンロードされます。
+ *
+ * 書体を差し替えるときは、下の <link> のURLと
+ * src/app/globals.css の --font-zen-kaku / --font-shippori を合わせて直してください。
+ */
+const GOOGLE_FONTS_CSS =
+  "https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap";
 
-/** 日本語の大見出し（h1 / h2）：温かみのある明朝体 */
-const shippori = Shippori_Mincho({
-  weight: ["500", "600"],
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-shippori",
-});
-
-/** 英字の見出し・ラベル：雑誌的な印象のセリフ体 */
+/** 英字の見出し・ラベル：雑誌的な印象のセリフ体（英字のみなので next/font で自己ホスト） */
 const fraunces = Fraunces({
   subsets: ["latin"],
   display: "swap",
@@ -94,12 +100,24 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="ja"
-      className={`${zenKaku.variable} ${shippori.variable} ${fraunces.variable}`}
-    >
+    <html lang="ja" className={fraunces.variable}>
+      <head>
+        {/* 日本語フォントの配信元へ、先に接続を開いておきます */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link rel="stylesheet" href={GOOGLE_FONTS_CSS} />
+      </head>
       <body className="antialiased">
-        {children}
+        {/* ヘッダー・フッター・スマホ固定CTAバーは全ページ共通です。
+            各ページ（page.tsx）はセクションの並びだけを持ちます。 */}
+        <SiteHeader />
+        <main>{children}</main>
+        <SiteFooter />
+        <StickyCtaBar />
         <script
           type="application/ld+json"
           // 構造化データは静的な定数のみを埋め込んでいます

@@ -3,7 +3,7 @@ import { contactHref, siteConfig } from "@/config/site";
 import { cn } from "@/lib/cn";
 
 type CtaButtonProps = {
-  /** 省略すると site.ts の ctaLabel（「入居について相談する」）になります */
+  /** 省略すると site.ts の ctaLabel（「滞在について相談する」）になります */
   children?: React.ReactNode;
   /**
    * clay    = 紙の背景の上（既定・テラコッタ）
