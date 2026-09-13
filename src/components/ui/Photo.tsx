@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { ImageAsset } from "@/config/images";
 import { cn } from "@/lib/cn";
+import { withBasePath } from "@/lib/paths";
 
 type PhotoProps = {
   image: ImageAsset;
@@ -60,7 +61,9 @@ export function Photo({
       }
     >
       <Image
-        src={image.src}
+        /* サブパス配信（GitHub Pages）でも読めるように basePath を前置します。
+           images.unoptimized: true のとき next/image は basePath を自動で付けません。 */
+        src={withBasePath(image.src)}
         alt={image.alt}
         fill
         sizes={sizes}

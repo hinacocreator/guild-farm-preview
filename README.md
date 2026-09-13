@@ -334,7 +334,26 @@ GitHubの対象ブランチにpushするたびに自動で再ビルド・再公�
 3. このリポジトリに同梱済みの [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) が、`main` ブランチへのpushをきっかけに `npm run build` → `out/` を自動でPages公開します
 4. 数分後、`https://＜ユーザー名＞.github.io/＜リポジトリ名＞/` で公開されます
 
-> **注意**：リポジトリ名がそのままURLのサブパス（`/リポジトリ名/`）になる場合、`next.config.ts` に `basePath: "/リポジトリ名"` の追加が必要です（独自ドメインを直接つないでルート `/` で公開する場合は不要です）。
+#### いま公開しているレビュー用プレビュー
+
+<https://hinacocreator.github.io/guild-farm-preview/>
+
+`main` にpushすると2〜3分で自動更新されます（`hinacocreator/guild-farm-preview` リポジトリ）。
+
+#### サブパス配信への対応（いまの仕組み）
+
+GitHub Pages ではURLがリポジトリ名のサブパス（`/guild-farm-preview/`）になるため、
+ビルド時に次の2つの環境変数を渡しています（[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) に記載）。
+
+| 環境変数 | 値 | 役目 |
+| --- | --- | --- |
+| `NEXT_PUBLIC_BASE_PATH` | `/guild-farm-preview` | `next.config.ts` の `basePath`。リンク・`_next/`・画像パスの前置 |
+| `NEXT_PUBLIC_SITE_URL` | `https://hinacocreator.github.io/guild-farm-preview` | OGP・JSON-LD の絶対URL |
+
+- 素の `<img>` / `<picture>` と `next/image`（`images.unoptimized: true` のときは自動で付かない）には、[`src/lib/paths.ts`](src/lib/paths.ts) の `withBasePath()` でサブパスを前置しています。
+- **環境変数を渡さなければ `basePath` は無効**なので、`npm run dev` / `npm run build` をそのまま実行するローカル確認は今までどおりです。
+
+> **本番は Cloudflare Pages（basePath なし）を推奨**します。独自ドメインをルート `/` で配信できるため、上の2つの環境変数は不要（`NEXT_PUBLIC_SITE_URL` だけ本番URLに設定、または [`src/config/site.ts`](src/config/site.ts) の `url` の既定値を差し替え）。GitHub Pages のURLはサブパス付きのプレビュー専用と考えてください。
 
 ### (c) Vercelを使いたい場合の注意
 

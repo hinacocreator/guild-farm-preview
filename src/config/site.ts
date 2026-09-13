@@ -16,8 +16,12 @@ export const siteConfig = {
   description:
     "愛媛・松山、畑のあるシェアハウス。仕事を続けたまま、1ヶ月暮らしてみる。個室と共用キッチン、畑に関わる時間、地域の人との食卓。移住を決める前に、暮らしから試せる場所です。",
 
-  /** 本番URL。独自ドメインを取ったら差し替えてください（OGPの絶対URL生成に使用） */
-  url: "https://guild-farm.vercel.app",
+  /**
+   * 本番URL。独自ドメインを取ったら下の既定値を差し替えてください（OGP・JSON-LDの絶対URL生成に使用）。
+   * ビルド時に環境変数 NEXT_PUBLIC_SITE_URL があれば、そちらが優先されます
+   * （GitHub Pages のプレビュー公開のように、サブパス付きURLで配信するとき用）。
+   */
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://guild-farm.vercel.app",
 
   /** SNSシェア画像（public/og.jpg） */
   ogImage: "/og.jpg",

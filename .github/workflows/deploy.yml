@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
-  # GitHub の Pages 画面から手動実行したいとき用
+  # GitHub の Actions 画面から手動実行したいとき用
   workflow_dispatch:
 
 permissions:
@@ -28,11 +28,19 @@ jobs:
           node-version: 20
           cache: npm
 
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
       - name: Install dependencies
         run: npm ci
 
+      # サブパス配信（https://hinacocreator.github.io/guild-farm-preview/）のための設定。
+      # 独自ドメイン（Cloudflare Pages など）に移すときは、この2つの環境変数を外す。
       - name: Build (static export)
         run: npm run build
+        env:
+          NEXT_PUBLIC_BASE_PATH: /guild-farm-preview
+          NEXT_PUBLIC_SITE_URL: https://hinacocreator.github.io/guild-farm-preview
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

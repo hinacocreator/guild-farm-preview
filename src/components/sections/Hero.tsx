@@ -3,6 +3,7 @@ import { TextLink } from "@/components/ui/TextLink";
 import { images } from "@/config/images";
 import { home } from "@/content/home";
 import { phrase } from "@/lib/jp";
+import { withBasePath } from "@/lib/paths";
 
 /**
  * H-01 HERO（HOME専用）。
@@ -28,13 +29,13 @@ export function Hero() {
       <picture>
         <source
           media="(max-width: 767px)"
-          srcSet={images.heroMobile.src}
+          srcSet={withBasePath(images.heroMobile.src)}
           width={864}
           height={1536}
         />
         {/* 画面幅で写真そのものを切り替えるため、next/image ではなく <picture> を使っています */}
         <img
-          src={images.hero.src}
+          src={withBasePath(images.hero.src)}
           alt={images.hero.alt}
           fetchPriority="high"
           decoding="async"
