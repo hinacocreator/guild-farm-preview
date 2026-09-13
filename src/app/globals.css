@@ -1,26 +1,169 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* =========================================================
+   GUILD Farm — デザイントークン
+   色を変えたいときは、ここの値だけを書き換えれば全ページに反映されます。
+   ========================================================= */
+@theme {
+  /* 背景（紙） */
+  --color-paper: #faf6ee; /* 紙・基本背景 */
+  --color-cream: #f3ebdd; /* 生成り（セクション交互背景） */
+  --color-sand: #e4d7c2; /* 境界線・写真のプレースホルダ */
+
+  /* アクセント（テラコッタ）— CTAと強調だけに使う。
+     ※ 当初案は #b4613a でしたが、その色だとCTAボタンの白文字との
+     コントラストが 4.13:1 で、アクセシビリティの基準（4.5:1）に届きませんでした。
+     見た目はほぼ変わらない範囲で少しだけ濃くしています（4.83:1）。 */
+  --color-clay: #a65733;
+  --color-clay-deep: #8f4a2a; /* ホバー */
+
+  /* 土・緑 */
+  --color-soil: #6b4f3a;
+  --color-forest: #223327; /* 深い緑（濃い面の背景） */
+  --color-moss: #55684a;
+  --color-sun: #e3b45c; /* 金色の光。線や小さな装飾のみ */
+
+  /* 文字 */
+  --color-ink: #2a2622;
+  --color-ink-soft: #5a544c;
+  /* ※ 当初案は #8c8478 でしたが、注記・住所・英字ラベルなど小さな文字で
+     コントラストが 3.1:1 しかなく読みにくかったため、少しだけ濃くしています（4.6:1）。 */
+  --color-ink-faint: #6f695e;
+
+  /* フォント */
+  --font-jp: var(--font-zen-kaku), "Hiragino Sans", "Noto Sans JP", ui-sans-serif,
+    system-ui, sans-serif;
+  /* 日本語の見出し（h1 / h2）に使う明朝体 */
+  --font-serif-jp: var(--font-shippori), "Hiragino Mincho ProN", "Yu Mincho",
+    "Noto Serif JP", serif;
+  --font-display: var(--font-fraunces), "Times New Roman", Georgia, serif;
+
+  /* 余白のリズム */
+  --spacing-section: 7rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-jp);
+    font-feature-settings: "palt" 1;
+    line-height: 1.95;
+    letter-spacing: 0.04em;
+    text-underline-offset: 0.25em;
+  }
+
+  /* 紙の粒子。全面に薄いノイズを重ねて、印刷物のような質感を出しています。
+     濃さを変えたいときは opacity（0.04〜0.06 が目安）だけ調整してください。 */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 220px 220px;
+  }
+
+  ::selection {
+    background-color: var(--color-forest);
+    color: var(--color-paper);
+  }
+
+  /* フォーカスリング（キーボード操作時のみ） */
+  :focus-visible {
+    outline: 2px solid var(--color-clay);
+    outline-offset: 3px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* =========================================================
+   共通のタイポグラフィ用クラス
+   ========================================================= */
+
+/* 日本語の大見出し（h1 / h2）。明朝体＋広めの行間。 */
+.heading-jp {
+  font-family: var(--font-serif-jp);
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: 0.045em;
+}
+
+/* h1 用の流体サイズ */
+.heading-hero {
+  font-size: clamp(2.2rem, 5vw, 4.5rem);
+  line-height: 1.4;
+}
+
+/* h2 用の流体サイズ */
+.heading-section {
+  font-size: clamp(1.65rem, 3.2vw, 2.75rem);
+}
+
+/* h3 用（ゴシックのまま少し大きく） */
+.heading-item {
+  font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+  line-height: 1.75;
+  letter-spacing: 0.03em;
+}
+
+/* 見出しの英字ラベル：雑誌的な字送り */
+.label-en {
+  font-family: var(--font-display);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* 大きな通し番号（01 / 02 …） */
+.numeral {
+  font-family: var(--font-display);
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+/* 引用（pull quote） */
+.pull-quote {
+  font-family: var(--font-serif-jp);
+  font-weight: 500;
+  line-height: 1.9;
+  letter-spacing: 0.05em;
+}
+
+/* 縦書きの小さな添え書き（PCのみ使用） */
+.vertical-jp {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* =========================================================
+   スクロールでの控えめなフェードイン
+   - 対応ブラウザ（animation-timeline: view()）だけで動きます
+   - 非対応ブラウザ／JS無効でも、内容は最初から見えています
+   ========================================================= */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal-fade linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 22%;
+    }
+  }
+}
+
+@keyframes reveal-fade {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
