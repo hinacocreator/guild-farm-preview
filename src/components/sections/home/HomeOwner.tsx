@@ -21,7 +21,7 @@ import { home } from "@/content/home";
  * ⚠ 後継者や相場などの社会課題の中身は、ここには書きません（/owner/ と /about/ の担当）。
  *
  * ■ 文章 … src/content/home.ts の owner
- * ■ 写真 … src/config/images.ts の journal[5]（田植えを終えた田んぼ）
+ * ■ 写真 … src/config/images.ts の expSeason（手のひらの玄米。人物の顔が写らない写真を選択）
  */
 export function HomeOwner() {
   return (
@@ -31,7 +31,7 @@ export function HomeOwner() {
           {/* ★ 松井本人写真差し替え推奨（いまは風景写真です） */}
           <figure className="reveal md:col-span-5 md:mt-16">
             <Photo
-              image={images.journal[5]}
+              image={images.expSeason}
               ratio="1 / 1"
               sizes="(min-width: 768px) 40vw, 100vw"
             />

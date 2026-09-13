@@ -72,6 +72,8 @@ export function HomeDay() {
                 image={photos[item.photo]}
                 ratio="4 / 5"
                 sizes="(min-width: 768px) 23vw, 76vw"
+                /* 朝の写真は上部に看板が入るため、畑側（下）を見せる */
+                objectPosition={item.photo === "dayMorning" ? "object-bottom" : "object-center"}
               />
 
               <p className="heading-jp mt-6 flex items-center gap-3 text-[1.15rem] text-ink md:text-[1.3rem]">
