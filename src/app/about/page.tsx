@@ -4,6 +4,7 @@ import { AboutAbundance } from "@/components/sections/about/AboutAbundance";
 import { AboutAgrarian } from "@/components/sections/about/AboutAgrarian";
 import { AboutDifference } from "@/components/sections/about/AboutDifference";
 import { AboutFertilizer } from "@/components/sections/about/AboutFertilizer";
+import { AboutFit } from "@/components/sections/about/AboutFit";
 import { AboutFood } from "@/components/sections/about/AboutFood";
 import { AboutFuture } from "@/components/sections/about/AboutFuture";
 import { AboutPeople } from "@/components/sections/about/AboutPeople";
@@ -37,7 +38,8 @@ export const metadata: Metadata = {
  *
  * ■ 並び（設計書 content-design.md 第3章 A-01〜A-10 に対応）
  *   A-01 PageHeader       旅行ではなく、暮らしてみる。（＋どんな暮らしをつくりたいか）
- *   A-02 AboutDifference  見るのでも、体験するのでもなく。＋「実際にすることは、こうです」
+ *   A-02 AboutDifference  見るのでも、体験するのでもなく。＋比較表＋「自分らしい、農との関わり方を見つける」
+ *   ---  AboutFit        こんな過ごし方を楽しめる方に。（id="fit" / Phase 3-C 追加）
  *   A-03 AboutAgrarian    農的暮らしと呼んでいるもの。
  *   A-04 AboutWhy         なぜ、農のある暮らしなのか。…… /owner/（層2はここだけ）
  *   A-05 AboutFertilizer  無肥料という、選び方。
@@ -46,6 +48,7 @@ export const metadata: Metadata = {
  *   A-08 AboutAbundance   豊かさと、心地よさ。
  *   A-09 AboutFuture      畳1畳の畑から、半径2kmへ。（id="future"）
  *   A-10 ClosingCta       共通CTA …… 問い合わせ（＋次に読む: /life/）
+ *   ※ 通し番号（01〜09）は AboutFit の追加に合わせて振り直しています。
  *
  * ■ このページに置かないもの（他ページの担当）
  *   料金の数字・含まれるもの・部屋・設備・住所（→ /plans/）
@@ -66,6 +69,8 @@ export default function AboutPage() {
         lead={about.header.lead}
       />
       <AboutDifference />
+      {/* id="fit" … /flow/ のFAQ「どんな人が向いていますか」からの着地点です */}
+      <AboutFit />
       <AboutAgrarian />
       <AboutWhy />
       <AboutFertilizer />

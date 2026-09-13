@@ -32,7 +32,7 @@ export const metadata: Metadata = {
  *   F-02  01 FlowSteps      滞在がはじまるまでの、5つのこと。（＋確認中のことの脚注）
  *   F-03  02 FlowPacking    持ってくるもの。
  *   F-04  03 FlowAccess     場所のこと。（滞在先2か所・体験の場所3か所）
- *   　    04 FlowConcerns   先に知っておいてほしいこと。（雨・土日・受け入れ時期）
+ *   　    04 FlowConcerns   知っておいてほしいこと。（雨・土日・受け入れ時期）
  *   F-05  05 FlowFaq        よくある質問（料金以外の6問）
  *   F-06     ClosingCta     問い合わせへ（「次に読む」は置きません）
  *
