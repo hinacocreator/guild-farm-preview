@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PageHeader } from "@/components/PageHeader";
 import { ClosingCta } from "@/components/sections/ClosingCta";
 import { OwnerChapters } from "@/components/sections/owner/OwnerChapters";
+import { OwnerFuture } from "@/components/sections/owner/OwnerFuture";
 import { OwnerInvitation } from "@/components/sections/owner/OwnerInvitation";
 import { OwnerTimeline } from "@/components/sections/owner/OwnerTimeline";
 import { OwnerVoices } from "@/components/sections/owner/OwnerVoices";
@@ -23,42 +24,57 @@ export const metadata: Metadata = {
 };
 
 /**
- * /owner/ オーナー松井。
+ * /owner/ 松井について。
  *
- * ■ ページの役割
- *   プロフィールページではなく、一人の人間の経験からGUILD Farmが生まれるまでの読み物です。
- *   成功談ではなく、行き詰まったこと・凹んだことも書きます（そこが信頼になります）。
- *   脚色はしません。資料にない事実は作りません。
+ * ■ ページの役割（2026-09-16 クライアント確定・owner-brand-edit.md）
+ *   プロフィール紹介ではなく、松井さんがどんな経験をして何を考え、
+ *   なぜGUILD Farmを始めるに至ったかを、本人の実体験と言葉で伝える読み物です。
+ *   ABOUT＝GUILD Farmとは何か／このページ＝その背景にいる人。
+ *   成功談にしません。行き詰まったこと・凹んだことも書きます。脚色はしません。
  *
- * ■ 並び（設計書 content-design.md 第4章 O-01〜O-12 に対応）
- *   O-01     PageHeader       オーナー松井／松井 真弥（GUILD Farm オーナー）
- *   —        OwnerTimeline    年表ナビ（2011 → 今）＋写真
- *   O-02〜09 OwnerChapters    時系列の本文9章（各章に id。年表からここへ飛びます）
- *   O-10     OwnerInvitation  どんな人に来てほしいか。
- *   O-11     OwnerVoices      滞在した人の言葉（3つ・属性なし）
- *   O-12     ClosingCta       共通CTA …… 問い合わせ（＋次に読む: /plans/）
+ * ■ 並び（owner-brand-edit.md 2〜11）
+ *   —  PageHeader       松井について／GUILD Farm オーナー　松井 真弥／簡潔な導入
+ *   —  OwnerTimeline    年表ナビ（読む順。年代順ではありません）＋写真
+ *   01 OwnerChapters    愛媛で農と出会う
+ *   02                  肥料を使わない農業へ
+ *   03                  うまくいかなかった、5年間。
+ *   04                  農業そのものについて、考える。
+ *   05                  東北と、19世帯の集落での暮らし。
+ *   06                  2015年、そして2020年。
+ *   07                  不安や危機感から、“心地イイ”へ。
+ *   08                  GUILD Farmを始める。
+ *   09 OwnerInvitation  どんな人に来てほしいか。
+ *   10 OwnerVoices      滞在した人の言葉（3つ・属性なし）
+ *   11 OwnerFuture      これから。
+ *   —  ClosingCta       共通CTA …… 問い合わせ（＋次に読む: /life/）
  *
  * ⚠ 松井さん本人の写真は素材にありません。
- *   ★ 松井本人写真差し替え推奨 … 米・田んぼ・畑・作業の写真で構成しています。
- *     代わりに別の人物写真をあてると「この人が松井さん」と誤解されるため、
- *     人物が主役の写真は使っていません（OwnerTimeline のコメントも参照）。
+ *   ★ 松井本人写真差し替え推奨 … 柑橘・土・畑・米・竹林・収穫の写真で構成しています。
+ *     人物の顔が大きく写り「この人が松井さん」と誤解されうる写真
+ *     （dayMorning / dayDinner / journal[5] / expPeople / journal[3] / owner）は
+ *     使っていません。
  *
- * ⚠ 肩書は「GUILD Farm オーナー」だけです。氏名の表記・ふりがなは※要確認です。
- * ⚠ ページの呼び方は、サイト全体で「オーナー松井」に統一しています
- *   （ナビ・フッター・HOME・ABOUTからのリンク・metadata）。本文で人として
- *   言及するときは「松井さん」のままでかまいません。URL（/owner/）は変えません。
- * ⚠ 引用は matsui-story.txt の原文です。方言（「ええけど」「〜せな」「やば」「最高やん！」）を
- *   標準語に直さないでください。
+ * ⚠ ページ名称は「松井について」です。プロフィール表記は
+ *   「GUILD Farm オーナー　松井 真弥」（肩書＋氏名）。
+ *   「オーナー松井」はページ名でもプロフィール名でもなく、文章中の人物表現です。
+ *   ナビ・フッター・HOME/ABOUTからのリンク・metadata・OGP も「松井について」で揃えています。
+ *   URL（/owner/）は変えません。氏名のふりがなは※要確認です。
+ * ⚠ 引用は matsui-story.txt の原文です。方言（「ええけど」「〜せな」「やば」「最高やん！」）や
+ *   「畳み1畳」を標準語・一般表記に直さないでください。
+ * ⚠ 松井さんの人生を要約・意味づけする文を足さないでください
+ *   （owner-brand-edit.md 1. 編集原則）。
  *
  * ■ このページに置かないもの（他ページの担当）
- *   「畳1畳の畑」「半径2kmの農的社会コミュニティ」（→ /about/#future）
- *   ／料金・設備（→ /plans/）
- *   ※ 2026-09-15 のブランド編集で、後継者・相場などの問題意識と、
- *     無肥料を選んだ理由の引用は ABOUT からこのページへ移しました。
+ *   料金・設備（→ /plans/）／滞在中の過ごし方の詳細（→ /life/）
+ *   ※「畳み1畳の畑」「半径2kmの農的社会コミュニティ」は、本人の言葉としてこのページの
+ *     「これから。」に置いています（GUILD Farmの構想としての説明は /about/#future）。
+ *   ※ 後継者・相場などの問題意識と、無肥料を選んだ理由の引用は ABOUT からこのページへ
+ *     移設済みです（CHANGELOG-phase3a.md「ABOUTブランド編集」2章）。
  *   ※ Phase 2 の旧セクション Story は、このページの本文に置き換えました
  *     （元のコピーは src/content/copy.ts の story に残しています）。
  *
  * ■ 文章 … src/content/owner.ts（このページの文字はすべてここ）
+ * ■ 棚卸し … docs/owner-inventory.md
  */
 export default function OwnerPage() {
   return (
@@ -73,6 +89,7 @@ export default function OwnerPage() {
       <OwnerChapters />
       <OwnerInvitation />
       <OwnerVoices />
+      <OwnerFuture />
       <ClosingCta
         title={owner.closing.title}
         body={owner.closing.body}

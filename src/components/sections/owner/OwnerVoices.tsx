@@ -3,7 +3,7 @@ import { LeafIcon } from "@/components/ui/LeafIcon";
 import { owner } from "@/content/owner";
 
 /**
- * OWNER「滞在した人の言葉」（設計書 O-11）
+ * 「松井について」の「滞在した人の言葉」
  *
  * 松井さんの語りを、第三者の言葉で受けるセクションです。
  *

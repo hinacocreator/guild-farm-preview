@@ -32,7 +32,7 @@ export const metadata: Metadata = {
  *   読み終えた人が「GUILD Farmは何をする場所か」「農的暮らしとはどんな暮らしか」
  *   「なぜ“心地イイ”を大切にしているか」を具体的に理解できることを優先します。
  *   松井さん個人の人生・農業への問題意識・無肥料栽培を選んだ経緯は
- *   このページでは説明せず、すべて /owner/「オーナー松井」に置いています。
+ *   このページでは説明せず、すべて /owner/「松井について」に置いています。
  *
  * ■ 並び（ブランド編集指示 2.〜8.）
  *   2. PageHeader     GUILD Farmとは（＋導入4行）
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
  *   5. AboutComfort    農的暮らしを通じて、“心地イイ”を見つめ直す。（HEROと同じ2行組み）
  *   6. AboutFood       農と食が、少し近くなる。
  *   7. AboutPeople     地域の人と出会う。
- *   8. AboutFuture     この先につくりたいもの。（id="future" ＋「オーナー松井」への導線）
+ *   8. AboutFuture     この先につくりたいもの。（id="future" ＋「松井について」への導線）
  *   -  ClosingCta      共通CTA …… 問い合わせ（＋次に読む: /life/）
  *
  * ■ このページに置かないもの（他ページの担当）

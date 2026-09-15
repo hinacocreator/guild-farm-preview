@@ -9,35 +9,42 @@ import { cn } from "@/lib/cn";
 import { phrase } from "@/lib/jp";
 
 /**
- * OWNER 本文（設計書 O-02〜O-09）。
+ * 「松井について」本文（章）。
  *
- * 時系列の読み物です。1章 = 見出し ＋ 本文（編集した標準語）＋ 引用（原文）。
- * 地の文と引用を交互に置いて、読み物としてのリズムをつくっています。
+ * 1章 = 見出し ＋ 事実（短い地の文）＋ 本人の原文引用。
+ * 地の文は、出来事をつなぐ最低限にとどめています。
  *
  * ⚠ 引用（kind: "quote"）は matsui-story.txt の原文です。
  *   「ええけど」「〜せな」「抜け出せんくて」「何にもできてへん」「やば」「ほんまに」
- *   を標準語に直さないでください。ここを直すとこのページの価値が消えます。
+ *   「最高やん！」「畳み1畳」を標準語・一般表記に直さないでください。
+ *   ここを直すとこのページの価値が消えます。
+ * ⚠ 松井さんの人生を要約・意味づけする文を足さないでください
+ *   （owner-brand-edit.md 1. 編集原則）。
  *
  * ■ 文章 … src/content/owner.ts の chapters（章の追加・並べ替えもこのファイルだけで済みます）
  * ■ 写真 … 下の photos で owner.ts の photo キーと対応づけています。
- *          ★ 松井さん本人の写真は素材にないため、米・田んぼ・畑・作業の写真で構成しています。
+ *
+ * ★ 松井さん本人の写真は素材にありません。
+ *   人物の顔が大きく写り「この人が松井さん」と誤解されうる写真（dayMorning /
+ *   dayDinner / journal[5] / expPeople / journal[3] / owner）は使わず、
+ *   柑橘・土・畑・米・竹林・収穫の写真で構成しています。
  *
  * ▼ 見せ方
- *   ・9章を1つの面（生成りの紙）に並べ、章のあいだは細い罫線で区切っています。
- *   ・写真のある章は左右交互に配置し、写真のない章（2011年・2015年・2020年）は
+ *   ・章を1つの面（生成りの紙）に並べ、章のあいだは細い罫線で区切っています。
+ *   ・写真のある章は左右交互に配置し、写真のない章（2015-2020）は
  *     文字だけの短い章として、年表の節目に見えるようにしています。
  *   ・各章の id は年表ナビ（OwnerTimeline）からのリンク先です。
  */
 
 /** owner.ts の photo キー → 実際の写真 */
 const photos: Record<OwnerPhotoKey, ImageAsset> = {
-  hero: images.hero,
-  journal5: images.journal[5],
-  expSeason: images.expSeason,
+  expHarvest: images.expHarvest,
   aboutSoil: images.aboutSoil,
   aboutField: images.aboutField,
   whyVisual: images.whyVisual,
-  dayDinner: images.dayDinner,
+  expSeason: images.expSeason,
+  expNature: images.expNature,
+  expFarmwork: images.expFarmwork,
 };
 
 export function OwnerChapters() {

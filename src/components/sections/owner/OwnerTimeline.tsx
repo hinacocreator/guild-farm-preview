@@ -4,18 +4,22 @@ import { images } from "@/config/images";
 import { owner } from "@/content/owner";
 
 /**
- * OWNER 年表ナビ（ページ上部）。
+ * 「松井について」の年表ナビ（ページ上部）。
  *
  * 長い読み物なので、先に「いつ・何があったか」を一覧で見せて、
  * 読みたいところへ飛べるようにしています。
- * リンク先は OwnerChapters の各章の id（#tohoku など）です。
+ * リンク先は OwnerChapters の各章の id（#ehime など）です。
  * → id は src/content/owner.ts の chapters と timeline の両方にあります。
  *   変えるときは両方を直してください。
  *
+ * ⚠ 並びは「読む順（章の順）」であって、年代順ではありません
+ *   （owner-brand-edit.md の章立てに合わせています）。
+ * ⚠「10年前」は相対表記のままです（資料の作成時点が不明なため）。西暦に直さないでください。
+ *
  * ★ 松井本人写真差し替え推奨
  *   本人の写真が素材にないため、稲刈りの写真を置いています。
- *   別の人物写真をあてると「この人が松井さん」と誤解されるので、
- *   人物が主役の写真は使いません。撮影できたら images.ts に追加して、
+ *   人物の顔が大きく写る写真をあてると「この人が松井さん」と誤解されるので、
+ *   そうした写真は使いません。撮影できたら images.ts に追加して、
  *   下の <Photo> の image と owner.timeline.photoNote を差し替えてください。
  *
  * ■ 文章 … src/content/owner.ts の timeline

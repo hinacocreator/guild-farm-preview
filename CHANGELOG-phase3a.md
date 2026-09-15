@@ -756,3 +756,102 @@ HOMEで書き直した文（上から順）:
 - 内部リンク … 全ページの `href` を抽出し、`/about/` `/owner/` `/life/` `/plans/` `/flow/` `/` と
   `#future` `#fit` `#tohoku` などのアンカー先がすべて存在することを確認（リンク切れなし）。
 - コミットはしていません。ブラウザでの目視確認も行っていません（PC1280／スマホ375の確認はQAで）。
+
+---
+
+# 松井についてブランド編集（2026-09-16・クライアント確定）
+
+指示書: `owner-brand-edit.md`。棚卸し: `docs/owner-inventory.md`。
+/owner/ を「プロフィール紹介」から「松井さんの実体験と本人の言葉でGUILD Farmに至るまでを伝えるページ」へ
+再構成し、あわせて前回の「オーナー松井」ページ名称化を **「松井について」** に戻しました。
+デザインシステム・ブランドカラー・共通部品は変更していません。写真も既存素材のみです。
+URL `/owner/` は変更していません。HOME・ABOUT・LIFE・PLANS・FLOW の確定コピー／構成／料金は変更していません。
+
+## 0. ページ名称の戻し（横断修正）
+
+「オーナー松井」は**文章中の人物表現**であり、ページ名称・プロフィール名ではありません。
+
+| 場所 | 変更前 → 変更後 |
+|---|---|
+| `src/config/site.ts` navItems（PC/モバイルナビ・フッター共通） | オーナー松井 → **松井について** |
+| `src/content/pages.ts` owner.metaTitle（`<title>`／OGP） | オーナー松井｜この場所を、はじめた人 → **松井について｜GUILD Farm オーナー 松井 真弥** |
+| `src/content/pages.ts` owner.description（meta／OGP） | 「GUILD Farmのオーナー松井のこと。…」 → 新しい章立ての要約に書き換え |
+| `src/content/pages.ts` owner.title / `src/content/owner.ts` header.title（h1） | オーナー松井 → **松井について** |
+| `src/content/pages.ts` owner.sub / `src/content/owner.ts` header.sub（プロフィール表記） | 松井 真弥（GUILD Farm オーナー） → **GUILD Farm オーナー　松井 真弥**（肩書＋氏名） |
+| `src/content/home.ts` owner.link（H-05）／voices.link（H-08） | オーナー松井 → **松井について** |
+| `src/content/about.ts` future.link | オーナー松井 → **松井について** |
+
+- HOME H-05 の見出し「この場所を、はじめた人。」は確定コピーなので変更していません（リンクのラベルのみ）。
+- ABOUT 本文の「オーナー松井が取り組んできた農」「オーナー松井の話や〜」「オーナー松井が10年ほど温めてきた」の
+  3か所は、**文章中の人物表現なのでそのまま残しています**。
+
+## 1. 章立ての再構成（指示書 2〜11）
+
+| # | id | 見出し | 中身 |
+|---|---|---|---|
+| — | — | 松井について | PageHeader。プロフィール＋簡潔な導入2行（人生を要約しません） |
+| — | `timeline` | これまでのこと。 | 年表ナビ6件。**読む順（章の順）**に並べ替え。「10年前」は相対表記のまま |
+| 01 | `ehime` | 愛媛で、農と出会う。 | 大阪→愛媛、自然栽培の伊予柑（F6）＋味の原文引用 |
+| 02 | `fertilizer` | 肥料を使わない農業へ。 | 環境・備え・「豆科＋ひまわり…」。ABOUT移設分を統合 |
+| 03 | `spiral` | うまくいかなかった、5年間。 | 生産性／木々／手間／価格／生産以外の仕事。成功物語にしない |
+| 04 | `rethink` | 農業そのものについて、考える。 | 高齢化・後継・相場・薄利多売・付加価値・「じゃーどうすれば？」（ABOUT移設分を原文引用に戻す） |
+| 05 | `village` | 東北と、19世帯の集落での暮らし。 | 2011年4月／19世帯の集落／美味しい米／心配。原文を主役に |
+| 06 | `years` | 2015年、そして2020年。 | フリーペーパー／ロックダウン／「何にもできてへんと凹みもしました」 |
+| 07 | `now` | 不安や危機感から、“心地イイ”へ。 | 章サブに確定コピー、本文は原文引用1つだけ |
+| 08 | `guild` | GUILD Farmを始める。 | 「カタチとして実現できてきました」＋何をする場所か |
+| 09 | `invitation` | どんな人に来てほしいか。 | 原文引用2つ＋F1/F2 の範囲の地の文（既存） |
+| 10 | `voices` | 滞在した人の言葉 | 確認済みの3つのみ・属性なし（既存） |
+| 11 | `future` | これから。 | **新規セクション**。「畳み1畳の畑」「半径2kmの農的社会コミュニティ」を本人の原文で |
+| — | — | 少しだけ、違う暮らしをしてみる。 | 既存 ClosingCta。**次に読む先を /plans/ → /life/ に変更** |
+
+- 各章は「事実（短い地の文）→ 本人の原文引用 → 次の事実」の形にそろえました。
+- 旧章 `tohoku` / `harvest` は `village` に統合（同じエピソードのため）。旧 `y2015` / `y2020` は `years` に統合。
+- 新規部品: `src/components/sections/owner/OwnerFuture.tsx`。
+- `src/content/owner.ts` に `future` を追加、`OwnerPhotoKey` を写真の変更に合わせて入れ替えました。
+
+## 2. 削除したAIによる意味づけ・重複（一次情報は削除していません）
+
+- 「この問いが、何年かたってから別のかたちで戻ってきます。」…本人の言葉にない伏線的な意味づけ
+- 「2011年に東北で感じたことが、ここで結びついています。」…「すべてが一本につながりました」型
+- 「いまGUILD Farmで伝えようとしているのは、この時期に身についた感覚です。」…「この経験こそが原点です」型
+- 「焦ったときに気づいたのは、…」…「そこで気づいたのです」型
+- 「心配していたことと、やっていたことが、ずれていました。」…指示書1の使用禁止表現
+- 「心配していたのは食生産を担う人が減っていくことだったのに、やっていたのは自分の農業を成り立たせることでした。」…「Aではなく、B」型
+- 「はじまりは、ここでした。」「理由は三つあります。味、環境、そして備え。」「頭のなかにあったことを、外に出そうとしていた時期でした。」…制作側による総括
+- 「やってみると、米は想像よりずっと手がかかります。…暮らしの重心が少し変わりました。」…原文にない体験描写
+- ABOUT から移設した農業の課題の段落は、**制作側の言い換えをやめて原文引用に戻しました**（内容は同じ・原文のほうが情報量が多い）。
+
+## 3. 写真
+
+- 人物の顔が大きく写り「この人が松井さん」と誤解されうる写真を、このページから外しました。
+  - `dayMorning`（→ `OwnerInvitation` は `expFood` に差し替え）
+  - `dayDinner` / `journal[5]`（旧 `now` / 旧 `village`。いずれも手前に人物の顔が大きく写るため不使用）
+- 使用中: `hero`（年表）／`expHarvest`（愛媛）／`aboutSoil`（無肥料）／`aboutField`（5年間）／
+  `whyVisual`（農業観）／`expSeason`（集落）／`expNature`（今）／`expFarmwork`（GUILD Farm）／`expFood`（どんな人に）。
+- `expPeople` / `journal[3]` / `owner.jpg` は引き続き不使用です。
+- ★ 松井本人写真差し替え推奨のコードコメントは維持しています（公開文には書いていません）。
+
+## 確認したこと
+
+- `npm run lint` … エラーなし。`npm run build` … 成功（9ページ）。
+- `out/owner/index.html` … 指示書1の禁止句（「気づいたのです」「一本につながり」「原点です」「かもしれません」
+  「ずれていました」「ではなく、」）**すべて0件**。「振興協議会」「準備中」「要確認」「確認中」**0件**。
+  料金の数字（85,300 / 58,300 / 25,000 / 35,000）**0件**。「心地イイ」は章07の見出しとサブの**2か所のみ**。
+- 引用照合 … `src/content/owner.ts` の引用文字列25本すべてが `matsui-story.txt` と一致
+  （全角「､」「｡」「｢」「｣」の置換と改行の除去のみ）。章07のサブだけはクライアント確定コピーです。
+- 一次情報の消失チェック … `docs/owner-inventory.md` の KEEP / MOVE / MERGE 項目37件が
+  すべて `out/owner/index.html` に出力されていることを確認。
+- 全6ページ … 「オーナー松井」はABOUT本文の人物表現3か所のみ。
+  ページ名称・ナビ・リンクラベル・`<title>`・meta description・OGP としての使用は**0件**。
+- 年表ナビのアンカー（#ehime / #fertilizer / #spiral / #village / #years / #now）はすべて存在（リンク切れなし）。
+- `docs/pending-facts.md` は変更していません。コミット・ブラウザ操作はしていません。
+
+## 変更したファイル
+
+- `src/content/owner.ts`（全面書き換え）／`src/content/pages.ts`（owner）／`src/content/home.ts`（リンクラベル）／
+  `src/content/about.ts`（リンクラベル）／`src/config/site.ts`（navItems）
+- `src/app/owner/page.tsx`（構成＋コメント）／`src/app/about/page.tsx`（コメントのみ）
+- `src/components/sections/owner/OwnerFuture.tsx`（**新規**）／`OwnerChapters.tsx`（写真の対応表）／
+  `OwnerInvitation.tsx`（写真差し替え）／`OwnerTimeline.tsx`（コメント）／`OwnerVoices.tsx`（コメント）
+- `src/components/sections/about/AboutFuture.tsx`（コメントのみ）／`src/components/sections/home/HomeOwner.tsx`（コメントのみ）
+- `docs/owner-inventory.md`（**新規**）／`CHANGELOG-phase3a.md`

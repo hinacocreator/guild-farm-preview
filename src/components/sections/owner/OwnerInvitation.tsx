@@ -5,7 +5,7 @@ import { images } from "@/config/images";
 import { owner } from "@/content/owner";
 
 /**
- * OWNER「どんな人に来てほしいか。」（設計書 O-10）
+ * 「松井について」の「どんな人に来てほしいか。」
  *
  * ほとんど松井さんの原文です。引用を主役にして、地の文は補足だけにしています。
  *
@@ -15,7 +15,9 @@ import { owner } from "@/content/owner";
  *   設備についての正直な注意は /plans/ の担当です。
  *
  * ■ 文章 … src/content/owner.ts の invitation
- * ■ 写真 … src/config/images.ts の dayMorning（朝の畑にしゃがんで作業をする滞在者）
+ * ■ 写真 … src/config/images.ts の expFood（採れた野菜をつかった食事）
+ *   ⚠ 以前使っていた dayMorning は人物の顔が大きく写っており、
+ *     「この人が松井さん」と誤解されうるため使いません（owner-brand-edit.md 12.）。
  */
 export function OwnerInvitation() {
   return (
@@ -27,7 +29,7 @@ export function OwnerInvitation() {
         <div className="grid gap-10 md:grid-cols-12 md:gap-14">
           <figure className="reveal md:col-span-5 md:mt-14">
             <Photo
-              image={images.dayMorning}
+              image={images.expFood}
               ratio="4 / 5"
               sizes="(min-width: 768px) 38vw, 100vw"
               objectPosition="object-center"

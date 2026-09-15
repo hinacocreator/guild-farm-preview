@@ -15,7 +15,7 @@ import { about } from "@/content/about";
  * ⚠ 引用は matsui-story.txt の原文です。文言を変えないでください。
  *
  * ページの最後に、構想の背景（松井さんの経歴・問題意識）を読める
- * 「オーナー松井」への導線を置いています。
+ * 「松井について」への導線を置いています。
  *
  * ■ 文章 … src/content/about.ts の future
  * ■ 写真 … src/config/images.ts の whyVisual（草の茂る土地を歩いて見てまわる人たち）
@@ -49,7 +49,7 @@ export function AboutFuture() {
               </p>
             </blockquote>
 
-            {/* 続きは「オーナー松井」へ */}
+            {/* 続きは「松井について」へ */}
             <div className="reveal mt-10 md:mt-12">
               <TextLink href={about.future.link.href} size="lg">
                 {about.future.link.label}
