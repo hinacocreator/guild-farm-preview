@@ -137,7 +137,7 @@ export const pages = {
       "GUILD Farm オーナー 松井 真弥のこと。愛媛で自然栽培の伊予柑に出会い、肥料を使わない栽培を選び、19世帯の集落で自給の米をつくってきました。GUILD Farmを始めるまでに考えてきたことを、本人の言葉で書いています。",
     path: "/owner/",
     label: "Owner",
-    title: "松井について",
+    title: "GUILD Farmをはじめた人",
     /** プロフィール表記は「肩書＋氏名」。氏名のふりがなは※要確認（pending-facts.md B-1） */
     sub: "GUILD Farm オーナー　松井 真弥",
     lead: [
