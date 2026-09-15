@@ -30,7 +30,7 @@ import { home } from "@/content/home";
  *   H-05 HomeOwner   この場所を、はじめた人。…… /owner/
  *   H-06 HomeFuture  畳1畳の畑から。…… /about/#future
  *   H-07 HomeStays   1週間か、1ヶ月か。…… /plans/
- *   H-08 HomeVoices  この場所で生まれた言葉 …… /owner/
+ *   H-08 HomeVoices  この場所で生まれた言葉 …… /voices/
  *   H-09 ClosingCta  最終CTA …………… 問い合わせ（＋/plans/）
  *
  * ■ 置いていない任意ブロック

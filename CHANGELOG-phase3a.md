@@ -994,3 +994,97 @@ h1「暮らすように、過ごす。」→ **「暮らし・過ごし方」**�
 - **削除**: `src/components/sections/life/LifeWeek.tsx` / `LifeFarm.tsx` / `LifeChapters.tsx`
   （文章は `life.ts` に移し、旧コピーは `src/content/copy.ts` にデータとして残っています）
 - `docs/life-inventory.md`（**新規**）／`docs/pending-facts.md`（C 章を追記）／`CHANGELOG-phase3a.md`
+
+---
+
+# /voices/「滞在者の声」新設（2026-09-16）
+
+対象: 新規ページ `/voices/`。クライアント指示（滞在者の声ページ）に基づく実装です。
+`docs/stories-plan.md` に書いていた `/stories/`（滞在記）の構想は、このページに統合しました。
+**`/stories/` は作りません。**
+
+## ページの役割
+
+実際にGUILD Farmで過ごした人が、どんな時間を過ごし何を感じたかを知るページ。
+これから体験ストーリー（1人ずつの滞在記）を足していく「器」として作っています。
+**現時点で載せているのは、確認済みの3つの言葉だけ**です。
+
+## 追加したファイル
+
+- `src/content/voices.ts`（**新規**）… このページの文章すべて。
+  - `header` … ページヘッダー（リードは事実のみ2行）
+  - `quotes` … 3つの言葉（`matsui-story.txt` の原文）＋注記2行
+  - `stories` … `readonly VoiceStory[]`。**いまは空配列**
+  - `next` … `/life/` と `/owner/` への戻り導線
+  - `closing` … 共通CTAに渡す文言（`next` は `/life/`）
+  - `VoiceStory` 型 … `slug` / `title` / `period` / `plan`（"week" | "month"）/ `attributes?` /
+    `consent`（`textGrantedOn` / `photoGrantedOn?` / `isMonitor`）/ `sections`（`heading` / `body` / `quote?`）/ `photos`。
+    型のコメントに**運用ルール（掲載許諾必須・モニター滞在の明示・料金非表示・架空の体験談を作らない）**を記載。
+- `src/app/voices/page.tsx`（**新規**）
+- `src/components/sections/voices/VoicesQuotes.tsx`（**新規**）… 3つの言葉。
+  HOMEより大きく（`1.35rem` / md `1.9rem`）、1つずつ余白（`space-y-14` / md `space-y-24`）。
+  見出しは `sr-only`（言葉そのものを主役にするため）。写真は `expNature`（竹林）1枚のみ。
+- `src/components/sections/voices/VoicesStories.tsx`（**新規**）…
+  **`stories` が0件のあいだは `null` を返し、セクションごと（見出しも）表示しません。**
+  「準備中」「今後追加予定」の表示は置いていません。
+- `src/components/sections/voices/VoicesNext.tsx`（**新規**）… `/life/` と `/owner/` へのテキストリンク2本。
+  写真は使っていません（直後の `ClosingCta` が写真の面のため。`LifeNext` と同じ扱い）。
+
+## 変更したファイル
+
+- `src/config/site.ts` … `navItems` の**末尾**に `{ label: "滞在者の声", en: "Voices", href: "/voices/" }` を追加。
+  - **末尾にした理由**: ナビは「何か → 誰か → どう過ごすか → 料金 → 申し込み方」という検討の順番。
+    `/voices/` はいま3つの言葉だけのページなので、その本線の途中（オーナーの後ろ）に置くと
+    中身の少なさが目立ちます。補足として末尾に置き、ストーリーが増えた段階で
+    「オーナー松井のご紹介」の後ろへ移す想定（1行動かすだけ）。判断の根拠はコードコメントにも記載。
+  - ⚠ PCナビ（lg以上）はこれで**6項目**。1024〜1200px 付近で横に詰まります。
+    これ以上増やすときは `SiteHeader` のPCナビの組み方の見直しが必要です。
+- `src/content/pages.ts` … `voices` の `metaTitle` / `description` / `path` / `label` / `title` / `lead` / `outline` を追加。
+  意味づけ表現（「人生観が変わった」等）は入れていません。冒頭コメントのページ一覧も更新。
+- `src/content/home.ts` … `voices.link` を
+  「松井について → `/owner/`」から**「滞在者の声をもっと見る → `/voices/`」に差し替え**。
+  - **既存の `/owner/` リンクを残さなかった理由**: 同じラベル・同じ行き先のリンクを、
+    1つ上のブロック H-05 `HomeOwner`（`home.owner.link`）がすでに持っています。
+    HOMEの各ブロックは「締めのテキストリンク1本」で終わる作りなので、2本並べていません。
+  - **HOMEの3つの声（`home.voices.words`）・注記・見出しは一切変更していません。**
+- `src/app/page.tsx` … H-08 の行き先コメントを `/owner/` → `/voices/` に更新（コメントのみ）。
+- `docs/stories-plan.md` … 冒頭に「`/voices/` に統合済み」の節を追加。
+  旧ルート／旧ファイル名の読み替え表、いまの状態、将来ストーリーを足すときの手順を記載。
+  **取材・掲載許諾の方針（1章）と公開前チェック（5章）はそのまま有効**として残しています。
+
+## 3つの声の重複について（報告）
+
+同じ3つの言葉が、いま**3か所**に出ます。**意図した重複**です。
+
+| 場所 | 扱い | 前後の文脈 |
+|---|---|---|
+| HOME `HomeVoices`（H-08） | 3つ・原文・大きめ（`1.3rem` / md `1.75rem`） | 締めのリンクが `/voices/` に変わりました |
+| `/owner/` `OwnerVoices`（10 滞在した人の言葉） | 3つ・原文・中くらい（`1.2rem` / md `1.6rem`） | 松井の語りを第三者の言葉で受ける位置。**削除していません** |
+| `/voices/` `VoicesQuotes`（01） | 3つ・原文・最大（`1.35rem` / md `1.9rem`）＋写真1枚 | ページの主役 |
+
+理由: サイトにある滞在者の声が、いまこの3つしかないためです。
+解消は**ストーリーが増えてから**が自然です。そのときは HOME と `/owner/` を抜粋のまま残し、
+`/voices/` を「全部が載っている場所」にします（HOME・OWNER の文面は変えずに済みます）。
+
+## 守ったこと
+
+- 3つの言葉は `matsui-story.txt` の原文どおり（「これが味わいたかったー！最高！幸せ！」
+  「帰りたくない」「松井の話しや繋いでくれるご縁がめちゃくちゃ価値がある」）。表記を整えていません。
+- 名前・年齢・職業・居住地・滞在期間・理由・行動・感情・Before/After を**補完していません**。
+- 言葉への意味づけ（「人生観が変わった」「本当の豊かさに気づいた」等）を**書いていません**。
+- 「準備中」「今後追加予定」等の空欄表示を**していません**（`stories` が空＝セクションごと非表示）。
+- 料金の数字は**0件**（`/plans/` のみ）。人物の顔が大きく写る写真は使っていません。
+- **`src/content/life.ts` と `src/components/sections/life/` は触っていません**（別担当の作業中のため）。
+
+## 確認したこと
+
+- `npm run lint` … エラーなし。`npm run build` … 成功（`/voices` が静的生成、全10ルート）。
+- `out/voices/index.html` … 生成あり。3つの言葉が原文どおり各1件。
+  注記「滞在した人が残していった言葉です（松井が聞いたもの）。」あり。
+  料金の数字（85,300 / 58,300 / 25,000 / 35,000 / 「〜円」）**0件**。
+  「準備中」「今後追加」「近日」「Coming Soon」**0件**。「滞在記」「Stories」**0件**（＝見出しも出ていない）。
+- ナビ … `out/` の全7ページ（`/` `/about/` `/owner/` `/life/` `/plans/` `/flow/` `/voices/`）に
+  「滞在者の声」と `/voices/` のリンクが出力されていることを確認（PCナビ・モバイルメニュー・フッター）。
+- HOME … `/voices/` へのリンク「滞在者の声をもっと見る」あり。3つの声は変更なし（各1件のまま）。
+- `/owner/` … 「滞在した人の言葉」は残っています。
+- コミット・ブラウザ操作はしていません。
