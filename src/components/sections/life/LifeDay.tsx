@@ -10,15 +10,19 @@ import { life } from "@/content/life";
  * 朝・昼・夕・夜の4場面を、写真を大きく取りながら左右交互に置いています。
  * HOMEの HomeDay（各場面1行の短縮版）と重複しないよう、
  * こちらは場面ごとに2〜3文を置き、写真も大きく使います。
+ * 4場面のあとに〈畑では、こんなことをします。〉を置いています
+ * （旧「農」セクションの本文です。畑の話は1日の流れの続きで読めるほうが分かります）。
  *
  * ⚠ 具体的な時刻は書きません（出典にあるのは曜日単位の午前／午後の予定だけです）。
  *   旧 src/content/copy.ts の aDay に残っている「06:30 — 09:00」等は使っていません。
  * ⚠ 畑は滞在先のすぐ近くにはありません。1日2往復する描き方はしません。
+ * ⚠ 「毎日この生活」ではなく「畑に行く日の一例」であることが、lead で分かるようにしています。
  *
  * ■ 文章 … src/content/life.ts の day
  * ■ 写真 … src/config/images.ts の dayMorning / aboutField / dayEvening / dayDinner
+ *          ＋ expFarmwork / aboutSoil / expSeason（畑での作業）
  *          ※ 昼は「畑での作業が続く」場面なので、机の写真（dayWork）ではなく
- *            畑の写真（aboutField）を使っています。dayWork は 06 chapters の Work で使用中です。
+ *            畑の写真（aboutField）を使っています。dayWork は「仕事」の章で使用中です。
  *          ※ 食卓（dayDinner）は流用写真です。追加撮影推奨。
  * ■ 並び方 … 下の layouts（写真の比率と、左右どちらに置くか）
  */
@@ -30,6 +34,16 @@ const photos: Record<(typeof life.day.items)[number]["photo"], ImageAsset> = {
   dayEvening: images.dayEvening,
   dayDinner: images.dayDinner,
 };
+
+/** 〈畑では、こんなことをします。〉に添える写真3枚 */
+const farmPhotos: Record<(typeof life.day.farm.photos)[number], ImageAsset> = {
+  expFarmwork: images.expFarmwork,
+  aboutSoil: images.aboutSoil,
+  expSeason: images.expSeason,
+};
+
+/** 上の farmPhotos と同じ順。1枚目を大きく、残り2枚を小さく並べます */
+const farmRatios = ["3 / 2", "1 / 1", "4 / 5"] as const;
 
 type Layout = {
   /** 写真の縦横比（PC） */
@@ -139,8 +153,46 @@ export function LifeDay() {
           })}
         </div>
 
-        {/* 雨の日のこと（このページではここと「農」の2か所だけに書いています） */}
-        <p className="reveal mx-auto mt-12 max-w-[34em] border-t border-sand pt-10 text-[0.875rem] leading-[2.05] text-soil md:mt-28">
+        {/* 畑で実際に何をするか（旧「農」セクションの本文） */}
+        <div className="mt-14 border-t border-sand pt-12 md:mt-28 md:pt-20">
+          <div className="grid gap-6 md:grid-cols-12 md:gap-14">
+            <h3 className="heading-jp reveal text-[1.4rem] text-ink md:col-span-5 md:text-[1.8rem]">
+              {life.day.farm.title}
+            </h3>
+            <div className="reveal space-y-5 text-[0.9rem] leading-[2.05] text-ink-soft md:col-span-6 md:col-start-7 md:text-[0.95rem]">
+              {life.day.farm.paragraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          </div>
+
+          {/* 畑の写真3枚。1枚目を大きく、残り2枚を小さく並べています */}
+          <ul className="mt-12 grid grid-cols-6 items-start gap-3 md:mt-16 md:gap-6">
+            {life.day.farm.photos.map((key, i) => (
+              <li
+                key={key}
+                className={
+                  i === 0
+                    ? "reveal col-span-6 md:col-span-6"
+                    : "reveal col-span-3 md:col-span-3 md:mt-16"
+                }
+              >
+                <Photo
+                  image={farmPhotos[key]}
+                  ratio={farmRatios[i]}
+                  sizes={
+                    i === 0
+                      ? "(min-width: 768px) 50vw, 100vw"
+                      : "(min-width: 768px) 24vw, 48vw"
+                  }
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* 雨の日のこと */}
+        <p className="reveal mx-auto mt-12 max-w-[34em] border-t border-sand pt-10 text-[0.875rem] leading-[2.05] text-soil md:mt-20">
           {life.day.footnote}
         </p>
       </Container>

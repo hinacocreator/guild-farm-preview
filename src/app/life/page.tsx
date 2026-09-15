@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/PageHeader";
 import { ClosingCta } from "@/components/sections/ClosingCta";
-import { LifeChapters } from "@/components/sections/life/LifeChapters";
 import { LifeDay } from "@/components/sections/life/LifeDay";
-import { LifeFarm } from "@/components/sections/life/LifeFarm";
+import { LifeFirstWeek } from "@/components/sections/life/LifeFirstWeek";
+import { LifeLiving } from "@/components/sections/life/LifeLiving";
 import { LifeMonth } from "@/components/sections/life/LifeMonth";
-import { LifeWeek } from "@/components/sections/life/LifeWeek";
+import { LifeNext } from "@/components/sections/life/LifeNext";
+import { LifePlaces } from "@/components/sections/life/LifePlaces";
 import { life } from "@/content/life";
 import { pages } from "@/content/pages";
 
@@ -24,24 +25,37 @@ export const metadata: Metadata = {
 };
 
 /**
- * /life/ 暮らし・過ごし方（Phase 3-B 本実装）。
+ * /life/ 暮らし・過ごし方。
  *
- * このページの役割は「ここで暮らしたら自分の1日はどうなるか」を想像できるようにすること。
- * 時間割の表ではなく、1日 → 1週間 → 1ヶ月 → 畑 → 畑のほかの時間、という順の読み物です。
+ * このページの役割は「自分がここに滞在したら、どこで暮らして、どこへ行って、
+ * どんな1日・1週間・1ヶ月を過ごすのか」を具体的に想像できるようにすることです。
+ * HOME / ABOUT / OWNER で書いた考え方は、ここでは繰り返しません。
  *
  * ■ 文章 … src/content/life.ts（このページに出る文字は全部ここにあります）
  * ■ セクション … src/components/sections/life/
+ * ■ 棚卸し（どの文がどの出典か・何を削ったか）… docs/life-inventory.md
  *
- * ▼ Phase 3-A からの変更
- *   ・PageOutline（見出しの一覧）を外しました。本文が入ったので不要です。
- *   ・旧 ADay / Schedule / Places / Experience は使っていません。
- *     7列の曜日グリッドは廃止し、曜日は縦に並べた軽い一覧にしています。
- *     旧セクションの文章は src/content/copy.ts にデータとして残っています。
+ * ▼ セクションの順番（2026-09-16 ブランド編集）
+ *   01 最初の1週間        LifeFirstWeek
+ *   02 畑に行く日の、1日。  LifeDay
+ *   03 場所について        LifePlaces  ← 02 の直後であることが重要
+ *   04 1ヶ月で滞在するなら  LifeMonth
+ *   05 仕事 / 06 食 / 07 地域・人   LifeLiving（3つの section を出力します）
+ *   08 プラン・料金への導線  LifeNext
+ *
+ * ▼ 以前の構成からの変更
+ *   ・「1週間滞在の6日間」と「1ヶ月の1週目」を 01 最初の1週間 に統合しました。
+ *     どちらも「GUILD Farm側が予定を用意する」という同じ趣旨だからです。
+ *   ・「農」セクションを解体し、畑での作業の話は 02（1日の続き）へ、
+ *     体験の場所3か所と位置関係の模式図は 03 場所について へ移しました。
+ *   ・「畑のほかの時間」の5章のうち、自由時間は 04 へ、地域は 03 へ統合し、
+ *     残りを 仕事 / 食 / 地域・人 の独立したセクションにしました。
  *
  * ⚠ このページに書かないもの
  *   料金の数字・受け入れ時期・部屋の広さ・設備の一覧 → /plans/
  *   持ち物・申し込みの手順 → /flow/
  *   具体的な時刻（出典にないため）／個人名（「地域の農家さん」等と書きます）
+ *   「ワーケーション」／三津浜の部屋・設備・立地の魅力（未整備。pending-facts.md 参照）
  */
 export default function LifePage() {
   return (
@@ -53,11 +67,12 @@ export default function LifePage() {
         lead={life.header.lead}
       />
 
+      <LifeFirstWeek />
       <LifeDay />
-      <LifeWeek />
+      <LifePlaces />
       <LifeMonth />
-      <LifeFarm />
-      <LifeChapters />
+      <LifeLiving />
+      <LifeNext />
 
       <ClosingCta
         title={life.closing.title}

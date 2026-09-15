@@ -1,23 +1,26 @@
 import { Container } from "@/components/ui/Container";
 import { Photo } from "@/components/ui/Photo";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { TextLink } from "@/components/ui/TextLink";
 import { images } from "@/config/images";
 import { life } from "@/content/life";
 import { cn } from "@/lib/cn";
 
 /**
- * /life/ 04 1ヶ月滞在の流れ（最初の1週間／2〜4週目／最後の2日）。
+ * /life/ 04 1ヶ月で滞在するなら（最初の1週間／2〜4週目／最後の2日）。
  *
  * 旧 Schedule.tsx の7列グリッドは廃止しました。
  * 「2週目からの1週間」は、曜日を縦に並べた軽い一覧にしています
  * （決まっているのは火曜だけ、という一点だけが伝わればよいブロックです）。
+ *
+ * ⚠ 2週目以降を「自由」の一語で終わらせないため、Week 2–4 のブロックの直後に
+ *   具体例（month.examples）を4つ置いています。旧「自由時間」の章はここへ統合しました。
  *
  * ■ 文章 … src/content/life.ts の month
  * ■ 写真 … src/config/images.ts の aboutField
  *          ※ 打上げのBBQの写真は素材にありません（追加撮影推奨）。
  *            ページ末尾の共通CTAの背景写真（cta）が近い雰囲気です。
  * ⚠ 日付（1日入居・30日BBQ・31日退去）は毎月固定かどうかが未確認のため書きません。
+ * ⚠ 料金へのリンクは、ページ末尾の導線（LifeNext）に一本化しています。
  */
 export function LifeMonth() {
   return (
@@ -46,31 +49,46 @@ export function LifeMonth() {
           className="reveal mt-12 md:mt-16"
         />
 
-        {/* 1週目 → 2〜4週目 → 最後の2日 */}
+        {/* 1週目 → 2〜4週目（＋具体例） → 最後の2日 */}
         <div className="mt-12 space-y-12 md:mt-24 md:space-y-20">
-          {life.month.blocks.map((block) => (
-            <div
-              key={block.title}
-              className="reveal grid gap-5 border-t border-sand pt-10 md:grid-cols-12 md:gap-14 md:pt-12"
-            >
-              <div className="md:col-span-5">
-                <p className="label-en text-[0.62rem] text-clay">
-                  {block.kicker}
-                </p>
-                <h3 className="heading-jp wrap-phrase mt-4 text-[1.3rem] leading-[1.6] text-ink md:text-[1.6rem]">
-                  {block.title}
-                </h3>
-              </div>
-              <div className="space-y-5 md:col-span-6 md:col-start-7">
-                {block.paragraphs.map((paragraph) => (
-                  <p
-                    key={paragraph}
-                    className="text-[0.9rem] leading-[2.05] text-ink-soft md:text-[0.95rem]"
-                  >
-                    {paragraph}
+          {life.month.blocks.map((block, i) => (
+            <div key={block.title}>
+              <div className="reveal grid gap-5 border-t border-sand pt-10 md:grid-cols-12 md:gap-14 md:pt-12">
+                <div className="md:col-span-5">
+                  <p className="label-en text-[0.62rem] text-clay">
+                    {block.kicker}
                   </p>
-                ))}
+                  <h3 className="heading-jp wrap-phrase mt-4 text-[1.3rem] leading-[1.6] text-ink md:text-[1.6rem]">
+                    {block.title}
+                  </h3>
+                </div>
+                <div className="space-y-5 md:col-span-6 md:col-start-7">
+                  {block.paragraphs.map((paragraph) => (
+                    <p
+                      key={paragraph}
+                      className="text-[0.9rem] leading-[2.05] text-ink-soft md:text-[0.95rem]"
+                    >
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
               </div>
+
+              {/* 2週目以降の組み方の例。「自由」の一語で終わらせないためのブロックです */}
+              {i === 1 ? (
+                <ul className="mt-8 grid gap-px overflow-hidden rounded-sm border border-sand bg-sand md:mt-10 md:grid-cols-2">
+                  {life.month.examples.map((example) => (
+                    <li key={example.title} className="reveal bg-paper p-6 md:p-7">
+                      <h4 className="heading-item wrap-phrase text-ink">
+                        {example.title}
+                      </h4>
+                      <p className="mt-3 text-[0.85rem] leading-[2] text-ink-soft">
+                        {example.text}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
             </div>
           ))}
         </div>
@@ -124,12 +142,6 @@ export function LifeMonth() {
               </li>
             ))}
           </ul>
-        </div>
-
-        <div className="reveal mt-12 md:mt-16">
-          <TextLink href={life.month.link.href} size="lg">
-            {life.month.link.label}
-          </TextLink>
         </div>
       </Container>
     </section>
