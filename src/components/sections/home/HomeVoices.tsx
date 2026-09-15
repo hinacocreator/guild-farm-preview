@@ -4,7 +4,7 @@ import { TextLink } from "@/components/ui/TextLink";
 import { home } from "@/content/home";
 
 /**
- * H-08 この場所で生まれた言葉。HOME専用。
+ * H-08 ここで過ごした人たちの声。HOME専用。
  *
  * 滞在した人の言葉を、原文のまま3つだけ。明朝で大きく組みます。
  * ⚠ 名前・年齢・職業・性別などの属性は付けません。3つ以外の声も作りません。
@@ -26,7 +26,7 @@ export function HomeVoices() {
         {/* このブロックだけ見出しを画面に出していません（3つの言葉そのものを主役にするため）。
             見出しが無いと読み上げソフトや目次で位置が分からなくなるので、
             設計書 H-08 のブロック名を、画面に出さない見出しとして置いています。 */}
-        <h2 className="sr-only">この場所で生まれた言葉</h2>
+        <h2 className="sr-only">ここで過ごした人たちの声</h2>
 
         <LeafIcon size={24} className="reveal mt-8 text-moss/70 md:mt-10" />
 

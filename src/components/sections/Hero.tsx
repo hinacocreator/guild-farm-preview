@@ -20,6 +20,22 @@ import { withBasePath } from "@/lib/paths";
  * ⚠ id="top" は、スマホ固定CTAバー（StickyCtaBar）が
  *   「HEROを過ぎたか」を判定するのに使っています。変えないでください。
  */
+/**
+ * HERO見出し専用の改行調整。
+ * 引用符で囲んだ語（例: “心地イイ”）と、その直後の助詞1文字を1かたまりにして、
+ * 「“心地イイ”／を見つめ直す」のような助詞先頭の改行を避けます。コピー自体は変えません。
+ */
+function heroTitle(text: string) {
+  const parts = text.split(/(“[^”]+”[をにはがのでとも]?)/).filter(Boolean);
+  // 各かたまり（例: 農的暮らしを通じて／“心地イイ”を／見つめ直す）の内側では折り返さず、
+  // かたまりの境目でだけ改行します。PCでは1行、スマホでは文節ごとの3行になります。
+  return parts.map((part, i) => (
+    <span key={i} className="inline-block whitespace-nowrap">
+      {part}
+    </span>
+  ));
+}
+
 export function Hero() {
   return (
     <section
@@ -56,7 +72,8 @@ export function Hero() {
         </p>
 
         <h1 className="heading-jp heading-hero mt-6 max-w-[16em] text-paper">
-          {phrase(home.hero.title)}
+          {/* 「“心地イイ”を」のように、閉じ引用符と直後の助詞のあいだで改行しないようにしています */}
+          {heroTitle(home.hero.title)}
         </h1>
 
         <p className="mt-6 text-[0.95rem] leading-[2] text-paper md:text-[1.1rem]">
