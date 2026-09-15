@@ -38,12 +38,12 @@ export const metadata: Metadata = {
  *
  * ■ 並び（設計書 content-design.md 第3章 A-01〜A-10 に対応）
  *   A-01 PageHeader       旅行ではなく、暮らしてみる。（＋どんな暮らしをつくりたいか）
- *   A-02 AboutDifference  見るのでも、体験するのでもなく。＋比較表＋「自分らしい、農との関わり方を見つける」
+ *   A-02 AboutDifference  見るのでも、体験するのでもなく。＋比較表＋「農との関わり方を、滞在のなかで見つける」
  *   ---  AboutFit        こんな過ごし方を楽しめる方に。（id="fit" / Phase 3-C 追加）
  *   A-03 AboutAgrarian    農的暮らしと呼んでいるもの。
  *   A-04 AboutWhy         なぜ、農のある暮らしなのか。…… /owner/（層2はここだけ）
  *   A-05 AboutFertilizer  無肥料という、選び方。
- *   A-06 AboutFood        採れたものを、その日に食べる。
+ *   A-06 AboutFood        採れたものを、食べられる日。
  *   A-07 AboutPeople      約束をしなくても、人と会う。
  *   A-08 AboutAbundance   豊かさと、心地よさ。
  *   A-09 AboutFuture      畳1畳の畑から、半径2kmへ。（id="future"）

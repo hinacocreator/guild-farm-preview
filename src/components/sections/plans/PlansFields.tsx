@@ -1,3 +1,4 @@
+import { AccessMap } from "@/components/ui/AccessMap";
 import { Container } from "@/components/ui/Container";
 import { Photo } from "@/components/ui/Photo";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -41,6 +42,10 @@ export function PlansFields() {
               sizes="(min-width: 768px) 36vw, 100vw"
               className="reveal mt-10"
             />
+
+            {/* 位置関係の模式図（松井さんFB①・F4）。
+                「畑が滞在先のすぐ近くにある」と読まれないように置いています。 */}
+            <AccessMap content={plans.fields.map} className="reveal mt-8" />
           </div>
 
           <ul className="md:col-span-6 md:col-start-7 md:pt-4">

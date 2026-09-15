@@ -1,3 +1,4 @@
+import { AccessMap } from "@/components/ui/AccessMap";
 import { Container } from "@/components/ui/Container";
 import { Photo } from "@/components/ui/Photo";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -88,6 +89,12 @@ export function LifeFarm() {
             <p className="reveal text-[0.9rem] leading-[2.05] text-ink-soft md:col-span-6 md:col-start-7">
               {life.farm.places.lead}
             </p>
+          </div>
+
+          {/* 位置関係の模式図（松井さんFB①・F4）。
+              「畑が家のすぐ隣にある」と読まれないよう、一覧の前に置いています。 */}
+          <div className="reveal mt-10 md:mt-14 md:max-w-[28rem]">
+            <AccessMap content={life.farm.map} />
           </div>
 
           <ol className="mt-10 md:mt-14">

@@ -5,7 +5,7 @@ import { images, type ImageAsset } from "@/config/images";
 import { life } from "@/content/life";
 
 /**
- * /life/ 02 ある1日（全文版）。
+ * /life/ 02 畑に行く日の1日（全文版）。
  *
  * 朝・昼・夕・夜の4場面を、写真を大きく取りながら左右交互に置いています。
  * HOMEの HomeDay（各場面1行の短縮版）と重複しないよう、
@@ -13,17 +13,20 @@ import { life } from "@/content/life";
  *
  * ⚠ 具体的な時刻は書きません（出典にあるのは曜日単位の午前／午後の予定だけです）。
  *   旧 src/content/copy.ts の aDay に残っている「06:30 — 09:00」等は使っていません。
+ * ⚠ 畑は滞在先のすぐ近くにはありません。1日2往復する描き方はしません。
  *
  * ■ 文章 … src/content/life.ts の day
- * ■ 写真 … src/config/images.ts の dayMorning / dayWork / dayEvening / dayDinner
- *          ※ 食卓（dayDinner）と仕事風景（dayWork）は流用写真です。追加撮影推奨。
+ * ■ 写真 … src/config/images.ts の dayMorning / aboutField / dayEvening / dayDinner
+ *          ※ 昼は「畑での作業が続く」場面なので、机の写真（dayWork）ではなく
+ *            畑の写真（aboutField）を使っています。dayWork は 06 chapters の Work で使用中です。
+ *          ※ 食卓（dayDinner）は流用写真です。追加撮影推奨。
  * ■ 並び方 … 下の layouts（写真の比率と、左右どちらに置くか）
  */
 
 /** life.ts の photo キー → 実際の写真 */
 const photos: Record<(typeof life.day.items)[number]["photo"], ImageAsset> = {
   dayMorning: images.dayMorning,
-  dayWork: images.dayWork,
+  aboutField: images.aboutField,
   dayEvening: images.dayEvening,
   dayDinner: images.dayDinner,
 };
@@ -57,8 +60,6 @@ const layouts: Layout[] = [
     photoClass: "md:order-2 md:col-span-7 md:col-start-6",
     textClass: "md:order-1 md:col-span-4 md:col-start-1 md:self-center",
     sizes: "(min-width: 768px) 58vw, 100vw",
-    /* day-work.jpg は縦長の写真です。中央で切ると主役の「机」が外れるため下寄せ */
-    objectPosition: "object-bottom",
   },
   {
     ratio: "4 / 5",

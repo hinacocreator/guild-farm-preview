@@ -8,14 +8,17 @@ import { home } from "@/content/home";
 import { cn } from "@/lib/cn";
 
 /**
- * H-04 暮らすように過ごす（ここでの、1日）。HOME専用。
+ * H-04 暮らすように過ごす（畑に行く日の、1日）。HOME専用。
  *
  * 朝・昼・夕・夜の4場面を、写真＋1行で見せます。
  * ⚠ 時間割（スケジュール表）にはしません。具体的な時刻は資料にないため書きません。
  *   1日・1週間・1ヶ月の流れの全文は /life/ の担当です。
+ * ⚠ 畑は滞在先のすぐ近くにはありません。「畑に行く日」の1日として描いています。
  *
  * ■ 文章 … src/content/home.ts の day
- * ■ 写真 … src/config/images.ts の dayMorning / dayWork / dayEvening / dayDinner
+ * ■ 写真 … src/config/images.ts の dayMorning / aboutField / dayEvening / dayDinner
+ *          ※ 昼は「畑での作業が続く」場面なので、机の写真（dayWork）ではなく
+ *            畑の写真（aboutField）を使っています。dayWork は H-03 の5項目で使用中です。
  *
  * ▼ 見せ方
  *   スマホ … 横スクロール＋スナップ（1画面に1場面ずつ止まる）。縦に伸ばさないためです。
@@ -25,7 +28,7 @@ import { cn } from "@/lib/cn";
 /** home.ts の photo キー → 実際の写真 */
 const photos: Record<(typeof home.day.items)[number]["photo"], ImageAsset> = {
   dayMorning: images.dayMorning,
-  dayWork: images.dayWork,
+  aboutField: images.aboutField,
   dayEvening: images.dayEvening,
   dayDinner: images.dayDinner,
 };

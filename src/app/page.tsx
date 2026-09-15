@@ -26,7 +26,7 @@ import { home } from "@/content/home";
  *   H-01 Hero        HERO ………………… /life/ ・/about/
  *   H-02 HomeIntro   旅行ではなく、暮らしてみる。…… /about/
  *   H-03 HomeValues  自分のペースで、農のある暮らしを。…… /life/
- *   H-04 HomeDay     ここでの、1日。……… /life/
+ *   H-04 HomeDay     畑に行く日の、1日。……… /life/
  *   H-05 HomeOwner   この場所を、はじめた人。…… /owner/
  *   H-06 HomeFuture  畳1畳の畑から。…… /about/#future
  *   H-07 HomeStays   1週間か、1ヶ月か。…… /plans/

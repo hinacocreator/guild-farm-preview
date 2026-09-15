@@ -55,7 +55,7 @@ export const metadata: Metadata = {
         url: siteConfig.ogImage,
         width: 1200,
         height: 630,
-        alt: `${siteConfig.name}｜畑のあるシェアハウス（愛媛・松山）`,
+        alt: `${siteConfig.name}｜農のある暮らしを試すシェアハウス（愛媛・松山）`,
       },
     ],
   },

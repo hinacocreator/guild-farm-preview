@@ -63,7 +63,7 @@ export const images = {
   },
   dayDinner: {
     src: "/images/day-dinner.jpg",
-    alt: "その日採れた野菜を並べた、屋外での食卓",
+    alt: "収穫した野菜を並べた、屋外での食卓",
   },
 
   /** 4. EXPERIENCE */

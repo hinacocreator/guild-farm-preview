@@ -5,7 +5,7 @@ import { images } from "@/config/images";
 import { about } from "@/content/about";
 
 /**
- * ABOUT 05「採れたものを、その日に食べる。」（設計書 A-06）
+ * ABOUT 05「採れたものを、食べられる日。」（設計書 A-06）
  *
  * このページで最も写真が主役になるセクションです。
  * ⚠ 作物は資料にある「米」「季節の野菜」までにしています
