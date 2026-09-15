@@ -5,23 +5,22 @@ import { images } from "@/config/images";
 import { about } from "@/content/about";
 
 /**
- * ABOUT 06「約束をしなくても、人と会う。」（設計書 A-07）
+ * ABOUT 05「地域の人と出会う。」（ブランド編集指示 7. 地域の人との出会い）
  *
- * 「人が財産の場所」だと伝えつつ、人付き合いが苦手な人を安心させるのが役割です。
- * 2段落目（毎晩みんなで食卓を囲む決まりはない／距離感）を必ず残してください。
- *
+ * ⚠ 資料にない人物・交流エピソードを追加しないでください。
  * ⚠ 体験先の農家さん・集落・シェアハウスのオーナーの個人名と屋号は書きません。
+ * ⚠ 滞在中に会う人の顔ぶれや、共用部での距離感は /life/ の担当です。
  *
  * ■ 文章 … src/content/about.ts の people
- * ■ 写真 … expPeople（畑に立つ地域の人と滞在者）／journal[3]（地域の子どもとおかき）
- *          ／dayEvening（夕方の畑で地域の人と）
+ * ■ 写真 … expPeople（畑に立つ地域の人と滞在者）／dayEvening（夕方の畑で地域の人と）
  *
- * ※ journal[3] には地域の子どもが写っています。掲載許諾の確認が必要です（※要確認）。
+ * ※ 以前ここに置いていた journal[3]（地域の子どもが写る写真。掲載許諾が未確認）は、
+ *   写真の枚数を絞るタイミングで外しています（docs/pending-facts.md B-5）。
  */
 export function AboutPeople() {
   return (
     <section
-      id="people"
+      id={about.people.id}
       className="scroll-mt-16 bg-paper py-20 md:scroll-mt-20 md:py-32"
     >
       <Container>
@@ -32,9 +31,6 @@ export function AboutPeople() {
               label={about.people.label}
               title={about.people.title}
             />
-            <p className="wrap-phrase reveal mt-6 text-[0.9rem] leading-[2] text-ink-faint md:text-[0.95rem]">
-              {about.people.sub}
-            </p>
 
             <div className="reveal mt-9 space-y-5 text-[0.95rem] leading-[2.1] text-ink-soft md:mt-12 md:text-[1rem]">
               {about.people.paragraphs.map((paragraph) => (
@@ -43,7 +39,7 @@ export function AboutPeople() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 items-start gap-4 md:col-span-5 md:col-start-8 md:grid-cols-2 md:gap-6">
+          <div className="grid grid-cols-2 items-start gap-4 md:col-span-5 md:col-start-8 md:gap-6">
             <Photo
               image={images.expPeople}
               ratio="4 / 5"
@@ -55,12 +51,6 @@ export function AboutPeople() {
               ratio="4 / 5"
               sizes="(min-width: 768px) 20vw, 48vw"
               className="reveal mt-8 md:mt-14"
-            />
-            <Photo
-              image={images.journal[3]}
-              ratio="3 / 2"
-              sizes="(min-width: 768px) 40vw, 100vw"
-              className="reveal col-span-2"
             />
           </div>
         </div>

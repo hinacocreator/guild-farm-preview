@@ -9,6 +9,11 @@ type SectionHeadingProps = {
   index: string;
   /** 日本語の見出し。明朝体で表示されます */
   title: string;
+  /**
+   * 見出しを指定の位置で改行したいときだけ渡します（1要素＝1行）。
+   * 渡すと title のかわりにこちらを表示します（title は読み上げ・検索用に残してください）。
+   */
+  lines?: readonly string[];
   className?: string;
   tone?: "light" | "dark";
   /** 見出しの横に小さな葉のマークを添える（使いすぎない） */
@@ -24,6 +29,7 @@ export function SectionHeading({
   label,
   index,
   title,
+  lines,
   className,
   tone = "light",
   leaf = false,
@@ -53,7 +59,13 @@ export function SectionHeading({
           tone === "light" ? "text-ink" : "text-paper",
         )}
       >
-        {phrase(title)}
+        {lines
+          ? lines.map((line) => (
+              <span key={line} className="block">
+                {phrase(line)}
+              </span>
+            ))
+          : phrase(title)}
         {leaf ? (
           <LeafIcon
             className={cn(

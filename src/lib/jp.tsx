@@ -27,3 +27,24 @@ export function phrase(text: string): ReactNode {
     </Fragment>
   ));
 }
+
+/**
+ * 読点「、」のうしろで**必ず改行する**2行組み。
+ *
+ * phrase() は「画面が広ければ1行のまま」ですが、こちらは画面幅にかかわらず
+ * 読点のあとで改行し、それぞれの行を whitespace-nowrap にして途中で折り返させません。
+ *
+ * HOMEのHERO「農的暮らしを通じて、／“心地イイ”を見つめ直す。」がこの組み方で、
+ * ABOUTの同じ見出し（AboutComfort）でも同じ見え方にするために共有しています。
+ * → 改行位置を変えたいときは、文章の読点を動かしてください。
+ */
+export function phraseLines(text: string): ReactNode {
+  const lines = text.split(/(?<=、)/).filter(Boolean);
+
+  return lines.map((line, i) => (
+    <Fragment key={`${line}-${i}`}>
+      <span className="inline-block whitespace-nowrap">{line}</span>
+      {i < lines.length - 1 ? <br /> : null}
+    </Fragment>
+  ));
+}

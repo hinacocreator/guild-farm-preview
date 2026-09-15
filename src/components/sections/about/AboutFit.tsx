@@ -5,24 +5,16 @@ import { images } from "@/config/images";
 import { about } from "@/content/about";
 
 /**
- * ABOUT 02「こんな過ごし方を楽しめる方に。」（Phase 3-C クライアント追加）
+ * ABOUT 02「最初の1週間は、一緒に。／その先は、自分で組み立てる。」
+ * （ブランド編集指示 4. 滞在の過ごし方）
  *
- * ■ このセクションの役割
- *   GUILD Farmは、毎日決められたプログラムを案内し続ける場所ではありません。
- *   最初の1週間はGUILD Farm側で農や地域を知るための予定を用意し、
- *   2週目からは、そこで見たことをもとに本人が予定を組み立てていきます。
- *   ⚠「最初から最後まで各自任せ」とは書かないでください（松井さんFB①）。
- *   その組み立てやすさを「体験価値」として先に伝えるため、
- *   AboutDifference の「農との関わり方を、滞在のなかで見つける。」の直後に置いています。
- *
- * ⚠ 語調のルール（クライアント指定）
- *   「主体性のある人を求めています」のような採用要件的・排他的な言い方はしません。
- *   note（合わないかもしれません）は、本文より小さく薄い文字で添えます。
- *   強調枠や警告色にはしないでください。
- *
- * ⚠ id="fit" は /flow/ のFAQ「どんな人が向いていますか」からの着地点です。変えないでください。
+ * ⚠「毎日決められたプログラムがある」とも「最初から最後まで各自任せ」とも
+ *   書かないでください（松井さんFB①・F1）。
+ * ⚠ id="fit" は /flow/ のFAQ「どんな人が向いていますか」からの着地点です。
+ *   変えるときは src/content/flow.ts の faq のリンクも直してください。
  *
  * ■ 文章 … src/content/about.ts の fit
+ *          見出しは titleLines で指定の位置（「一緒に。」のあと）で改行しています。
  * ■ 写真 … src/config/images.ts の expNature（手入れをしている竹林）
  *          ※「畑以外の時間もある」ことが伝わる、畑仕事ではない風景を選んでいます。
  */
@@ -50,6 +42,7 @@ export function AboutFit() {
               index={fit.index}
               label={fit.label}
               title={fit.title}
+              lines={fit.titleLines}
             />
 
             <div className="reveal mt-9 space-y-5 text-[0.95rem] leading-[2.1] text-ink-soft md:mt-12 md:text-[1rem]">
@@ -57,11 +50,6 @@ export function AboutFit() {
                 <p key={paragraph}>{paragraph}</p>
               ))}
             </div>
-
-            {/* 補足。小さめ・薄めにして、選別しているように読ませません */}
-            <p className="reveal mt-9 border-t border-sand pt-7 text-[0.85rem] leading-[2.05] text-ink-faint">
-              {fit.note}
-            </p>
           </div>
         </div>
       </Container>

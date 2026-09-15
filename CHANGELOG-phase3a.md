@@ -659,3 +659,100 @@ HOMEで書き直した文（上から順）:
 - Phase 3-B で0件にした禁止語（「畑のある家」「夕方また」「その日採れた」「続けたまま」「基本的に自由」
   「自分で決められ」「都市にいるとき」「もう一度、外」「自分が抜いた」）は**0件のまま**増えていません。
 - コミットはしていません。ブラウザでの目視確認も行っていません。
+
+---
+
+# ABOUTブランド編集（2026-09-15・クライアント確定）
+
+指示書: `about-brand-edit.md`。ABOUTを「GUILD Farmが何をする場所かを理解するページ」に整理し、
+人物ページの呼び方をサイト全体で「オーナー松井」に統一しました。
+デザインシステム・ブランドカラー・共通部品は変更していません。写真も既存素材のみです。
+**見出しと本文は、クライアントが書いた文をそのまま置いています**（独自のブランドコピーは作っていません）。
+
+## 1. ABOUT の再構成（6セクション）
+
+| # | id | 見出し | 中身 |
+|---|---|---|---|
+| — | — | GUILD Farmとは | 指定の導入4行（PageHeader。sub は置かず、4行をリードにしました） |
+| 01 | `agrarian` | 「農的暮らし」って、どんな暮らし？ | 指定本文＋既存の比較表（深緑の面。旧 AboutDifference を置き換え） |
+| 02 | `fit` | 最初の1週間は、一緒に。／その先は、自分で組み立てる。 | 滞在の過ごし方。**id は変更していません**（/flow/ FAQ の着地点） |
+| 03 | `comfort` | 農的暮らしを通じて、“心地イイ”を見つめ直す。 | HOME HERO と同じコピー・同じ2行組み |
+| 04 | `food` | 農と食が、少し近くなる。 | 収穫は確約しない書き方のまま（F5） |
+| 05 | `people` | 地域の人と出会う。 | 資料にある範囲だけ |
+| 06 | `future` | この先につくりたいもの。 | **id="future" 維持**。末尾に「オーナー松井」への導線 |
+| — | — | 少しだけ、違う暮らしをしてみる。 | 既存 ClosingCta（次に読む: /life/） |
+
+- 見出しの2行組みは `src/lib/jp.tsx` に `phraseLines()` を追加して共通化しました
+  （HERO の `heroTitle()` を置き換え。**HOMEの見え方は変わりません**）。
+  03「“心地イイ”」の見出しは行を折り返さない組み方なので、HEROと同じく
+  `clamp(1.6rem, 3.2vw, 2.75rem)` まで下げています（スマホ375pxで横スクロールを出さないため）。
+- 指定の位置で改行する見出しのために、`ui/SectionHeading` に任意の `lines` prop を足しました。
+- 比較表は残し、「滞在」の行だけ **数週間〜数ヶ月 → 1週間、または1ヶ月** に直しました
+  （実際のプランと合っていなかったため）。他の行は据え置きです。
+- 写真は各セクション1〜2枚に絞りました（aboutSoil / expNature / journal[1] / expFood /
+  expHarvest / expPeople / dayEvening / whyVisual）。
+  掲載許諾が未確認の journal[3]（地域の子ども・`docs/pending-facts.md` B-5）は、この整理で**使わなくなりました**。
+
+## 2. 「オーナー松井」へ移した一次情報（ABOUTから削除していません）
+
+| ABOUTにあった内容 | 移設先（`src/content/owner.ts`） |
+|---|---|
+| 無肥料の理由（環境）「今の時代に沿ったカタチで地球に愛される人間の在り方を追求したかった」 | 04 `fertilizer` の章（原文引用として追加） |
+| 「豆科＋ひまわり＋水＋ミネラル＋炭が今の答え」 | 04 `fertilizer` の章（原文引用として追加） |
+| 生産性の低さ・木々を枯らさずに育てること＝いまも試行錯誤の途中 | 05 `spiral` の章（一文を追加） |
+| 高齢化・後継者・相場・薄利多売・付加価値（旧 ABOUT 03「なぜ、農のある暮らしなのか」） | 08 `rethink` の章（1段落として追加） |
+| 「食生産を担う人が減る一方でじゃーどうすれば？…」 | 08 `rethink` の章（原文引用として追加） |
+| 味／伊予柑／生産性と価格の悩み／2011年東北／移住 | **すでに owner にあったため、追加していません**（二重掲載の回避） |
+| 不安や恐怖→豊かさ・心地よさ／「1ヶ月という貴重なじかん…」 | **すでに owner 09 `now` にあったため、ABOUT側を削除** |
+
+`out/` の全文検索で、旧ABOUTの一次情報34項目がすべてサイト内のどこかに残っていることを確認しました
+（消えた一次情報はありません）。
+
+## 3. 削除した重複・AI的な表現
+
+- 「見るのでも、体験するのでもなく。」「旅行ではなく、暮らしてみる。」…「AではなくB」型の見出し
+- 「増やしたいのは、農に関わる人です。」…余韻だけの短文
+- 「だから、危機感から来てもらう場所にはしていません。」…対比だけの段落
+- 「たとえば（農／仕事／暮らし／学び／観光）」の5項目 … /life/ と同じ内容だったため（LIFEに残っています）
+- 「少し足を伸ばせば、竹林も、田んぼも、海も」「毎晩みんなで食卓を囲む決まりはありません」 … /life/ ・/flow/ と重複
+- 旧セクション部品を削除: `AboutDifference.tsx` / `AboutWhy.tsx` / `AboutFertilizer.tsx` / `AboutAbundance.tsx`
+
+## 4. 「オーナー松井」表記の統一（URL /owner/ は変更なし）
+
+| 場所 | 変更前 → 変更後 |
+|---|---|
+| `src/config/site.ts` navItems（ヘッダー・モバイルメニュー・フッター共通） | 松井について → **オーナー松井** |
+| `src/content/pages.ts` owner.metaTitle（OGPも同じ値） | 松井について｜この場所を、はじめた人 → **オーナー松井｜この場所を、はじめた人** |
+| `src/content/pages.ts` owner.description | 冒頭に「GUILD Farmのオーナー松井のこと。」を追加 |
+| `src/content/pages.ts` owner.title | この場所を、はじめた人。 → **オーナー松井** |
+| `src/content/owner.ts` header.title（h1） | この場所を、はじめた人。 → **オーナー松井**（肩書＋氏名の sub はそのまま） |
+| `src/content/home.ts` owner.link（H-05） | この場所をつくった人 → **オーナー松井**（見出しは確定コピーのため変更なし） |
+| `src/content/home.ts` voices.link（H-08） | 松井について → **オーナー松井** |
+| `src/content/about.ts` future.link | （旧 why.link「松井について」）→ **オーナー松井** |
+
+- HOME H-05 の見出し「この場所を、はじめた人。」は確定コピーなので変更していません（リンクのラベルのみ）。
+- 本文中で人として言及する箇所（「松井さん」「松井が」）はそのままです。
+- `src/content/pages.ts` about も新しい役割に合わせて更新しました
+  （metaTitle「GUILD Farmとは｜農的暮らしを、実際の暮らしの中で試してみる場所」／description は導入文の要約／outline 6件）。
+
+## 変更したファイル
+
+- `src/content/about.ts`（全面書き換え） / `src/content/owner.ts` / `src/content/pages.ts` / `src/content/home.ts` / `src/config/site.ts`
+- `src/app/about/page.tsx` / `src/app/owner/page.tsx`（コメント）
+- `src/components/sections/about/` … `AboutAgrarian.tsx`（書き換え）／`AboutFit.tsx`／`AboutComfort.tsx`（新規）／
+  `AboutFood.tsx`／`AboutPeople.tsx`／`AboutFuture.tsx`／`AboutCompare.tsx`（参照先のみ）、
+  `AboutDifference.tsx`・`AboutWhy.tsx`・`AboutFertilizer.tsx`・`AboutAbundance.tsx` は削除
+- `src/components/sections/Hero.tsx`（共通化のみ・表示は変化なし） / `src/components/sections/home/HomeOwner.tsx`（コメント）
+- `src/components/ui/SectionHeading.tsx`（任意の `lines` prop を追加） / `src/lib/jp.tsx`（`phraseLines()` を追加）
+- `CHANGELOG-phase3a.md`
+- `docs/pending-facts.md` は変更していません（未確定情報を公開文に戻していないため）。
+
+## 確認したこと
+
+- `npm run lint` … エラーなし。`npm run build` … 成功（9ページ）。
+- `out/about/index.html` … 指定の見出し7つがすべて出力されている。料金の数字0件、
+  「振興協議会」0件、「準備中」「要確認」「確認中」0件。
+- `out/` 全体 … 「松井について」「この場所をつくった人」ともに0件。
+- 内部リンク … 全ページの `href` を抽出し、`/about/` `/owner/` `/life/` `/plans/` `/flow/` `/` と
+  `#future` `#fit` `#tohoku` などのアンカー先がすべて存在することを確認（リンク切れなし）。
+- コミットはしていません。ブラウザでの目視確認も行っていません（PC1280／スマホ375の確認はQAで）。

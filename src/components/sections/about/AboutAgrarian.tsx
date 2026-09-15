@@ -1,3 +1,4 @@
+import { AboutCompare } from "@/components/sections/about/AboutCompare";
 import { Container } from "@/components/ui/Container";
 import { Photo } from "@/components/ui/Photo";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -5,55 +6,56 @@ import { images } from "@/config/images";
 import { about } from "@/content/about";
 
 /**
- * ABOUT 02「農的暮らしと呼んでいるもの。」（設計書 A-03）
+ * ABOUT 01「「農的暮らし」って、どんな暮らし？」（ブランド編集指示 3.）
  *
- * 「農的暮らし」という言葉の中身を、生活の場面で説明します。
- * 2段落目が「具体的には」で始まるのが大事なところです（言葉の定義で終わらせない）。
+ * ページのなかで唯一、深緑の面になるセクションです。
+ * 指定の本文（毎日農作業をすることだけが、農的暮らしではありません…）のあとに、
+ * 旅行・一般的な農業体験との違いが一目で分かる比較表を置いています。
+ *
+ * ★ 表だけでは「結局どんな暮らしなのか」が伝わらないため、
+ *   本文を表より先に置いています。順番を入れ替えないでください。
  *
  * ■ 文章 … src/content/about.ts の agrarian
- * ■ 写真 … expFarmwork（採れたばかりの葉物）／expSeason（手のひらの玄米）
+ * ■ 写真 … src/config/images.ts の aboutSoil（土のついた作業靴）
+ *
+ * ※ 旧 AboutDifference（見るのでも、体験するのでもなく。）を置き換えたセクションです。
+ *   比較表（AboutCompare）はそのまま引き継いでいます。
  */
 export function AboutAgrarian() {
   return (
     <section
-      id="agrarian"
-      className="scroll-mt-16 bg-paper py-20 md:scroll-mt-20 md:py-32"
+      id={about.agrarian.id}
+      className="scroll-mt-16 bg-forest py-20 text-paper md:scroll-mt-20 md:py-32"
     >
       <Container>
         <div className="grid gap-10 md:grid-cols-12 md:gap-14">
-          <div className="md:col-span-6">
+          <div className="md:col-span-7">
             <SectionHeading
               index={about.agrarian.index}
               label={about.agrarian.label}
               title={about.agrarian.title}
+              tone="dark"
             />
-            <p className="wrap-phrase reveal mt-6 text-[0.9rem] leading-[2] text-ink-faint md:text-[0.95rem]">
-              {about.agrarian.sub}
-            </p>
 
-            <div className="reveal mt-9 space-y-5 text-[0.95rem] leading-[2.1] text-ink-soft md:mt-12 md:text-[1rem]">
+            <div className="reveal mt-9 space-y-5 text-[0.95rem] leading-[2.1] text-paper/85 md:mt-12 md:text-[1rem]">
               {about.agrarian.paragraphs.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
             </div>
           </div>
 
-          {/* 写真2枚。段差をつけて、カタログのように並べません */}
-          <div className="grid grid-cols-2 gap-4 md:col-span-5 md:col-start-8 md:grid-cols-1 md:gap-8">
+          <div className="md:col-span-4 md:col-start-9 md:mt-10">
             <Photo
-              image={images.expFarmwork}
+              image={images.aboutSoil}
               ratio="4 / 5"
-              sizes="(min-width: 768px) 38vw, 48vw"
+              sizes="(min-width: 768px) 30vw, 100vw"
               className="reveal"
-            />
-            <Photo
-              image={images.expSeason}
-              ratio="1 / 1"
-              sizes="(min-width: 768px) 28vw, 48vw"
-              className="reveal self-end md:ml-16"
             />
           </div>
         </div>
+
+        {/* 旅行・一般的な農業体験との違いを、一目で見られる比較表にしています */}
+        <AboutCompare />
       </Container>
     </section>
   );

@@ -1,9 +1,8 @@
-import { Fragment } from "react";
 import { CtaButton } from "@/components/ui/CtaButton";
 import { TextLink } from "@/components/ui/TextLink";
 import { images } from "@/config/images";
 import { home } from "@/content/home";
-import { phrase } from "@/lib/jp";
+import { phrase, phraseLines } from "@/lib/jp";
 import { withBasePath } from "@/lib/paths";
 
 /**
@@ -21,21 +20,6 @@ import { withBasePath } from "@/lib/paths";
  * ⚠ id="top" は、スマホ固定CTAバー（StickyCtaBar）が
  *   「HEROを過ぎたか」を判定するのに使っています。変えないでください。
  */
-/**
- * HERO見出し専用の改行。
- * 読点「、」のあとで必ず改行し（クライアント指定の2行組み）、
- * 「“心地イイ”を見つめ直す。」の行は途中で折り返さないようにしています。コピー自体は変えません。
- */
-function heroTitle(text: string) {
-  const lines = text.split(/(?<=、)/).filter(Boolean);
-  return lines.map((line, i) => (
-    <Fragment key={i}>
-      <span className="inline-block whitespace-nowrap">{line}</span>
-      {i < lines.length - 1 ? <br /> : null}
-    </Fragment>
-  ));
-}
-
 export function Hero() {
   return (
     <section
@@ -76,8 +60,9 @@ export function Hero() {
           /* 2行目「“心地イイ”を見つめ直す。」がスマホ幅（375px）で1行に収まる最小サイズ。PCは従来どおり */
           style={{ fontSize: "clamp(1.6rem, 5vw, 4.5rem)" }}
         >
-          {/* 読点のあとで改行した2行組み（heroTitle 参照） */}
-          {heroTitle(home.hero.title)}
+          {/* 読点のあとで改行した2行組み（src/lib/jp.tsx の phraseLines）。
+              ABOUTの「農的暮らしを通じて、“心地イイ”を見つめ直す。」も同じ組み方です */}
+          {phraseLines(home.hero.title)}
         </h1>
 
         <p className="mt-6 text-[0.95rem] leading-[2] text-paper md:text-[1.1rem]">

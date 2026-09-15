@@ -1,18 +1,21 @@
 import { Container } from "@/components/ui/Container";
 import { LeafIcon } from "@/components/ui/LeafIcon";
 import { Photo } from "@/components/ui/Photo";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { TextLink } from "@/components/ui/TextLink";
 import { images } from "@/config/images";
 import { about } from "@/content/about";
-import { phrase } from "@/lib/jp";
 
 /**
- * ABOUT 08「畳1畳の畑から、半径2kmへ。」（設計書 A-09）
+ * ABOUT 06「この先につくりたいもの。」（ブランド編集指示 8. FUTURE）
  *
  * ⚠ id="future" は、HOMEの「目指している未来」から /about/#future で
  *   飛んでくる着地点です。変えないでください。
  * ⚠ コミュニティの具体的な仕組み・参加条件・開始時期は資料にないため書きません。
- *   「半径2kmは歩いて行き来できる距離」も、一般的な距離感の説明にとどめています。
  * ⚠ 引用は matsui-story.txt の原文です。文言を変えないでください。
+ *
+ * ページの最後に、構想の背景（松井さんの経歴・問題意識）を読める
+ * 「オーナー松井」への導線を置いています。
  *
  * ■ 文章 … src/content/about.ts の future
  * ■ 写真 … src/config/images.ts の whyVisual（草の茂る土地を歩いて見てまわる人たち）
@@ -20,41 +23,19 @@ import { phrase } from "@/lib/jp";
 export function AboutFuture() {
   return (
     <section
-      id="future"
-      className="scroll-mt-16 bg-paper py-20 md:scroll-mt-20 md:py-32"
+      id={about.future.id}
+      className="scroll-mt-16 bg-cream py-20 md:scroll-mt-20 md:py-32"
     >
       <Container>
-        <div className="grid gap-10 md:grid-cols-12 md:gap-x-14 md:gap-y-16">
-          <div className="md:col-span-6 md:row-start-1">
-            <p className="label-en reveal flex items-center gap-3 text-[0.7rem] text-ink-faint">
-              <span className="numeral">{about.future.index}</span>
-              <span aria-hidden="true" className="h-px w-8 bg-ink-faint/50" />
-              <span>{about.future.label}</span>
-            </p>
-
-            <h2 className="heading-jp heading-section reveal mt-6 text-ink">
-              {about.future.lines.map((line) => (
-                <span key={line} className="block">
-                  {phrase(line)}
-                </span>
-              ))}
-            </h2>
-
-            <p className="wrap-phrase reveal mt-7 text-[0.9rem] leading-[2] text-ink-faint md:text-[0.95rem]">
-              {about.future.sub}
-            </p>
-          </div>
-
-          <figure className="reveal md:col-span-5 md:col-start-8 md:row-span-2 md:row-start-1 md:mt-6">
-            <Photo
-              image={images.whyVisual}
-              ratio="3 / 2"
-              sizes="(min-width: 768px) 38vw, 100vw"
+        <div className="grid gap-10 md:grid-cols-12 md:gap-14">
+          <div className="md:col-span-6">
+            <SectionHeading
+              index={about.future.index}
+              label={about.future.label}
+              title={about.future.title}
             />
-          </figure>
 
-          <div className="md:col-span-6 md:row-start-2">
-            <div className="reveal space-y-5 text-[0.95rem] leading-[2.1] text-ink-soft md:text-[1rem]">
+            <div className="reveal mt-9 space-y-5 text-[0.95rem] leading-[2.1] text-ink-soft md:mt-12 md:text-[1rem]">
               {about.future.paragraphs.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
@@ -67,7 +48,22 @@ export function AboutFuture() {
                 {about.future.quote}
               </p>
             </blockquote>
+
+            {/* 続きは「オーナー松井」へ */}
+            <div className="reveal mt-10 md:mt-12">
+              <TextLink href={about.future.link.href} size="lg">
+                {about.future.link.label}
+              </TextLink>
+            </div>
           </div>
+
+          <figure className="reveal md:col-span-5 md:col-start-8 md:mt-20">
+            <Photo
+              image={images.whyVisual}
+              ratio="3 / 2"
+              sizes="(min-width: 768px) 38vw, 100vw"
+            />
+          </figure>
         </div>
       </Container>
     </section>

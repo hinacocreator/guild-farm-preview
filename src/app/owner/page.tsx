@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 };
 
 /**
- * /owner/ 松井について。
+ * /owner/ オーナー松井。
  *
  * ■ ページの役割
  *   プロフィールページではなく、一人の人間の経験からGUILD Farmが生まれるまでの読み物です。
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
  *   脚色はしません。資料にない事実は作りません。
  *
  * ■ 並び（設計書 content-design.md 第4章 O-01〜O-12 に対応）
- *   O-01     PageHeader       この場所を、はじめた人。／松井 真弥（GUILD Farm オーナー）
+ *   O-01     PageHeader       オーナー松井／松井 真弥（GUILD Farm オーナー）
  *   —        OwnerTimeline    年表ナビ（2011 → 今）＋写真
  *   O-02〜09 OwnerChapters    時系列の本文9章（各章に id。年表からここへ飛びます）
  *   O-10     OwnerInvitation  どんな人に来てほしいか。
@@ -44,13 +44,17 @@ export const metadata: Metadata = {
  *     人物が主役の写真は使っていません（OwnerTimeline のコメントも参照）。
  *
  * ⚠ 肩書は「GUILD Farm オーナー」だけです。氏名の表記・ふりがなは※要確認です。
+ * ⚠ ページの呼び方は、サイト全体で「オーナー松井」に統一しています
+ *   （ナビ・フッター・HOME・ABOUTからのリンク・metadata）。本文で人として
+ *   言及するときは「松井さん」のままでかまいません。URL（/owner/）は変えません。
  * ⚠ 引用は matsui-story.txt の原文です。方言（「ええけど」「〜せな」「やば」「最高やん！」）を
  *   標準語に直さないでください。
  *
  * ■ このページに置かないもの（他ページの担当）
- *   後継者・相場などの社会課題の説明の全文（→ /about/）
- *   ／「畳1畳の畑」「半径2kmの農的社会コミュニティ」（→ /about/#future）
+ *   「畳1畳の畑」「半径2kmの農的社会コミュニティ」（→ /about/#future）
  *   ／料金・設備（→ /plans/）
+ *   ※ 2026-09-15 のブランド編集で、後継者・相場などの問題意識と、
+ *     無肥料を選んだ理由の引用は ABOUT からこのページへ移しました。
  *   ※ Phase 2 の旧セクション Story は、このページの本文に置き換えました
  *     （元のコピーは src/content/copy.ts の story に残しています）。
  *

@@ -4,9 +4,9 @@ import { cn } from "@/lib/cn";
 /**
  * 旅行 / 一般的な農業体験 / GUILD Farm の比較表。
  *
- * AboutDifference（深緑の面）の中で使います。
+ * AboutAgrarian（深緑の面）の中で使います。
  *
- * ■ 文章 … src/content/about.ts の difference.compare
+ * ■ 文章 … src/content/about.ts の agrarian.compare
  *   （軸と「旅行」「一般的な農業体験」の列はクライアント指定です。言い換えないでください）
  *   セルはすべて短い文です。記号（◎○△）前提の装飾はしていないので、
  *   文が伸びても PC は table-fixed で折り返し、スマホはブロックに積み替わります。
@@ -21,7 +21,7 @@ import { cn } from "@/lib/cn";
  *   ・横スクロールはページ全体に出さず、この表のコンテナの中だけに閉じます。
  */
 export function AboutCompare() {
-  const { caption, columns, rows } = about.difference.compare;
+  const { caption, columns, rows } = about.agrarian.compare;
   /** 強調する列＝いちばん右（GUILD Farm） */
   const lastIndex = columns.length - 1;
 

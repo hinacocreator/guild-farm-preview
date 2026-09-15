@@ -131,7 +131,7 @@ export const monthlyPriceText = `${siteConfig.price.monthly.toLocaleString("ja-J
  */
 export const navItems = [
   { label: "GUILD Farmとは", en: "About", href: "/about/" },
-  { label: "松井について", en: "Owner", href: "/owner/" },
+  { label: "オーナー松井", en: "Owner", href: "/owner/" },
   { label: "暮らし・過ごし方", en: "Life", href: "/life/" },
   { label: "プラン・料金", en: "Plans", href: "/plans/" },
   { label: "入居までの流れ", en: "Flow", href: "/flow/" },

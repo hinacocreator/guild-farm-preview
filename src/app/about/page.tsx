@@ -1,14 +1,11 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/PageHeader";
-import { AboutAbundance } from "@/components/sections/about/AboutAbundance";
 import { AboutAgrarian } from "@/components/sections/about/AboutAgrarian";
-import { AboutDifference } from "@/components/sections/about/AboutDifference";
-import { AboutFertilizer } from "@/components/sections/about/AboutFertilizer";
+import { AboutComfort } from "@/components/sections/about/AboutComfort";
 import { AboutFit } from "@/components/sections/about/AboutFit";
 import { AboutFood } from "@/components/sections/about/AboutFood";
 import { AboutFuture } from "@/components/sections/about/AboutFuture";
 import { AboutPeople } from "@/components/sections/about/AboutPeople";
-import { AboutWhy } from "@/components/sections/about/AboutWhy";
 import { ClosingCta } from "@/components/sections/ClosingCta";
 import { about } from "@/content/about";
 import { pages } from "@/content/pages";
@@ -31,31 +28,28 @@ export const metadata: Metadata = {
 /**
  * /about/ GUILD Farmとは。
  *
- * ■ ページの役割
- *   施設の説明ではなく「GUILD Farmという考え方」を伝えるページです。
- *   農業問題から始めず、「どんな暮らしをつくりたいか」から始めます。
- *   社会課題（層2）に触れるのは AboutWhy の1セクションだけです。
+ * ■ ページの役割（2026-09-15 ブランド編集指示）
+ *   読み終えた人が「GUILD Farmは何をする場所か」「農的暮らしとはどんな暮らしか」
+ *   「なぜ“心地イイ”を大切にしているか」を具体的に理解できることを優先します。
+ *   松井さん個人の人生・農業への問題意識・無肥料栽培を選んだ経緯は
+ *   このページでは説明せず、すべて /owner/「オーナー松井」に置いています。
  *
- * ■ 並び（設計書 content-design.md 第3章 A-01〜A-10 に対応）
- *   A-01 PageHeader       旅行ではなく、暮らしてみる。（＋どんな暮らしをつくりたいか）
- *   A-02 AboutDifference  見るのでも、体験するのでもなく。＋比較表＋「農との関わり方を、滞在のなかで見つける」
- *   ---  AboutFit        こんな過ごし方を楽しめる方に。（id="fit" / Phase 3-C 追加）
- *   A-03 AboutAgrarian    農的暮らしと呼んでいるもの。
- *   A-04 AboutWhy         なぜ、農のある暮らしなのか。…… /owner/（層2はここだけ）
- *   A-05 AboutFertilizer  無肥料という、選び方。
- *   A-06 AboutFood        採れたものを、食べられる日。
- *   A-07 AboutPeople      約束をしなくても、人と会う。
- *   A-08 AboutAbundance   豊かさと、心地よさ。
- *   A-09 AboutFuture      畳1畳の畑から、半径2kmへ。（id="future"）
- *   A-10 ClosingCta       共通CTA …… 問い合わせ（＋次に読む: /life/）
- *   ※ 通し番号（01〜09）は AboutFit の追加に合わせて振り直しています。
+ * ■ 並び（ブランド編集指示 2.〜8.）
+ *   2. PageHeader     GUILD Farmとは（＋導入4行）
+ *   3. AboutAgrarian  「農的暮らし」って、どんな暮らし？（＋比較表・id="agrarian"）
+ *   4. AboutFit        最初の1週間は、一緒に。／その先は、自分で組み立てる。（id="fit"）
+ *   5. AboutComfort    農的暮らしを通じて、“心地イイ”を見つめ直す。（HEROと同じ2行組み）
+ *   6. AboutFood       農と食が、少し近くなる。
+ *   7. AboutPeople     地域の人と出会う。
+ *   8. AboutFuture     この先につくりたいもの。（id="future" ＋「オーナー松井」への導線）
+ *   -  ClosingCta      共通CTA …… 問い合わせ（＋次に読む: /life/）
  *
  * ■ このページに置かないもの（他ページの担当）
  *   料金の数字・含まれるもの・部屋・設備・住所（→ /plans/）
  *   ／1日・1週間・1ヶ月の具体的な段取り（→ /life/）／持ち物・FAQ（→ /flow/）
- *   ／松井の経歴の詳細（→ /owner/）
- *   ※ Phase 2 の旧セクション WhyGuildFarm は AboutDifference に置き換えました。
- *     元のコピーは src/content/copy.ts の why に残しています（消していません）。
+ *   ／松井の経歴・無肥料を選んだ理由・農業の課題（→ /owner/）
+ *   ※ 旧セクション AboutDifference / AboutWhy / AboutFertilizer / AboutAbundance は、
+ *     ブランド編集で統合・移設したため削除しました（一次情報は /owner/ にあります）。
  *
  * ■ 文章 … src/content/about.ts（このページの文字はすべてここ）
  */
@@ -65,18 +59,14 @@ export default function AboutPage() {
       <PageHeader
         label={about.header.label}
         title={about.header.title}
-        sub={about.header.sub}
         lead={about.header.lead}
       />
-      <AboutDifference />
+      <AboutAgrarian />
       {/* id="fit" … /flow/ のFAQ「どんな人が向いていますか」からの着地点です */}
       <AboutFit />
-      <AboutAgrarian />
-      <AboutWhy />
-      <AboutFertilizer />
+      <AboutComfort />
       <AboutFood />
       <AboutPeople />
-      <AboutAbundance />
       {/* id="future" … HOMEの「目指している未来」からの着地点です */}
       <AboutFuture />
       <ClosingCta
