@@ -29,7 +29,7 @@ export const metadata: Metadata = {
  *
  * ■ 並び（設計書 content-design.md 第7章 F-01〜F-06 に対応）
  *   F-01     PageHeader     まず、話を聞くところから。
- *   F-02  01 FlowSteps      滞在がはじまるまでの、5つのこと。（＋確認中のことの脚注）
+ *   F-02  01 FlowSteps      滞在がはじまるまでの、5つのこと。（＋お問い合わせ時にご案内することの脚注）
  *   F-03  02 FlowPacking    持ってくるもの。
  *   F-04  03 FlowAccess     場所のこと。（滞在先2か所・体験の場所3か所）
  *   　    04 FlowConcerns   知っておいてほしいこと。（雨・土日・受け入れ時期）
