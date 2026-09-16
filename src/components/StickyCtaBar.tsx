@@ -1,8 +1,8 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { contactHref } from "@/config/site";
-import { copy } from "@/content/copy";
+import { applyHref, contactHref } from "@/config/site";
+import { common } from "@/content/common";
 import { cn } from "@/lib/cn";
 
 /** スクロールと画面サイズの変化を購読します（useSyncExternalStore 用） */
@@ -47,7 +47,10 @@ function getVisibleOnServer(): boolean {
  *
  * ・PC（md以上）では表示しません。ヘッダーのCTAがあるためです。
  * ・料金の数字は出しません（金額はPLANSページにだけ書く方針です）。
- * ・文言は src/content/copy.ts の stickyBar.cta を見ています。
+ * ・文言は src/content/common.ts の stickyBar を見ています。
+ * ・主「滞在を申し込む」（Googleフォーム・外部サイト）と
+ *   副「相談する」（メール）の2導線を1本のバーに置いています（2026-09-16）。
+ *   375px に収まるよう、副は塗らないテキストリンクにしています。
  */
 export function StickyCtaBar() {
   const visible = useSyncExternalStore(
@@ -65,14 +68,29 @@ export function StickyCtaBar() {
         visible ? "translate-y-0" : "translate-y-full",
       )}
     >
-      <a
-        href={contactHref}
-        tabIndex={visible ? undefined : -1}
-        className="flex items-center justify-center gap-2 bg-clay px-5 py-3.5 pb-[max(0.875rem,env(safe-area-inset-bottom))] text-[0.9rem] tracking-[0.05em] text-paper"
-      >
-        {copy.stickyBar.cta}
-        <span aria-hidden="true">→</span>
-      </a>
+      <div className="flex items-stretch bg-clay pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2">
+        <a
+          href={applyHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          tabIndex={visible ? undefined : -1}
+          className="flex flex-1 items-center justify-center gap-1.5 py-2 pl-4 pr-3 text-[0.9rem] tracking-[0.04em] text-paper"
+        >
+          {common.stickyBar.apply}
+          <span aria-hidden="true">↗</span>
+        </a>
+
+        <span aria-hidden="true" className="my-2 w-px bg-paper/30" />
+
+        <a
+          href={contactHref}
+          tabIndex={visible ? undefined : -1}
+          className="flex shrink-0 items-center justify-center gap-1.5 py-2 pl-3 pr-4 text-[0.8rem] tracking-[0.04em] text-paper/85"
+        >
+          {common.stickyBar.consult}
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
     </div>
   );
 }

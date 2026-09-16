@@ -16,7 +16,7 @@ import { withBasePath } from "@/lib/paths";
  * ■ 写真 … src/config/images.ts の hero / heroMobile
  *
  * ⚠ 金額は出しません。以前ここにあった「85,300円に含まれるもの →」のリンクは
- *   削除しました（金額は /plans/ だけに出す方針。文言は copy.ts に残しています）。
+ *   削除しました（金額は /plans/ だけに出す方針です）。
  * ⚠ id="top" は、スマホ固定CTAバー（StickyCtaBar）が
  *   「HEROを過ぎたか」を判定するのに使っています。変えないでください。
  */
@@ -57,11 +57,13 @@ export function Hero() {
 
         <h1
           className="heading-jp heading-hero mt-6 max-w-[16em] text-paper"
-          /* 2行目「“心地イイ”を見つめ直す。」がスマホ幅（375px）で1行に収まる最小サイズ。PCは従来どおり */
-          style={{ fontSize: "clamp(1.6rem, 5vw, 4.5rem)" }}
+          /* 1行目「あなたの“心地イイ”を、」は全角12文字。375px（本文幅335px）で
+             1行に収まるよう下限を 1.5rem にしています。単語が分断されると
+             確定コピーの読みが崩れるので、下限を上げないでください。PCは従来どおり */
+          style={{ fontSize: "clamp(1.5rem, 5vw, 4.5rem)" }}
         >
-          {/* 読点のあとで改行した2行組み（src/lib/jp.tsx の phraseLines）。
-              ABOUTの「農的暮らしを通じて、“心地イイ”を見つめ直す。」も同じ組み方です */}
+          {/* 読点のあとで必ず改行する2行組み（src/lib/jp.tsx の phraseLines）。
+              「あなたの“心地イイ”を、」／「農ある暮らしで探す。」 */}
           {phraseLines(home.hero.title)}
         </h1>
 

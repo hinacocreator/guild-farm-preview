@@ -7,6 +7,7 @@ import { HomeOwner } from "@/components/sections/home/HomeOwner";
 import { HomeStays } from "@/components/sections/home/HomeStays";
 import { HomeValues } from "@/components/sections/home/HomeValues";
 import { HomeVoices } from "@/components/sections/home/HomeVoices";
+import { applyHref, siteConfig } from "@/config/site";
 import { home } from "@/content/home";
 
 /**
@@ -45,7 +46,8 @@ import { home } from "@/content/home";
  *   料金の数字・含まれるもの（→ /plans/）／部屋・設備・住所（→ /plans/）
  *   ／スケジュール表と具体的な時刻（→ /life/）／持ち物・FAQ（→ /flow/）
  *   ／社会課題の中身（→ /about/・/owner/）
- *   ※ これらのコピーは src/content/copy.ts に残してあります（削除していません）。
+ *   ※ 旧コピーを保管していた src/content/copy.ts は削除しました（2026-09-16）。
+ *     共通部品の文言は src/content/common.ts にあります。
  *
  * ■ 文章 … src/content/home.ts（HOMEの文字はすべてここ）
  *
@@ -66,10 +68,17 @@ export default function HomePage() {
       <HomeFuture />
       <HomeStays />
       <HomeVoices />
+      {/* 主＝相談（既定の contactHref）／副＝申し込み（Googleフォーム）。
+          どのページの末尾でも、申し込みと相談の両方に進めるようにしています */}
       <ClosingCta
         title={home.closing.title}
         body={home.closing.body}
         cta={home.closing.cta}
+        secondary={{
+          label: home.closing.secondary,
+          href: applyHref,
+          note: siteConfig.applyNote,
+        }}
         note={home.closing.note}
         next={home.closing.next}
       />

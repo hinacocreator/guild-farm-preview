@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useSyncExternalStore } from "react";
-import { contactHref, navItems, siteConfig } from "@/config/site";
-import { copy } from "@/content/copy";
+import { applyHref, contactHref, navItems, siteConfig } from "@/config/site";
+import { common } from "@/content/common";
 import { cn } from "@/lib/cn";
 
 /** window のスクロールを購読します（useSyncExternalStore 用・関数は使い回します） */
@@ -36,8 +36,9 @@ function normalize(path: string): string {
  *   ・HOME（/）だけは、HERO写真の上に透明で重なり、少しスクロールすると生成りになります。
  *   ・下層ページはHERO写真がないため、最初から生成りの背景です。
  * ■ ナビ
- *   ・PC（lg以上）は5項目を横に並べ、右端にCTAボタン。
- *   ・スマホはハンバーガー。開くと深緑の面に、明朝の大きな日本語ラベルが並びます。
+ *   ・PC（1160px以上）は6項目を横に並べ、右端に「滞在を申し込む」のボタン（1つだけ）。
+ *   ・1160px未満（スマホ・タブレット・小さめのノートPC）はハンバーガー。
+ *     開くと深緑の面に、明朝の大きな日本語ラベルが並びます。
  * ■ 項目 … src/config/site.ts の navItems
  */
 export function SiteHeader() {
@@ -116,9 +117,16 @@ export function SiteHeader() {
           {siteConfig.name.toUpperCase()}
         </Link>
 
-        {/* PCの横並びナビ */}
-        <nav aria-label="メインメニュー" className="hidden lg:block">
-          <ul className="flex items-center gap-8">
+        {/* PCの横並びナビ。
+            ⚠ 切替は lg（1024px）ではなく min-[1160px] です（2026-09-16 QA）。
+              ナビ6項目の実測幅は合計577px。ロゴ147px＋申し込みボタン164px＋
+              左右の余白80px＋項目間の間隔を足すと、gap-6 でも約1120px必要で、
+              1024pxではボタンが画面右へはみ出していました。
+              1160px未満はハンバーガーに切り替えます。
+              項目や文言を増やしたら、この数値を上げてください。 */}
+        <nav aria-label="メインメニュー" className="hidden min-[1160px]:block">
+          {/* 1160〜1279px は gap-6（間隔を詰めて収める）／1280px以上は従来どおり gap-8 */}
+          <ul className="flex items-center gap-6 xl:gap-8">
             {navItems.map((item) => {
               const current = normalize(pathname) === normalize(item.href);
               return (
@@ -159,8 +167,14 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex shrink-0 items-center gap-2 md:gap-3">
+          {/* ヘッダーのボタンは1つのままです（PCナビ6項目と両立させるため）。
+              行き先はGoogleフォーム＝外部サイトなので、別タブで開き ↗ を添えています。
+              相談導線はスマホ固定バー・フッター・各ページ末尾のCTA・/flow/ にあります。 */}
           <a
-            href={contactHref}
+            href={applyHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={siteConfig.applyNote}
             className={cn(
               "whitespace-nowrap rounded-full px-4 py-2 text-[0.75rem] tracking-[0.05em] transition-colors duration-300 md:px-6 md:py-2.5 md:text-[0.82rem]",
               onDark
@@ -168,9 +182,12 @@ export function SiteHeader() {
                 : "bg-clay text-paper hover:bg-clay-deep",
             )}
           >
-            {/* 狭い画面では「相談する」に短縮します（「入居」は使いません） */}
-            <span className="sm:hidden">{siteConfig.ctaLabelShort}</span>
-            <span className="hidden sm:inline">{siteConfig.ctaLabel}</span>
+            {/* 狭い画面では「申し込む」に短縮します（「入居」は使いません） */}
+            <span className="sm:hidden">{siteConfig.applyCtaLabelShort}</span>
+            <span className="hidden sm:inline">{siteConfig.applyCtaLabel}</span>
+            <span aria-hidden="true" className="ml-1.5">
+              ↗
+            </span>
           </a>
 
           {/* ハンバーガー（スマホ・タブレット） */}
@@ -181,7 +198,7 @@ export function SiteHeader() {
             aria-label={menuOpen ? "メニューを閉じる" : "メニューを開く"}
             onClick={() => setOpenedOn(menuOpen ? null : pathname)}
             className={cn(
-              "-mr-1 flex h-10 w-10 items-center justify-center lg:hidden",
+              "-mr-1 flex h-10 w-10 items-center justify-center min-[1160px]:hidden",
               onDark ? "text-paper" : "text-ink",
             )}
           >
@@ -214,7 +231,7 @@ export function SiteHeader() {
         id="site-menu"
         hidden={!menuOpen}
         className={cn(
-          "fixed inset-x-0 bottom-0 top-16 z-40 overflow-y-auto bg-forest text-paper md:top-20 lg:hidden",
+          "fixed inset-x-0 bottom-0 top-16 z-40 overflow-y-auto bg-forest text-paper md:top-20 min-[1160px]:hidden",
           !menuOpen && "hidden",
         )}
       >
@@ -252,12 +269,18 @@ export function SiteHeader() {
 
           <div className="mt-10 space-y-4">
             <a
+              href={contactHref}
+              className="block text-[0.85rem] text-paper/75"
+            >
+              {siteConfig.ctaLabel}
+            </a>
+            <a
               href={siteConfig.social.instagram.url}
               target="_blank"
               rel="noopener noreferrer"
               className="block text-[0.85rem] text-paper/75"
             >
-              {copy.footer.instagramLabel}{" "}
+              {common.footer.instagramLabel}{" "}
               <span className="numeral">
                 {siteConfig.social.instagram.handle}
               </span>
@@ -271,12 +294,17 @@ export function SiteHeader() {
           </div>
 
           <a
-            href={contactHref}
+            href={applyHref}
+            target="_blank"
+            rel="noopener noreferrer"
             className="mt-10 flex items-center justify-center gap-3 rounded-full bg-paper px-8 py-4 text-[0.95rem] tracking-[0.06em] text-clay"
           >
-            {siteConfig.ctaLabel}
-            <span aria-hidden="true">→</span>
+            {siteConfig.applyCtaLabel}
+            <span aria-hidden="true">↗</span>
           </a>
+          <p className="mt-3 text-center text-[0.7rem] text-paper/55">
+            {siteConfig.applyNote}
+          </p>
         </nav>
       </div>
     </header>

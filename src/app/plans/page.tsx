@@ -9,6 +9,7 @@ import { PlansIncluded } from "@/components/sections/plans/PlansIncluded";
 import { PlansLifestyle } from "@/components/sections/plans/PlansLifestyle";
 import { PlansPlan } from "@/components/sections/plans/PlansPlan";
 import { PlansStays } from "@/components/sections/plans/PlansStays";
+import { applyHref, contactHref, siteConfig } from "@/config/site";
 import { plans } from "@/content/plans";
 
 export const metadata: Metadata = {
@@ -19,6 +20,12 @@ export const metadata: Metadata = {
     title: plans.meta.metaTitle,
     description: plans.meta.description,
     url: plans.meta.path,
+  },
+  /* twitter を省くと layout.tsx のHOMEの値が全ページに出てしまうため、
+     ページごとに上書きしています（2026-09-16 最終回遊QA） */
+  twitter: {
+    title: plans.meta.metaTitle,
+    description: plans.meta.description,
   },
 };
 
@@ -52,8 +59,9 @@ export const metadata: Metadata = {
  *   背景は paper / cream が交互になるように tone を指定しています。
  *
  * ■ 文章 … src/content/plans.ts（このページの文字はすべてここ）
- *   ※ 旧セクション（Value / Plans / House / Faq）のコピーは
- *     src/content/copy.ts にそのまま残しています（データは消していません）。
+ *   ※ 旧セクション（Value / Plans / House / Faq）のコピーを保管していた
+ *     src/content/copy.ts は削除しました（2026-09-16・ビルド後JSに料金の数字や
+ *     旧コピーが残っていたため）。履歴で参照してください。
  *
  * ■ このページに書かないもの
  *   思想・考え方（→ /about/ ・/owner/）／1日・1週間・1ヶ月の過ごし方の全文と
@@ -78,10 +86,15 @@ export default function PlansPage() {
       <PlansCosts />
       <PlansFaq />
       <PlansDecide />
+      {/* 料金を読んだ直後＝いちばん行動意欲が高い場所なので、
+          主＝申し込み（Googleフォーム）／副＝相談（メール）です（2026-09-16） */}
       <ClosingCta
         title={plans.closing.title}
         body={plans.closing.body}
         cta={plans.closing.cta}
+        ctaHref={applyHref}
+        ctaNote={siteConfig.applyNote}
+        secondary={{ label: plans.closing.secondary, href: contactHref }}
         note={plans.closing.note}
         next={plans.closing.next}
       />

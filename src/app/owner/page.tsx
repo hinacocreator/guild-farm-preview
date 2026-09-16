@@ -4,8 +4,10 @@ import { ClosingCta } from "@/components/sections/ClosingCta";
 import { OwnerChapters } from "@/components/sections/owner/OwnerChapters";
 import { OwnerFuture } from "@/components/sections/owner/OwnerFuture";
 import { OwnerInvitation } from "@/components/sections/owner/OwnerInvitation";
+import { OwnerNote } from "@/components/sections/owner/OwnerNote";
 import { OwnerTimeline } from "@/components/sections/owner/OwnerTimeline";
 import { OwnerVoices } from "@/components/sections/owner/OwnerVoices";
+import { applyHref, siteConfig } from "@/config/site";
 import { owner } from "@/content/owner";
 import { pages } from "@/content/pages";
 
@@ -20,6 +22,12 @@ export const metadata: Metadata = {
     title: page.metaTitle,
     description: page.description,
     url: page.path,
+  },
+  /* twitter を省くと layout.tsx のHOMEの値が全ページに出てしまうため、
+     ページごとに上書きしています（2026-09-16 最終回遊QA） */
+  twitter: {
+    title: page.metaTitle,
+    description: page.description,
   },
 };
 
@@ -46,7 +54,8 @@ export const metadata: Metadata = {
  *   09 OwnerInvitation  どんな人に来てほしいか。
  *   10 OwnerVoices      滞在した人の言葉（3つ・属性なし）
  *   11 OwnerFuture      これから。
- *   —  ClosingCta       共通CTA …… 問い合わせ（＋次に読む: /life/）
+ *   —  OwnerNote        松井さんのnoteへ（外部リンク・2026-09-16）
+ *   —  ClosingCta       共通CTA …… 主＝相談／副＝申し込み（＋次に読む: /plans/）
  *
  * ⚠ 松井さん本人の写真は素材にありません。
  *   ★ 松井本人写真差し替え推奨 … 柑橘・土・畑・米・竹林・収穫の写真で構成しています。
@@ -71,7 +80,7 @@ export const metadata: Metadata = {
  *   ※ 後継者・相場などの問題意識と、無肥料を選んだ理由の引用は ABOUT からこのページへ
  *     移設済みです（CHANGELOG-phase3a.md「ABOUTブランド編集」2章）。
  *   ※ Phase 2 の旧セクション Story は、このページの本文に置き換えました
- *     （元のコピーは src/content/copy.ts の story に残しています）。
+ *     （旧 src/content/copy.ts は削除済みです。履歴で参照してください）。
  *
  * ■ 文章 … src/content/owner.ts（このページの文字はすべてここ）
  * ■ 棚卸し … docs/owner-inventory.md
@@ -90,10 +99,19 @@ export default function OwnerPage() {
       <OwnerInvitation />
       <OwnerVoices />
       <OwnerFuture />
+      {/* 本文の後、ページ末尾のCTAの前。松井さんのnoteへの外部リンクだけの小さな章です */}
+      <OwnerNote />
+      {/* 主＝相談（既定の contactHref）／副＝申し込み（Googleフォーム）。
+          どのページの末尾でも、申し込みと相談の両方に進めるようにしています */}
       <ClosingCta
         title={owner.closing.title}
         body={owner.closing.body}
         cta={owner.closing.cta}
+        secondary={{
+          label: owner.closing.secondary,
+          href: applyHref,
+          note: siteConfig.applyNote,
+        }}
         note={owner.closing.note}
         next={owner.closing.next}
       />

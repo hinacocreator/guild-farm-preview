@@ -4,6 +4,7 @@ import { ClosingCta } from "@/components/sections/ClosingCta";
 import { VoicesNext } from "@/components/sections/voices/VoicesNext";
 import { VoicesQuotes } from "@/components/sections/voices/VoicesQuotes";
 import { VoicesStories } from "@/components/sections/voices/VoicesStories";
+import { applyHref, siteConfig } from "@/config/site";
 import { pages } from "@/content/pages";
 import { voices } from "@/content/voices";
 
@@ -18,6 +19,12 @@ export const metadata: Metadata = {
     title: page.metaTitle,
     description: page.description,
     url: page.path,
+  },
+  /* twitter を省くと layout.tsx のHOMEの値が全ページに出てしまうため、
+     ページごとに上書きしています（2026-09-16 最終回遊QA） */
+  twitter: {
+    title: page.metaTitle,
+    description: page.description,
   },
 };
 
@@ -68,10 +75,17 @@ export default function VoicesPage() {
       <VoicesStories />
       <VoicesNext />
 
+      {/* 主＝相談（既定の contactHref）／副＝申し込み（Googleフォーム）。
+          どのページの末尾でも、申し込みと相談の両方に進めるようにしています */}
       <ClosingCta
         title={voices.closing.title}
         body={voices.closing.body}
         cta={voices.closing.cta}
+        secondary={{
+          label: voices.closing.secondary,
+          href: applyHref,
+          note: siteConfig.applyNote,
+        }}
         note={voices.closing.note}
         next={voices.closing.next}
       />

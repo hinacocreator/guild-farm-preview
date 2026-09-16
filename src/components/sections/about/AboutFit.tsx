@@ -50,6 +50,11 @@ export function AboutFit() {
                 <p key={paragraph}>{paragraph}</p>
               ))}
             </div>
+
+            {/* 「時間にゆとりを持って過ごす人」も想像できるように1行（最終回遊QA C-9） */}
+            <p className="reveal mt-7 border-t border-sand pt-6 text-[0.85rem] leading-[2] text-ink-faint">
+              {fit.note}
+            </p>
           </div>
         </div>
       </Container>

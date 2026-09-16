@@ -32,7 +32,11 @@ export function PageHeader({ label, title, sub, lead }: PageHeaderProps) {
             <span>{label}</span>
           </p>
 
-          <h1 className="heading-jp heading-hero mt-6 text-ink">
+          {/* text-balance … 2行になるとき、行の長さをそろえて折り返します。
+              これがないと /owner/ の「GUILD Farmをはじめた人」が、幅1240px以上で
+              「人」の1文字だけ次の行に落ちていました（読み物用の狭い幅880pxに対して
+              見出しが 5vw で大きくなるため）。1行で収まるときは見た目は変わりません。 */}
+          <h1 className="heading-jp heading-hero mt-6 text-balance text-ink">
             {phrase(title)}
           </h1>
 

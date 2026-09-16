@@ -55,10 +55,10 @@ export const siteConfig = {
   /**
    * 料金。
    * ・price.monthly / monthlyPriceText は 1ヶ月滞在の金額（既存の表示箇所で使用中）。
-   * ・price.plans が2つの滞在プランの正となる値です。金額を変えるときは
-   *   src/content/copy.ts の plans / value / stickyBar の表記も合わせて直してください。
+   * ・price.plans が2つの滞在プランの正となる値です。金額を表示してよいのは
+   *   /plans/ だけです（src/content/plans.ts の表記も合わせて直してください）。
    * 内訳（光熱費・Wi-Fi）や初期費用は未確定のため、サイトには書きません。
-   * 食事と現地交通費は実費です（copy 側に明記）。
+   * 食事と現地交通費は実費です（/plans/ の本文に明記しています）。
    */
   price: {
     monthly: 85300,
@@ -68,7 +68,8 @@ export const siteConfig = {
       month: {
         label: "1ヶ月滞在",
         price: 85300,
-        stay: "道後シェアハウス",
+        /** 滞在先の呼称は「今市シェアハウス（道後エリア）」で全ページ統一しています */
+        stay: "今市シェアハウス（道後エリア）",
       },
       /** 1週間滞在（5泊6日） */
       week: {
@@ -97,19 +98,17 @@ export const siteConfig = {
     formUrl: "",
 
     /**
-     * ---- 申し込み導線（/flow/ の主CTA「滞在を申し込む」だけが使います） ----
+     * ---- 申し込み導線（「滞在を申し込む」CTA の行き先） ----
      *
-     * ⚠ これは **暫定の導線** です。
-     *   チラシに記載されている正式な導線は「予約は Googleフォーム／相談は Instagram DM」ですが、
-     *   **GoogleフォームのURLがまだ取得できていません**（docs/pending-facts.md の D 章）。
-     *   架空のフォームURLは作らないため、当面は相談と同じメールアドレスへ、
-     *   件名だけを変えて送る形にしています。
+     * 正式な導線です（クライアント確定・2026-09-16）。チラシの「予約はGoogleフォーム」の
+     * 実URLをいただいたので、暫定のメール導線（件名「GUILD Farmの滞在申し込み」）は廃止しました。
      *
-     *   URL が届いたら applyFormUrl に入れてください。それだけで
-     *   applyHref の行き先がフォームに切り替わります（contactHref と同じ仕組みです）。
+     * ⚠ 外部サイト（Googleフォーム）です。ボタン・リンクは Instagram と同じく
+     *   target="_blank" rel="noopener noreferrer" で開き、
+     *   「Googleフォームが開きます」の補足を添えてください（applyNote）。
      */
-    applySubject: "GUILD Farmの滞在申し込み",
-    applyFormUrl: "",
+    applyFormUrl:
+      "https://docs.google.com/forms/d/e/1FAIpQLSfFacZVGyQsPF3SjHJKzeJXb2BwH4dNhgseU-4r287ND22USQ/viewform",
   },
 
   social: {
@@ -117,17 +116,31 @@ export const siteConfig = {
       handle: "@guildfarm.dogo",
       url: "https://www.instagram.com/guildfarm.dogo/",
     },
+    /**
+     * 松井さんのnote（/owner/ の末尾からだけリンクしています）。
+     * ⚠ Instagram のプロフィール経由のリダイレクトURLは使いません。
+     * ⚠ noteの記事内容を /owner/ の本文・年表・思想へ持ち込まないでください。
+     */
+    note: {
+      handle: "@guild853",
+      url: "https://note.com/guild853",
+    },
   },
 
-  /** サイト内のCTAボタンの既定の文言（全ページ共通。「入居」は使いません） */
+  /** 相談CTAの文言（「入居」は使いません） */
   ctaLabel: "滞在について相談する",
-  /** 画面が狭いとき（スマホのヘッダー）に使う短縮版 */
+  /** 画面が狭いとき（スマホのヘッダー・固定バー）に使う短縮版 */
   ctaLabelShort: "相談する",
   /**
-   * 申し込みボタンの文言。/flow/ の主CTAだけが使います。
-   * ヘッダー・フッター・スマホ固定バー・他ページのCTAは ctaLabel（相談）のままです。
+   * 申し込みボタンの文言。
+   * ヘッダー・スマホ固定バー・フッター・/plans/・/flow/ の主CTAが使います。
+   * 行き先は applyHref（Googleフォーム・外部サイト）です。
    */
   applyCtaLabel: "滞在を申し込む",
+  /** 申し込みボタンの短縮版（スマホのヘッダー） */
+  applyCtaLabelShort: "申し込む",
+  /** 外部フォームであることを示す補足。申し込みCTAの近くに小さく添えます */
+  applyNote: "Googleフォームが開きます",
 } as const;
 
 /**
@@ -141,16 +154,13 @@ export const contactHref: string =
   )}`;
 
 /**
- * 「滞在を申し込む」ボタンのリンク先（/flow/ の主CTAだけが使います）。
- * siteConfig.contact.applyFormUrl が入っていればフォーム、空なら件名を変えたメール。
+ * 「滞在を申し込む」ボタンのリンク先＝GoogleフォームのURL（正式導線）。
  *
- * ⚠ 暫定の導線です。上の contact.applySubject のコメントを読んでください。
+ * ⚠ 外部サイトです。http で始まるため CtaButton / TextLink が自動で
+ *   target="_blank" rel="noopener noreferrer" を付けます（Instagram リンクと同じ設計）。
+ *   文字の側の補足は siteConfig.applyNote を使ってください。
  */
-export const applyHref: string =
-  siteConfig.contact.applyFormUrl ||
-  `mailto:${siteConfig.contact.email}?subject=${encodeURIComponent(
-    siteConfig.contact.applySubject,
-  )}`;
+export const applyHref: string = siteConfig.contact.applyFormUrl;
 
 /** 「85,300円」のように、カンマ区切りの金額文字列を作ります */
 export const monthlyPriceText = `${siteConfig.price.monthly.toLocaleString("ja-JP")}円`;
@@ -179,8 +189,9 @@ export const navItems = [
    *   補足として末尾に置き、体験ストーリーが増えた段階で
    *   「オーナー松井のご紹介」の後ろへ移すのが素直です（そのときはここの1行を動かすだけ）。
    *
-   * ⚠ PCナビ（lg以上）はこれで6項目になります。1024〜1200px あたりで横に詰まるので、
-   *   項目をもう1つ増やすときは SiteHeader のPCナビの組み方を見直してください。
+   * ⚠ PCナビはこれで6項目になります。横並びで収まる下限が実測で約1160pxだったため、
+   *   SiteHeader の切替は lg ではなく min-[1160px] にしてあります（2026-09-16 QA）。
+   *   項目や文言を増やすときは、SiteHeader のその数値も合わせて見直してください。
    */
   { label: "滞在者の声", en: "Voices", href: "/voices/" },
 ] as const;

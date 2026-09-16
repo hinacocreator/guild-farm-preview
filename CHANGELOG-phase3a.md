@@ -1303,3 +1303,143 @@ FAQ 等の本文にあった「入居」は、すべて「滞在」に置き換�
   （FlowPacking の内容は FlowPrepare に統合。Access / Concerns は `/plans/`・`/life/` に既出）
 - `src/app/flow/page.tsx` … 並びと ClosingCta の props。
 - 新規 `docs/flow-inventory.md`／`docs/pending-facts.md` に D 章を追加。
+
+---
+
+# 最終回遊QA（2026-09-16・クライアント確定）
+
+HOME → ABOUT → OWNER → LIFE → VOICES → PLANS → FLOW を初見ユーザーとして通読し、
+横断的な不整合（事実・CTA・用語・回遊）を直しました。**ページ単位の再構成はしていません。**
+通読の棚卸しは `docs/final-qa-inventory.md`（MUST FIX 43／SHOULD FIX 46／KEEP 34／FACT CHECK 6／FUTURE 1）。
+
+## 1. 滞在申し込みの正式導線（Googleフォーム）
+
+チラシの「予約はGoogleフォーム」の実URLをいただいたので、暫定のメール導線を廃止しました。
+
+- `src/config/site.ts` … `contact.applyFormUrl` に正式URLを設定。`contact.applySubject`（件名
+  「GUILD Farmの滞在申し込み」）は**削除**。`applyHref` はフォームURLをそのまま返します。
+- 外部サイトなので、Instagram リンクと同じ `target="_blank" rel="noopener noreferrer"` で開き、
+  `siteConfig.applyNote`（「Googleフォームが開きます」）を近くに小さく添えています。
+  `CtaButton` / `TextLink` は `http` で始まるリンクに自動で `target` / `rel` を付けます。
+
+## 2. CTAを「申し込む」と「相談する」の2導線に
+
+「相談だけが唯一の最終行動に見える」状態を解消しました。
+
+| 場所 | 主 | 副 |
+|---|---|---|
+| ヘッダー（PC・スマホ・ハンバーガー） | 滞在を申し込む（フォーム） | ハンバーガー内にのみ相談リンク |
+| スマホ固定バー | 滞在を申し込む | 相談する（テキスト） |
+| フッター Contact | 滞在を申し込む（Googleフォーム） | 滞在について相談する（メール） |
+| HOME / ABOUT / OWNER / LIFE / VOICES 末尾 | 滞在について相談する | 滞在を申し込む |
+| PLANS / FLOW 末尾 | 滞在を申し込む | 滞在について相談する |
+
+- **ヘッダーのボタンは1つのままです。** PCナビが6項目あり、ボタンを2つにすると
+  1024〜1200px で確実に破綻するためです（`docs/final-qa-inventory.md` K-1）。
+  相談導線はハンバーガー内・スマホ固定バー・フッター・全ページ末尾・`/flow/` の4系統で確保しています。
+- `ClosingCta` に `ctaNote`（主ボタンの下の補足）を追加し、`secondary` に `note` を持たせました。
+  どちらも任意です。
+
+## 3. 事実の訂正
+
+- **道後の畑の所有者を書かない。** 「シェアハウスのオーナーの畑です。」→「滞在先から自転車で
+  行ける、いちばん近い畑です。」／LIFE 07「会う人たち」の列挙からも所有関係を外しました。
+  公開上「オーナー」と書くと松井さんと混同されるためです。他の畑（梅津寺・興居島）の
+  所有・運営関係は推測で変更していません。
+- **「栽培の技術」→「技術を学ぶ日」。** 一次資料の表現は「山岡 技術学び」までです（LIFE 6文・PLANS 4文）。
+  家庭菜園／家用／持ち帰れる といった意味付けは足していません。
+- **滞在先の呼称を「今市シェアハウス（道後エリア）」に統一。** 「道後の家」「道後シェアハウス」を廃止
+  （住所表記と引用はそのまま）。
+- **畑への移動手段**を「公共交通機関や自転車で」に統一（道後の畑は自転車10分のため）。
+- **戻り先**を「家へ戻る」に統一（滞在先は市街ではありません）。
+
+## 4. HOME HERO を確定コピーに
+
+- メインコピー「あなたの“心地イイ”を、農ある暮らしで探す。」を2行組みで表示
+  （`phraseLines` で読点のあとに改行。375px で単語が分断されないよう `clamp` の下限を 1.5rem に）。
+- 説明文はクライアント確定の3文をそのまま（sub 1文＋body 2文）。
+- 変更前の HERO 見出しは ABOUT 03 の h2 と完全に同一でした。
+
+## 5. /owner/ 末尾に note 導線（新規）
+
+- 新規 `src/components/sections/owner/OwnerNote.tsx` … 「これから。」の後・末尾CTAの前。
+  見出し「松井さんのことを、もう少し。」＋本文＋「松井さんのnoteを読む ↗」。
+- URL は `src/config/site.ts` の `social.note`（`https://note.com/guild853`）。
+  Instagram プロフィール経由のリダイレクトURLは使っていません。
+- ⚠ **noteの記事内容を /owner/ の本文・年表・思想へ逆輸入していません。** 導線1ブロックだけの追加です。
+
+## 6. 回遊（「次に読む」）
+
+思想ルート HOME → ABOUT → OWNER → PLANS → FLOW がつながるようにしました。
+
+| ページ | 変更前 | 変更後 |
+|---|---|---|
+| ABOUT | /life/ | **/owner/** |
+| OWNER | /life/ | **/plans/** |
+| HOME / LIFE / VOICES / PLANS / FLOW | /plans/ ・/plans/ ・/life/ ・/flow/ ・なし | 変更なし |
+
+## 7. 相談が必須に見えるコピーの除去
+
+「まず、話を聞くところから。」を全廃しました（LIFE の note、PLANS の最終CTA）。
+PLANS の最終CTAは指示書9の確定方針に差し替え（「滞在したいと思ったら、そのままお申し込み
+いただけます。／迷っている方は、申し込み前にご相談ください。」）。直前の 08「どちらにするか
+迷ったら。」は同じ話が2回続かないよう、プランの違いの説明に書き換えています。
+
+## 8. `src/content/copy.ts` の削除（ビルド出力の残存を解消）
+
+`copy.ts`（607行）は SiteHeader ほか5部品から import されていたため、画面に出ていない旧コピー
+（「入居までの流れ」「まず話を聞くところから始まります」「気になったら、まず話を聞くところから。」
+「シェアハウスのオーナーの畑です。」「道後シェアハウス」「料金の数字4種」）が
+ビルド後のJSチャンクに丸ごと残っていました。
+
+- 新規 `src/content/common.ts` … 共通部品が実際に使う `closing` / `stickyBar` / `footer` / `journal` だけ。
+- `copy.ts` は削除（内容は git 履歴で参照できます）。**表示は1文字も変わっていません。**
+
+## 9. meta
+
+- 下層6ページの `twitter:title` / `twitter:description` が HOME の値のままだったので、
+  各ページの値で上書きしました（`og:` はもともとページごとに正しい値でした）。
+
+## 主な判断
+
+- **ヘッダーのボタンは増やしませんでした**（上記2。ナビ6項目との両立ができないため）。
+- **OWNER のページ名称（ナビ「オーナー松井のご紹介」）は変更していません**（クライアント確定のため）。
+  `docs/final-qa-inventory.md` K-3 に、ナビ／本文リンク／h1／metaTitle で呼称が分かれている旨を記録しています。
+- **3つの声（HOME / OWNER / VOICES の重複）は削除していません**（一次情報が3件しかないため・指示書13）。
+  HOME のリンク文言を「滞在者の声をもっと見る」→「滞在者の声を読む」に変え、
+  VOICES の役割（言い回しを変えていない一次情報のページ）が伝わる1文を添えるにとどめました。
+- **三津浜は拡張していません**（新コピーなし・今市の写真を流用しない・`pending-facts.md` C 章のまま）。
+- **原文引用は1文字も変えていません**（`matsui-story.txt` 由来の引用、3つの声）。
+- **ABOUT に1文ずつ補足を追加**しました。「畑は家のすぐ隣ではない」（ABOUT だけ読むと畑のある家に
+  読めるため）と「まとまった時間をとって農や地域に触れる時間を多めにする方もいる」（ABOUT に
+  時間にゆとりのある人の像が一度も出てこなかったため）。年齢でのターゲット分類はしていません。
+
+## 変更したファイル
+
+- `src/config/site.ts` … `applyFormUrl`（正式URL）／`applySubject` 削除／`applyHref` 単純化／
+  `social.note` 追加／`applyCtaLabelShort`・`applyNote` 追加／`price.plans.month.stay` の呼称。
+- `src/components/SiteHeader.tsx` `SiteFooter.tsx` `StickyCtaBar.tsx` … CTAの2導線化。
+- `src/components/sections/ClosingCta.tsx` … `ctaNote` 追加、`secondary` に `note` を追加。
+- `src/components/sections/Hero.tsx` … 2行組みの文字サイズ。
+- `src/components/sections/Journal.tsx` … `copy` → `common`。
+- `src/components/sections/about/AboutAgrarian.tsx` `about/AboutFit.tsx` … 補足1行の表示。
+- `src/components/sections/flow/FlowEntries.tsx` … 申し込みボタンに外部フォームの補足。
+- 新規 `src/components/sections/owner/OwnerNote.tsx`／更新 `owner/OwnerFuture.tsx`（コメント）。
+- `src/content/home.ts` `about.ts` `owner.ts` `life.ts` `voices.ts` `plans.ts` … 上記1〜7の文言。
+- 新規 `src/content/common.ts`／**削除** `src/content/copy.ts`。
+- `src/app/page.tsx` `about/page.tsx` `owner/page.tsx` `life/page.tsx` `voices/page.tsx`
+  `plans/page.tsx` `flow/page.tsx` … 末尾CTAの props、twitter メタ、OwnerNote の差し込み。
+- `src/config/images.ts` `src/lib/jp.tsx` `src/components/sections/life/LifeDay.tsx` … copy.ts への参照コメント。
+- `docs/pending-facts.md` … 章の索引（解消済み／未解消）、D 章の更新（D-1 解消）、E 章の新設（FACT CHECK 6件）。
+- 新規 `docs/final-qa-inventory.md`（棚卸し）。
+
+## 確認したこと
+
+- `npm run lint` … エラーなし。
+- `npm run build` … 成功（10ページ）。
+- `out/` 全体（HTML＋`_next/static/chunks`）で **0件**:
+  「入居までの流れ」「入居」「まず話を聞く」「話を聞くところから」「オーナーの畑」「松井さんの畑」
+  「栽培の技術」「振興協議会」「準備中」「要確認」「確認中」「滞在申し込み」「道後の家」「道後シェアハウス」。
+- 料金の数字（58,300 / 85,300 / 25,000 / 35,000）は `out/plans/` のみ。
+- `docs.google.com/forms` は全7ページ（＋404）に出ます。`note.com/guild853` は `/owner/` のみ。
+- HOME HERO が2行（「あなたの“心地イイ”を、」／「農ある暮らしで探す。」）で出力されている。

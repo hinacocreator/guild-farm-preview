@@ -53,9 +53,12 @@ export function SectionHeading({
         <span>{label}</span>
       </p>
 
+      {/* text-balance … 2行以上になるとき、行の長さをそろえて折り返します。
+          これがないと /flow/ の「申し込む前に相談したい方へ」が、375px（本文幅335px）で
+          「へ」の1文字だけ次の行に落ちていました。1行で収まるときは見た目は変わりません。 */}
       <h2
         className={cn(
-          "heading-jp heading-section mt-5",
+          "heading-jp heading-section mt-5 text-balance",
           tone === "light" ? "text-ink" : "text-paper",
         )}
       >

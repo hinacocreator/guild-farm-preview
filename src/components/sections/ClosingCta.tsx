@@ -4,11 +4,11 @@ import { LeafIcon } from "@/components/ui/LeafIcon";
 import { Photo } from "@/components/ui/Photo";
 import { TextLink } from "@/components/ui/TextLink";
 import { images } from "@/config/images";
-import { copy } from "@/content/copy";
+import { common } from "@/content/common";
 import { phrase } from "@/lib/jp";
 
 type ClosingCtaProps = {
-  /** 見出し。省略すると src/content/copy.ts の closing.title になります */
+  /** 見出し。省略すると src/content/common.ts の closing.title になります */
   title?: string;
   /** 本文。1要素＝1行 */
   body?: readonly string[];
@@ -16,15 +16,18 @@ type ClosingCtaProps = {
   cta?: string;
   /**
    * 主ボタンのリンク先。省略すると src/config/site.ts の contactHref（相談）です。
-   * /flow/ だけが applyHref（申し込み）を渡しています。
+   * /plans/ と /flow/ が applyHref（申し込み・Googleフォーム）を渡しています。
    */
   ctaHref?: string;
+  /** 主ボタンのすぐ下に置く小さな補足（例:「Googleフォームが開きます」） */
+  ctaNote?: string;
   /**
    * 主ボタンの下に置く、副CTAのリンク（省略すると出ません）。
-   * /flow/ の「滞在について相談する」（contactHref）に使っています。
+   * 全ページで「申し込む」と「相談する」の両方が出るようにするための枠です。
    * ボタンではなくテキストリンクにして、主CTAと同格にならないようにしています。
+   * note を渡すと、リンクの下に小さな補足が付きます（外部フォームの明示用）。
    */
-  secondary?: { label: string; href: string };
+  secondary?: { label: string; href: string; note?: string };
   /** ボタンの下に置く小さな添え書き */
   note?: string;
   /** ボタンの横に置く「次に読む」の副リンク（省略すると出ません） */
@@ -35,22 +38,29 @@ type ClosingCtaProps = {
  * ページ最後のCTA（全ページ共通）。
  * 全幅の写真の上に深い緑を重ねて、文字を読ませています。
  *
- * ■ 文章 … 既定は src/content/copy.ts の closing。
+ * ■ 文章 … 既定は src/content/common.ts の closing。
  *          ページごとに変えたいときは props で渡してください
  *          （HOMEは src/content/home.ts の closing を渡しています）。
  * ■ 写真 … src/config/images.ts の cta
- * ■ ボタンのリンク先 … src/config/site.ts の contactHref（フォーム or メール）
+ * ■ ボタンのリンク先 … src/config/site.ts の contactHref（相談・メール）／
+ *                      applyHref（申し込み・Googleフォーム）
+ *
+ * ⚠ 全ページで「申し込む」と「相談する」の両方を出します（2026-09-16 最終回遊QA）。
+ *   行動意欲の高い /plans/ /flow/ は 主＝申し込む／副＝相談する。
+ *   検討中のページ（HOME / ABOUT / OWNER / LIFE / VOICES）は
+ *   主＝相談する／副＝申し込む です。
  *
  * ⚠ id="contact" は、スマホ固定CTAバー（StickyCtaBar）が
  *   「末尾のCTAが画面に出ているか」を判定するのに使っています。変えないでください。
  */
 export function ClosingCta({
-  title = copy.closing.title,
-  body = copy.closing.body,
-  cta = copy.closing.cta,
+  title = common.closing.title,
+  body = common.closing.body,
+  cta = common.closing.cta,
   ctaHref,
+  ctaNote,
   secondary,
-  note = copy.closing.note,
+  note = common.closing.note,
   next,
 }: ClosingCtaProps = {}) {
   return (
@@ -91,9 +101,18 @@ export function ClosingCta({
           </div>
 
           <div className="mt-10 flex flex-col items-start gap-7 md:mt-12 md:flex-row md:items-center md:gap-10">
-            <CtaButton variant="light" size="lg" {...(ctaHref ? { href: ctaHref } : {})}>
-              {cta}
-            </CtaButton>
+            <div>
+              <CtaButton
+                variant="light"
+                size="lg"
+                {...(ctaHref ? { href: ctaHref } : {})}
+              >
+                {cta}
+              </CtaButton>
+              {ctaNote ? (
+                <p className="mt-3 text-[0.72rem] text-paper/60">{ctaNote}</p>
+              ) : null}
+            </div>
 
             {next ? (
               <TextLink href={next.href} tone="dark">
@@ -104,11 +123,16 @@ export function ClosingCta({
 
           {/* 副CTA。主CTAの下に置いて、同格に見えないようにしています */}
           {secondary ? (
-            <p className="mt-7">
+            <div className="mt-7">
               <TextLink href={secondary.href} tone="dark">
                 {secondary.label}
               </TextLink>
-            </p>
+              {secondary.note ? (
+                <p className="mt-2 text-[0.72rem] text-paper/60">
+                  {secondary.note}
+                </p>
+              ) : null}
+            </div>
           ) : null}
 
           <p className="wrap-phrase mt-8 max-w-[26em] text-[0.78rem] leading-[2] text-paper/60">

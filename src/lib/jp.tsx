@@ -12,7 +12,7 @@ import { Fragment, type ReactNode } from "react";
  * と、意味の切れ目で改行されるようにしています。
  *
  * 画面が広くて1行に収まるときは、見た目は今までどおり1行のままです。
- * → 改行位置を変えたいときは、src/content/copy.ts の文章の読点を動かしてください。
+ * → 改行位置を変えたいときは、src/content/ の各ファイルの文章の読点を動かしてください。
  */
 export function phrase(text: string): ReactNode {
   const chunks = text.split(/(?<=、)/).filter(Boolean);

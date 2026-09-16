@@ -7,6 +7,7 @@ import { LifeLiving } from "@/components/sections/life/LifeLiving";
 import { LifeMonth } from "@/components/sections/life/LifeMonth";
 import { LifeNext } from "@/components/sections/life/LifeNext";
 import { LifePlaces } from "@/components/sections/life/LifePlaces";
+import { applyHref, siteConfig } from "@/config/site";
 import { life } from "@/content/life";
 import { pages } from "@/content/pages";
 
@@ -21,6 +22,12 @@ export const metadata: Metadata = {
     title: page.metaTitle,
     description: page.description,
     url: page.path,
+  },
+  /* twitter を省くと layout.tsx のHOMEの値が全ページに出てしまうため、
+     ページごとに上書きしています（2026-09-16 最終回遊QA） */
+  twitter: {
+    title: page.metaTitle,
+    description: page.description,
   },
 };
 
@@ -74,10 +81,17 @@ export default function LifePage() {
       <LifeLiving />
       <LifeNext />
 
+      {/* 主＝相談（既定の contactHref）／副＝申し込み（Googleフォーム）。
+          どのページの末尾でも、申し込みと相談の両方に進めるようにしています */}
       <ClosingCta
         title={life.closing.title}
         body={life.closing.body}
         cta={life.closing.cta}
+        secondary={{
+          label: life.closing.secondary,
+          href: applyHref,
+          note: siteConfig.applyNote,
+        }}
         note={life.closing.note}
         next={life.closing.next}
       />

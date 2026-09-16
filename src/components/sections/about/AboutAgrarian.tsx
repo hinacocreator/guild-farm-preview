@@ -42,6 +42,11 @@ export function AboutAgrarian() {
                 <p key={paragraph}>{paragraph}</p>
               ))}
             </div>
+
+            {/* 畑は家の隣ではない、という事実を1行だけ添えています（最終回遊QA C-5） */}
+            <p className="reveal mt-7 border-t border-paper/20 pt-6 text-[0.85rem] leading-[2] text-paper/65">
+              {about.agrarian.note}
+            </p>
           </div>
 
           <div className="md:col-span-4 md:col-start-9 md:mt-10">

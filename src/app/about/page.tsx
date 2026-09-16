@@ -7,6 +7,7 @@ import { AboutFood } from "@/components/sections/about/AboutFood";
 import { AboutFuture } from "@/components/sections/about/AboutFuture";
 import { AboutPeople } from "@/components/sections/about/AboutPeople";
 import { ClosingCta } from "@/components/sections/ClosingCta";
+import { applyHref, siteConfig } from "@/config/site";
 import { about } from "@/content/about";
 import { pages } from "@/content/pages";
 
@@ -22,6 +23,12 @@ export const metadata: Metadata = {
     title: page.metaTitle,
     description: page.description,
     url: page.path,
+  },
+  /* twitter を省くと layout.tsx のHOMEの値が全ページに出てしまうため、
+     ページごとに上書きしています（2026-09-16 最終回遊QA） */
+  twitter: {
+    title: page.metaTitle,
+    description: page.description,
   },
 };
 
@@ -69,10 +76,17 @@ export default function AboutPage() {
       <AboutPeople />
       {/* id="future" … HOMEの「目指している未来」からの着地点です */}
       <AboutFuture />
+      {/* 主＝相談（既定の contactHref）／副＝申し込み（Googleフォーム）。
+          どのページの末尾でも、申し込みと相談の両方に進めるようにしています */}
       <ClosingCta
         title={about.closing.title}
         body={about.closing.body}
         cta={about.closing.cta}
+        secondary={{
+          label: about.closing.secondary,
+          href: applyHref,
+          note: siteConfig.applyNote,
+        }}
         note={about.closing.note}
         next={about.closing.next}
       />

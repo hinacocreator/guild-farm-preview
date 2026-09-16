@@ -2,7 +2,7 @@ import { Container } from "@/components/ui/Container";
 import { CtaButton } from "@/components/ui/CtaButton";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { TextLink } from "@/components/ui/TextLink";
-import { applyHref, contactHref } from "@/config/site";
+import { applyHref, contactHref, siteConfig } from "@/config/site";
 import { flow } from "@/content/flow";
 import { phrase } from "@/lib/jp";
 
@@ -18,8 +18,9 @@ import { phrase } from "@/lib/jp";
  * ⚠ 見た目で差を付けているのは意図的です。
  *   2つを同じボタンで並べると「どちらかを選ばないと進めない」ように見え、
  *   結果として「まず相談」が前提のページに戻ってしまいます。
- * ⚠ 架空のフォームURLは作りません。applyHref は当面メール（件名だけ変えたもの）です。
- *   詳しくは src/config/site.ts の contact.applySubject のコメントを読んでください。
+ * ⚠ applyHref は Googleフォーム（外部サイト）です。CtaButton が http で始まるリンクに
+ *   自動で target="_blank" rel="noopener noreferrer" を付けます。
+ *   ボタンのすぐ下に「Googleフォームが開きます」（siteConfig.applyNote）を添えています。
  */
 export function FlowEntries() {
   const { apply, consult } = flow.entries;
@@ -52,6 +53,10 @@ export function FlowEntries() {
             <CtaButton href={applyHref} size="lg">
               {apply.cta}
             </CtaButton>
+            {/* 外部サイト（Googleフォーム）に移動することが分かるようにしています */}
+            <p className="mt-3 text-[0.75rem] text-ink-faint">
+              {siteConfig.applyNote}
+            </p>
           </div>
         </div>
 

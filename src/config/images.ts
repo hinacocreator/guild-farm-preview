@@ -94,7 +94,8 @@ export const images = {
 
   /**
    * 4-b. HOUSE（シェアハウスの建物・部屋）
-   * 並び順は src/content/copy.ts の copy.house.items と1対1で対応しています。
+   * 並び順は /plans/ の「暮らす場所」で使う写真（src/content/plans.ts の stays）と
+   * 1対1で対応しています。
    * 差し替えるときは、キャプションの内容とずれないように注意してください。
    * house-01〜04・06 は 4:5（縦）、house-05 は 3:2（横）で書き出しています。
    */

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
-import { contactHref, navItems, siteConfig } from "@/config/site";
-import { copy } from "@/content/copy";
+import { applyHref, contactHref, navItems, siteConfig } from "@/config/site";
+import { common } from "@/content/common";
 
 /**
  * フッター。
@@ -10,7 +10,11 @@ import { copy } from "@/content/copy";
  * ■ ナビの項目   … src/config/site.ts の navItems（日本語ラベルを表示しています）
  * ■ 住所         … src/config/site.ts の location.address
  * ■ Instagram    … src/config/site.ts の social.instagram
- * ■ 見出しの文言 … src/content/copy.ts の footer
+ * ■ 見出しの文言 … src/content/common.ts の footer
+ *
+ * ■ Contact 欄は2導線です（2026-09-16 最終回遊QA）
+ *   「滞在を申し込む」＝Googleフォーム（外部サイト・別タブ）／
+ *   「滞在について相談する」＝メール。相談だけが最終行動に見えないようにしています。
  *
  * ※ スマホでは画面下に固定CTAバー（StickyCtaBar）が出るため、
  *   下側に余分な余白を取って、リンクが隠れないようにしています。
@@ -28,7 +32,7 @@ export function SiteFooter() {
               {siteConfig.name.toUpperCase()}
             </p>
             <p className="heading-jp mt-6 max-w-[14em] text-[1.15rem] leading-[1.8] text-paper/85 md:text-[1.3rem]">
-              {copy.footer.tagline}
+              {common.footer.tagline}
             </p>
           </div>
 
@@ -53,15 +57,27 @@ export function SiteFooter() {
           <div className="space-y-10 md:col-span-4">
             <div>
               <p className="label-en text-[0.65rem] text-paper/60">
-                {copy.footer.contactLabel}
+                {common.footer.contactLabel}
               </p>
               <ul className="mt-5 space-y-3">
+                <li>
+                  {/* 主導線。Googleフォーム（外部サイト）なので別タブで開きます */}
+                  <a
+                    href={applyHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[0.875rem] text-paper/85 transition-opacity duration-300 hover:opacity-60"
+                  >
+                    {common.footer.applyLabel}
+                    <span aria-hidden="true"> ↗</span>
+                  </a>
+                </li>
                 <li>
                   <a
                     href={contactHref}
                     className="text-[0.875rem] text-paper/85 transition-opacity duration-300 hover:opacity-60"
                   >
-                    {siteConfig.ctaLabel}
+                    {common.footer.consultLabel}
                   </a>
                 </li>
                 <li>
@@ -79,7 +95,7 @@ export function SiteFooter() {
                     rel="noopener noreferrer"
                     className="text-[0.85rem] text-paper/70 transition-opacity duration-300 hover:opacity-60"
                   >
-                    {copy.footer.instagramLabel}{" "}
+                    {common.footer.instagramLabel}{" "}
                     <span className="numeral">
                       {siteConfig.social.instagram.handle}
                     </span>
@@ -90,7 +106,7 @@ export function SiteFooter() {
 
             <div>
               <p className="label-en text-[0.65rem] text-paper/60">
-                {copy.footer.locationLabel}
+                {common.footer.locationLabel}
               </p>
               <address className="mt-5 text-[0.875rem] leading-[1.95] not-italic text-paper/85">
                 {siteConfig.location.address}
@@ -104,7 +120,7 @@ export function SiteFooter() {
 
         <div className="mt-16 flex flex-col gap-3 border-t border-paper/15 pt-8 sm:flex-row sm:items-center sm:justify-between md:mt-24">
           <p className="numeral text-[0.7rem] tracking-[0.08em] text-paper/60">
-            © {year} {copy.footer.copyright}
+            © {year} {common.footer.copyright}
           </p>
           <p className="text-[0.7rem] tracking-[0.1em] text-paper/60">
             {siteConfig.location.region} — {siteConfig.location.area}

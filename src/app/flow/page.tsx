@@ -6,7 +6,7 @@ import { FlowEntries } from "@/components/sections/flow/FlowEntries";
 import { FlowFaq } from "@/components/sections/flow/FlowFaq";
 import { FlowPrepare } from "@/components/sections/flow/FlowPrepare";
 import { FlowSteps } from "@/components/sections/flow/FlowSteps";
-import { applyHref, contactHref } from "@/config/site";
+import { applyHref, contactHref, siteConfig } from "@/config/site";
 import { flow } from "@/content/flow";
 
 export const metadata: Metadata = {
@@ -17,6 +17,12 @@ export const metadata: Metadata = {
     title: flow.meta.metaTitle,
     description: flow.meta.description,
     url: flow.meta.path,
+  },
+  /* twitter を省くと layout.tsx のHOMEの値が全ページに出てしまうため、
+     ページごとに上書きしています（2026-09-16 最終回遊QA） */
+  twitter: {
+    title: flow.meta.metaTitle,
+    description: flow.meta.description,
   },
 };
 
@@ -48,9 +54,11 @@ export const metadata: Metadata = {
  *   畑3か所の所要時間・位置関係（→ /plans/・/life/）／1日・1週間・1ヶ月の過ごし方（→ /life/）／
  *   「山岡 技術学びの日」（何を学ぶ日かが未確認のため、意味を補完しません）。
  *
- * ■ ClosingCta のリンク先
- *   このページだけ、主CTAに applyHref（申し込み）を渡しています。
- *   他ページの ClosingCta は既定のまま contactHref（相談）です。変えないでください。
+ * ■ ClosingCta のリンク先（2026-09-16 最終回遊QA）
+ *   このページと /plans/ は 主＝applyHref（申し込み・Googleフォーム）／
+ *   副＝contactHref（相談・メール）です。
+ *   HOME・ABOUT・OWNER・LIFE・VOICES は逆で、主＝相談／副＝申し込みにしています。
+ *   どのページの末尾でも、申し込みと相談の両方に進めます。
  */
 export default function FlowPage() {
   return (
@@ -70,6 +78,7 @@ export default function FlowPage() {
         body={flow.closing.body}
         cta={flow.closing.cta}
         ctaHref={applyHref}
+        ctaNote={siteConfig.applyNote}
         secondary={{ label: flow.closing.secondary, href: contactHref }}
         note={flow.closing.note}
       />
