@@ -14,6 +14,17 @@ type ClosingCtaProps = {
   body?: readonly string[];
   /** ボタンの文言 */
   cta?: string;
+  /**
+   * 主ボタンのリンク先。省略すると src/config/site.ts の contactHref（相談）です。
+   * /flow/ だけが applyHref（申し込み）を渡しています。
+   */
+  ctaHref?: string;
+  /**
+   * 主ボタンの下に置く、副CTAのリンク（省略すると出ません）。
+   * /flow/ の「滞在について相談する」（contactHref）に使っています。
+   * ボタンではなくテキストリンクにして、主CTAと同格にならないようにしています。
+   */
+  secondary?: { label: string; href: string };
   /** ボタンの下に置く小さな添え書き */
   note?: string;
   /** ボタンの横に置く「次に読む」の副リンク（省略すると出ません） */
@@ -37,6 +48,8 @@ export function ClosingCta({
   title = copy.closing.title,
   body = copy.closing.body,
   cta = copy.closing.cta,
+  ctaHref,
+  secondary,
   note = copy.closing.note,
   next,
 }: ClosingCtaProps = {}) {
@@ -78,7 +91,7 @@ export function ClosingCta({
           </div>
 
           <div className="mt-10 flex flex-col items-start gap-7 md:mt-12 md:flex-row md:items-center md:gap-10">
-            <CtaButton variant="light" size="lg">
+            <CtaButton variant="light" size="lg" {...(ctaHref ? { href: ctaHref } : {})}>
               {cta}
             </CtaButton>
 
@@ -88,6 +101,15 @@ export function ClosingCta({
               </TextLink>
             ) : null}
           </div>
+
+          {/* 副CTA。主CTAの下に置いて、同格に見えないようにしています */}
+          {secondary ? (
+            <p className="mt-7">
+              <TextLink href={secondary.href} tone="dark">
+                {secondary.label}
+              </TextLink>
+            </p>
+          ) : null}
 
           <p className="wrap-phrase mt-8 max-w-[26em] text-[0.78rem] leading-[2] text-paper/60">
             {note}

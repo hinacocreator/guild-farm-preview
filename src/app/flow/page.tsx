@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/PageHeader";
 import { ClosingCta } from "@/components/sections/ClosingCta";
-import { FlowAccess } from "@/components/sections/flow/FlowAccess";
-import { FlowConcerns } from "@/components/sections/flow/FlowConcerns";
+import { FlowConsult } from "@/components/sections/flow/FlowConsult";
+import { FlowEntries } from "@/components/sections/flow/FlowEntries";
 import { FlowFaq } from "@/components/sections/flow/FlowFaq";
-import { FlowPacking } from "@/components/sections/flow/FlowPacking";
+import { FlowPrepare } from "@/components/sections/flow/FlowPrepare";
 import { FlowSteps } from "@/components/sections/flow/FlowSteps";
+import { applyHref, contactHref } from "@/config/site";
 import { flow } from "@/content/flow";
 
 export const metadata: Metadata = {
@@ -20,32 +21,36 @@ export const metadata: Metadata = {
 };
 
 /**
- * /flow/ 入居までの流れ。
- * ※ ページ名だけは「入居」を使います。本文・ボタンでは「滞在」に統一します。
+ * /flow/ 滞在までの流れ。
  *
- * ■ 役割
- *   検討し始めた人の不安をなくすページです。
- *   「何から始めるか」「何を用意するか」「どこへ行くか」「来てから困らないか」に答えます。
+ * ■ 役割（flow-brand-edit.md 指示書3）
+ *   第一の目的は、滞在したい人を迷わせずに**申し込みまで**案内することです。
+ *   副次的に、まだ決めきれない人が申し込み前に相談できることを伝えます。
  *
- * ■ 並び（設計書 content-design.md 第7章 F-01〜F-06 に対応）
- *   F-01     PageHeader     まず、話を聞くところから。
- *   F-02  01 FlowSteps      滞在がはじまるまでの、5つのこと。（＋お問い合わせ時にご案内することの脚注）
- *   F-03  02 FlowPacking    持ってくるもの。
- *   F-04  03 FlowAccess     場所のこと。（滞在先2か所・体験の場所3か所）
- *   　    04 FlowConcerns   知っておいてほしいこと。（雨・土日・受け入れ時期）
- *   F-05  05 FlowFaq        よくある質問（料金以外の6問）
- *   F-06     ClosingCta     問い合わせへ（「次に読む」は置きません）
+ * ⚠ 事前相談や面談は必須ではありません（クライアント確定・2026-09-16）。
+ *   「問い合わせ → 相談・面談 → 申し込み」を必須のフローとして見せないでください。
+ *   相談は STEP の中ではなく、STEP の後ろに独立した任意の導線として置いています。
+ *
+ * ■ 並び（指示書4の構成そのままです。順番を変えないでください）
+ *   —     PageHeader    h1「滞在までの流れ」＋導入
+ *   01    FlowEntries   2つの入口（主＝申し込む／副＝相談する）
+ *   02    FlowSteps     申し込みから、滞在がはじまるまで。（STEP 01〜05）
+ *   03    FlowConsult   申し込む前に相談したい方へ（任意）
+ *   04    FlowPrepare   滞在前に確認しておきたいこと（用意されているもの／自分で用意するもの）
+ *   05    FlowFaq       よくある質問
+ *   —     ClosingCta    主「滞在を申し込む」／副「滞在について相談する」
  *
  * ■ 文章 … src/content/flow.ts（このページの文字はすべてここ）
- *   ※ 旧セクション Flow のコピーは src/content/copy.ts に残しています。
+ * ■ 棚卸し … docs/flow-inventory.md（KEEP/TUNE/MOVE/MERGE/CUT の判断）
  *
  * ■ このページに書かないもの
- *   料金の数字（→ /plans/）。金額に関わる質問は /plans/ のFAQへリンクで送ります。
- *   部屋・設備の詳細（→ /plans/）／1日・1週間・1ヶ月の過ごし方（→ /life/）。
+ *   料金の数字（→ /plans/）／部屋・設備の詳細・周辺環境（→ /plans/）／
+ *   畑3か所の所要時間・位置関係（→ /plans/・/life/）／1日・1週間・1ヶ月の過ごし方（→ /life/）／
+ *   「山岡 技術学びの日」（何を学ぶ日かが未確認のため、意味を補完しません）。
  *
- * ■ ClosingCta に next を渡していない理由
- *   このページが回遊の終点で、次に進む先が問い合わせそのものだからです
- *   （ボタンのリンク先は src/config/site.ts の contactHref）。
+ * ■ ClosingCta のリンク先
+ *   このページだけ、主CTAに applyHref（申し込み）を渡しています。
+ *   他ページの ClosingCta は既定のまま contactHref（相談）です。変えないでください。
  */
 export default function FlowPage() {
   return (
@@ -53,18 +58,19 @@ export default function FlowPage() {
       <PageHeader
         label={flow.header.label}
         title={flow.header.title}
-        sub={flow.header.sub}
         lead={flow.header.lead}
       />
+      <FlowEntries />
       <FlowSteps />
-      <FlowPacking />
-      <FlowAccess />
-      <FlowConcerns />
+      <FlowConsult />
+      <FlowPrepare />
       <FlowFaq />
       <ClosingCta
         title={flow.closing.title}
         body={flow.closing.body}
         cta={flow.closing.cta}
+        ctaHref={applyHref}
+        secondary={{ label: flow.closing.secondary, href: contactHref }}
         note={flow.closing.note}
       />
     </>

@@ -1221,3 +1221,85 @@ HOME / ABOUT / OWNER / LIFE を読んで興味を持った人が、
 - 「おすすめ」「向け」「シニア」「現役」… すべて0件（既存の「向いている過ごし方」はそのまま）。
 - `id="lifestyle"` の出力あり。写真は追加していません。
 - コミット・ブラウザ操作はしていません。
+
+---
+
+# FLOWブランド編集（2026-09-16）
+
+対象: `/flow/`。指示書 `flow-brand-edit.md`（クライアント確定）。
+**運用上の重要修正**: 事前相談や面談は必須ではない。問い合わせや面談をはさまずに
+そのまま申し込んだ方もいる。「問い合わせ → 相談・面談 → 申し込み」を必須のフローとして見せない。
+
+## ページ名称の変更（サイト横断）
+
+「入居までの流れ」→「**滞在までの流れ**」。**URL（/flow/）は変えていません。**
+
+| 場所 | ファイル |
+| --- | --- |
+| PCナビ・モバイルナビ・フッター（共通） | `src/config/site.ts` の `navItems` |
+| meta title / description / OGP | `src/content/flow.ts` の `meta`（`src/app/flow/page.tsx` が metadata と openGraph に使用） |
+| h1 | `src/content/flow.ts` の `header.title` |
+| 設計上のページ情報 | `src/content/pages.ts` の `flow`（metaTitle / description / title / lead / outline） |
+| /plans/ の「次に読む」ラベル | `src/content/plans.ts` の `closing.next.label`（**ラベルのみ**。PLANS の内容は無変更） |
+
+「入居」という語は `src/content/life.ts` のコードコメント（資料の引用）にのみ残しています。
+FAQ 等の本文にあった「入居」は、すべて「滞在」に置き換えても自然だったため置換済みです。
+
+## 章構成（h2 の順）
+
+| 旧 | 新 |
+| --- | --- |
+| h1「まず、話を聞くところから。」 | h1「**滞在までの流れ**」 |
+| 01 滞在がはじまるまでの、5つのこと。 | 01 **2つの入口**（主＝滞在を申し込む／副＝滞在について相談する） |
+| 02 持ってくるもの。 | 02 申し込みから、滞在がはじまるまで。（STEP 01〜05） |
+| 03 場所のこと。 | 03 **申し込む前に相談したい方へ**（任意） |
+| 04 知っておいてほしいこと。 | 04 **滞在前に確認しておきたいこと**（用意されているもの／自分で用意するもの） |
+| 05 よくある質問 | 05 よくある質問 |
+| CTA「滞在について相談する」のみ | CTA 主「**滞在を申し込む**」／副「滞在について相談する」 |
+
+棚卸し（KEEP / TUNE / MOVE / MERGE / CUT / FACT CHECK）は `docs/flow-inventory.md`。
+
+## 導線（`src/config/site.ts`）
+
+- `applyHref` を**新設**。`mailto:guildfarm.dogo@gmail.com`／件名「**GUILD Farmの滞在申し込み**」。
+- `contactHref` は**無変更**。件名「GUILD Farmの滞在について」のまま、全ページの相談CTAが使います。
+- **新しい連絡先やフォームは作っていません。** チラシの正式導線は「予約＝Googleフォーム／
+  相談＝Instagram DM」ですが、**GoogleフォームのURLが未取得**のため、申し込みは当面メールです。
+  `contact.applyFormUrl` にURLを入れれば自動でフォームに切り替わります（`contactHref` と同じ仕組み）。
+  暫定である旨は `site.ts` のコメントと `docs/pending-facts.md` の D 章に記録しています。
+- **`applyHref` を使うのは `/flow/` だけ**です。HOME・ABOUT・OWNER・LIFE・PLANS・VOICES の
+  CTA、ヘッダー、フッター、スマホ固定バーは、すべて `contactHref` のままです。
+
+## 主な判断
+
+- **相談をステップから外しました。** 旧 STEP 02「オンラインなどで相談する」は、番号付きで
+  並んでいることで相談・面談が必須に見えていました。相談は STEP の**後ろ**に独立した
+  任意の導線（03 申し込む前に相談したい方へ）として置いています。
+- **2つの入口を同格にしていません。** A（申し込む）はボタン、B（相談する）はテキストリンクです。
+  同じボタンで2つ並べると「どちらかを選ばないと進めない」ように見えるためです。
+- **「場所のこと」「知っておいてほしいこと」の2章を削除しました。** 滞在先・畑3か所・
+  雨の日・土日は `/plans/` と `/life/` にすでにあり、申し込みの判断にも効かないためです。
+  「1週間は各月2〜4週目」だけは申し込み直前に効くので FAQ へ移しました。
+- **「山岡 技術学びの日」に触れていません。** 何を学ぶ日かが未確認のため（`pending-facts` D-7）。
+  旧FAQにあった「毎週決まっているのは火曜の学びの日だけ」も削除しました。
+- **削除した出典なしの記述**: 「合いそうかどうかを一緒に確かめます」（選考があるように読める）／
+  「滞在の日数ぶんの衣類を持ってくる必要はありません」／「分からないことは、その場で聞ける人が
+  います」／「松山までの行き方は個別にご案内します」。
+- **設備は4項目だけ**にして `/plans/#stays` へ送っています。三津浜エリアの宿の設備は未確認なので、
+  今市シェアハウスの設備として明示し、三津浜は「お問い合わせのときにご案内します」としています。
+
+## 変更したファイル
+
+- `src/config/site.ts` … `navItems` のラベル、`contact.applySubject` / `contact.applyFormUrl`、
+  `applyCtaLabel`、`applyHref`（新規 export）。既存の `contactHref` / `price` / `location` は無変更。
+- `src/content/flow.ts` … 全面書き換え（meta / header / entries / steps / consult / prepare / faq / closing）。
+- `src/content/pages.ts` … `flow` ブロックを新構成に更新。
+- `src/content/plans.ts` … `closing.next.label` のページ名称のみ。
+- `src/components/sections/ClosingCta.tsx` … `ctaHref` と `secondary` の2つの props を追加
+  （**どちらも任意。渡さなければ表示は従来どおり**なので、他ページの見た目は変わりません）。
+- 新規 `src/components/sections/flow/FlowEntries.tsx` / `FlowConsult.tsx` / `FlowPrepare.tsx`
+- 更新 `src/components/sections/flow/FlowSteps.tsx`（脚注ブロックを廃止、ステップ内リンクに対応）
+- 削除 `src/components/sections/flow/FlowAccess.tsx` / `FlowConcerns.tsx` / `FlowPacking.tsx`
+  （FlowPacking の内容は FlowPrepare に統合。Access / Concerns は `/plans/`・`/life/` に既出）
+- `src/app/flow/page.tsx` … 並びと ClosingCta の props。
+- 新規 `docs/flow-inventory.md`／`docs/pending-facts.md` に D 章を追加。

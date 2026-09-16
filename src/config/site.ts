@@ -88,13 +88,28 @@ export const siteConfig = {
 
   contact: {
     email: "guildfarm.dogo@gmail.com",
-    /** メールの件名に自動で入る文字列 */
+    /** 相談のメールの件名に自動で入る文字列 */
     subject: "GUILD Farmの滞在について",
     /**
      * Googleフォームなどを使う場合は、ここにURLを入れてください。
      * 入っていればサイト内のCTAは全てそのURLへ、空ならメール（mailto:）に飛びます。
      */
     formUrl: "",
+
+    /**
+     * ---- 申し込み導線（/flow/ の主CTA「滞在を申し込む」だけが使います） ----
+     *
+     * ⚠ これは **暫定の導線** です。
+     *   チラシに記載されている正式な導線は「予約は Googleフォーム／相談は Instagram DM」ですが、
+     *   **GoogleフォームのURLがまだ取得できていません**（docs/pending-facts.md の D 章）。
+     *   架空のフォームURLは作らないため、当面は相談と同じメールアドレスへ、
+     *   件名だけを変えて送る形にしています。
+     *
+     *   URL が届いたら applyFormUrl に入れてください。それだけで
+     *   applyHref の行き先がフォームに切り替わります（contactHref と同じ仕組みです）。
+     */
+    applySubject: "GUILD Farmの滞在申し込み",
+    applyFormUrl: "",
   },
 
   social: {
@@ -108,6 +123,11 @@ export const siteConfig = {
   ctaLabel: "滞在について相談する",
   /** 画面が狭いとき（スマホのヘッダー）に使う短縮版 */
   ctaLabelShort: "相談する",
+  /**
+   * 申し込みボタンの文言。/flow/ の主CTAだけが使います。
+   * ヘッダー・フッター・スマホ固定バー・他ページのCTAは ctaLabel（相談）のままです。
+   */
+  applyCtaLabel: "滞在を申し込む",
 } as const;
 
 /**
@@ -118,6 +138,18 @@ export const contactHref: string =
   siteConfig.contact.formUrl ||
   `mailto:${siteConfig.contact.email}?subject=${encodeURIComponent(
     siteConfig.contact.subject,
+  )}`;
+
+/**
+ * 「滞在を申し込む」ボタンのリンク先（/flow/ の主CTAだけが使います）。
+ * siteConfig.contact.applyFormUrl が入っていればフォーム、空なら件名を変えたメール。
+ *
+ * ⚠ 暫定の導線です。上の contact.applySubject のコメントを読んでください。
+ */
+export const applyHref: string =
+  siteConfig.contact.applyFormUrl ||
+  `mailto:${siteConfig.contact.email}?subject=${encodeURIComponent(
+    siteConfig.contact.applySubject,
   )}`;
 
 /** 「85,300円」のように、カンマ区切りの金額文字列を作ります */
@@ -134,7 +166,7 @@ export const navItems = [
   { label: "オーナー松井のご紹介", en: "Owner", href: "/owner/" },
   { label: "暮らし・過ごし方", en: "Life", href: "/life/" },
   { label: "プラン・料金", en: "Plans", href: "/plans/" },
-  { label: "入居までの流れ", en: "Flow", href: "/flow/" },
+  { label: "滞在までの流れ", en: "Flow", href: "/flow/" },
   /**
    * 滞在者の声（/voices/）。
    *
