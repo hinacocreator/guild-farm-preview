@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/PageHeader";
 import { ClosingCta } from "@/components/sections/ClosingCta";
-import { PlansConditions } from "@/components/sections/plans/PlansConditions";
-import { PlansEnvironment } from "@/components/sections/plans/PlansEnvironment";
+import { PlansCompare } from "@/components/sections/plans/PlansCompare";
+import { PlansCosts } from "@/components/sections/plans/PlansCosts";
+import { PlansDecide } from "@/components/sections/plans/PlansDecide";
 import { PlansFaq } from "@/components/sections/plans/PlansFaq";
-import { PlansFields } from "@/components/sections/plans/PlansFields";
-import { PlansHouse } from "@/components/sections/plans/PlansHouse";
 import { PlansIncluded } from "@/components/sections/plans/PlansIncluded";
-import { PlansOptions } from "@/components/sections/plans/PlansOptions";
-import { PlansUpgrade } from "@/components/sections/plans/PlansUpgrade";
+import { PlansPlan } from "@/components/sections/plans/PlansPlan";
+import { PlansStays } from "@/components/sections/plans/PlansStays";
 import { plans } from "@/content/plans";
 
 export const metadata: Metadata = {
@@ -25,31 +24,38 @@ export const metadata: Metadata = {
 /**
  * /plans/ プラン・料金。
  *
- * ■ 役割
- *   検討に必要な実務情報を一か所に集めるページです。
- *   料金の数字を表示してよいのは、サイト内でこのページだけです
- *   （金額そのものは src/config/site.ts の price が正の値です）。
- *   金額の隣には必ず「その料金でどんな暮らしができるのか」を置いています。
+ * ■ 役割（2026-09-16 ブランド編集で確定）
+ *   HOME / ABOUT / OWNER / LIFE を読んで興味を持った人が、
+ *   「1週間と1ヶ月のどちらが合うか」「どこに泊まりどんな生活になるか」
+ *   「何が含まれていくら必要か」を判断できるページです。
+ *   サイト内で最も比較・検討の情報を具体的に伝えます。
  *
- * ■ 並び（設計書 content-design.md 第6章 P-01〜P-12 に対応）
- *   P-01        PageHeader        この料金で、できる暮らし。
- *   P-02/03 01  PlansOptions      2つの滞在プラン（金額＋その期間の過ごし方）
- *   P-04    02  PlansIncluded     この料金に、含まれるもの。
- *   P-05    03  PlansUpgrade      部屋を、変えることもできます。（三津浜）
- *   P-06    04  PlansConditions   両方のプランに共通すること。
- *   P-07    05  PlansHouse        住むのは、こんな家です。（写真6枚・設備・所在地）
- *   P-08    06  PlansFields       通う畑は、3か所。
- *   P-09/10 07  PlansEnvironment  働きながら、住む。／車がなくても、暮らせます。
- *   P-11    08  PlansFaq          料金と設備について、よくある質問
- *   P-12        ClosingCta        次に読む → /flow/
+ *   料金の数字を表示してよいのは、サイト内でこのページだけです
+ *   （金額そのものは src/config/site.ts の price.plans が正の値です）。
+ *
+ * ■ 並び（docs/plans-inventory.md の 12章に対応）
+ *   —      PageHeader     プラン・料金（H1）
+ *   01     PlansCompare   1週間プランと、1ヶ月プラン。（上部で2プラン比較）
+ *   02     PlansPlan      1週間プラン（5泊6日）      id="week"
+ *   03     PlansPlan      1ヶ月プラン                id="month"
+ *   04     PlansStays     暮らす場所。（今市シェアハウス／三津浜エリアの宿）
+ *   05     PlansIncluded  料金に含まれるもの、含まれないもの。（＋使える設備）
+ *   06     PlansCosts     滞在にかかる、その他の費用。
+ *   07     PlansFaq       プランを決める前に、よくある質問
+ *   08     PlansDecide    どちらにするか迷ったら。
+ *   —      ClosingCta     次に読む → /flow/
+ *
+ *   02 と 03 は同じ部品（PlansPlan）に、内容だけを渡して出しています。
+ *   背景は paper / cream が交互になるように tone を指定しています。
  *
  * ■ 文章 … src/content/plans.ts（このページの文字はすべてここ）
  *   ※ 旧セクション（Value / Plans / House / Faq）のコピーは
  *     src/content/copy.ts にそのまま残しています（データは消していません）。
  *
  * ■ このページに書かないもの
- *   思想・考え方（→ /about/ ・/owner/）／1日・1週間・1ヶ月の過ごし方の全文（→ /life/）
- *   ／持ち物・アクセス・料金以外のFAQ（→ /flow/）
+ *   思想・考え方（→ /about/ ・/owner/）／1日・1週間・1ヶ月の過ごし方の全文と
+ *   曜日別のスケジュール（→ /life/）／持ち物・申し込みの手順・料金以外のFAQ（→ /flow/）
+ *   ／三津浜の宿の写真・部屋・設備・周辺（確認待ち。docs/pending-facts.md の C 章）
  */
 export default function PlansPage() {
   return (
@@ -60,14 +66,14 @@ export default function PlansPage() {
         sub={plans.header.sub}
         lead={plans.header.lead}
       />
-      <PlansOptions />
+      <PlansCompare />
+      <PlansPlan id="week" content={plans.week} tone="paper" />
+      <PlansPlan id="month" content={plans.month} tone="cream" />
+      <PlansStays />
       <PlansIncluded />
-      <PlansUpgrade />
-      <PlansConditions />
-      <PlansHouse />
-      <PlansFields />
-      <PlansEnvironment />
+      <PlansCosts />
       <PlansFaq />
+      <PlansDecide />
       <ClosingCta
         title={plans.closing.title}
         body={plans.closing.body}
