@@ -436,7 +436,7 @@ export const owner = {
     id: "future",
     index: "11",
     label: "Future",
-    title: "これから。",
+    title: "想い描いていること",
     lead: "10年ほど前から持ち続けているアイデアがあります。",
     /** 原文どおり */
     quotes: [

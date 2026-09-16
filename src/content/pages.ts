@@ -436,7 +436,7 @@ export const pages = {
         index: "05",
         en: "FAQ",
         title: "よくある質問",
-        summary: "申し込む前後に聞かれることをまとめています。",
+        summary: "よくある質問",
       },
     ],
   },

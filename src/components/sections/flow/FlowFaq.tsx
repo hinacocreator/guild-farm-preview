@@ -29,9 +29,12 @@ export function FlowFaq() {
           title={flow.faq.title}
         />
 
-        <p className="reveal mt-8 max-w-[38em] text-[0.95rem] leading-[2.05] text-ink-soft">
-          {flow.faq.lead}
-        </p>
+        {/* 導入文は置きません（クライアント指示）。lead が空のときは何も描画しません */}
+        {flow.faq.lead ? (
+          <p className="reveal mt-8 max-w-[38em] text-[0.95rem] leading-[2.05] text-ink-soft">
+            {flow.faq.lead}
+          </p>
+        ) : null}
 
         <div className="mt-12 border-t border-sand md:mt-16">
           {flow.faq.items.map((item) => {
