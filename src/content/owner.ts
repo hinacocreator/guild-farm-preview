@@ -207,7 +207,7 @@ export const owner = {
       en: "Five Years",
       title: "うまくいかなかった、5年間。",
       sub: "生産性と、木々と、価格のこと。",
-      photo: "aboutField",
+      photo: "ownerStraw",
       blocks: [
         {
           kind: "text",
@@ -265,7 +265,7 @@ export const owner = {
       en: "The Village",
       title: "東北と、19世帯の集落での暮らし。",
       sub: "2011年4月と、10年前のこと。",
-      photo: "ownerStraw",
+      photo: "expSeason",
       blocks: [
         {
           kind: "text",
