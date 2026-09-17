@@ -8,6 +8,7 @@ import { OwnerNote } from "@/components/sections/owner/OwnerNote";
 import { OwnerTimeline } from "@/components/sections/owner/OwnerTimeline";
 import { OwnerVoices } from "@/components/sections/owner/OwnerVoices";
 import { applyHref, siteConfig } from "@/config/site";
+import { images } from "@/config/images";
 import { owner } from "@/content/owner";
 import { pages } from "@/content/pages";
 
@@ -41,8 +42,8 @@ export const metadata: Metadata = {
  *   成功談にしません。行き詰まったこと・凹んだことも書きます。脚色はしません。
  *
  * ■ 並び（owner-brand-edit.md 2〜11）
- *   —  PageHeader       松井について／GUILD Farm オーナー　松井 真弥／簡潔な導入
- *   —  OwnerTimeline    年表ナビ（読む順。年代順ではありません）＋写真
+ *   —  PageHeader       松井について／GUILD Farm オーナー　松井 真弥／本人写真（レモン）／簡潔な導入
+ *   —  OwnerTimeline    年表ナビ（読む順。年代順ではありません）
  *   01 OwnerChapters    愛媛で農と出会う
  *   02                  肥料を使わない農業へ
  *   03                  うまくいかなかった、5年間。
@@ -93,6 +94,8 @@ export default function OwnerPage() {
         title={owner.header.title}
         sub={owner.header.sub}
         lead={owner.header.lead}
+        /* 名前のすぐ下に、レモンを持った本人写真（2026-09-17 クライアント指示） */
+        photo={{ image: images.ownerProfile, caption: owner.header.photoNote }}
       />
       <OwnerTimeline />
       <OwnerChapters />

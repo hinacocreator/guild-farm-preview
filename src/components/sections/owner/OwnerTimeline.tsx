@@ -1,6 +1,4 @@
 import { Container } from "@/components/ui/Container";
-import { Photo } from "@/components/ui/Photo";
-import { images } from "@/config/images";
 import { owner } from "@/content/owner";
 
 /**
@@ -16,14 +14,10 @@ import { owner } from "@/content/owner";
  *   （owner-brand-edit.md の章立てに合わせています）。
  * ⚠「10年前」は相対表記のままです（資料の作成時点が不明なため）。西暦に直さないでください。
  *
- * ★ 松井本人写真差し替え推奨
- *   本人の写真が素材にないため、稲刈りの写真を置いています。
- *   人物の顔が大きく写る写真をあてると「この人が松井さん」と誤解されるので、
- *   そうした写真は使いません。撮影できたら images.ts に追加して、
- *   下の <Photo> の image と owner.timeline.photoNote を差し替えてください。
+ * 本人写真（レモン）は PageHeader（名前のすぐ下）に置いています（2026-09-17）。
+ * ここは年表だけです。
  *
  * ■ 文章 … src/content/owner.ts の timeline
- * ■ 写真 … src/config/images.ts の hero（秋の田んぼで稲刈り）
  *
  * ※ ページ内リンクなので next/link ではなく素の <a> を使っています
  *   （同一ページ内のアンカーは、そのままのほうが確実に動きます）。
@@ -36,7 +30,7 @@ export function OwnerTimeline() {
     >
       <Container>
         <div className="grid gap-10 md:grid-cols-12 md:gap-14">
-          <div className="md:col-span-7">
+          <div className="md:col-span-8">
             <p className="label-en reveal flex items-center gap-3 text-[0.7rem] text-ink-faint">
               <span aria-hidden="true" className="h-px w-8 bg-ink-faint/50" />
               <span>{owner.timeline.label}</span>
@@ -71,18 +65,6 @@ export function OwnerTimeline() {
             </ol>
           </div>
 
-          {/* ★ 松井本人写真差し替え推奨（いまは稲刈りの写真です） */}
-          <figure className="reveal md:col-span-4 md:col-start-9 md:mt-16">
-            <Photo
-              image={images.ownerProfile}
-              ratio="4 / 5"
-              sizes="(min-width: 768px) 30vw, 100vw"
-              objectPosition="object-center"
-            />
-            <figcaption className="mt-4 text-[0.72rem] leading-[1.9] text-ink-faint">
-              {owner.timeline.photoNote}
-            </figcaption>
-          </figure>
         </div>
       </Container>
     </section>

@@ -1,5 +1,7 @@
+import type { ImageAsset } from "@/config/images";
 import { Container } from "@/components/ui/Container";
 import { LeafIcon } from "@/components/ui/LeafIcon";
+import { Photo } from "@/components/ui/Photo";
 import { phrase } from "@/lib/jp";
 
 type PageHeaderProps = {
@@ -11,6 +13,12 @@ type PageHeaderProps = {
   sub?: string;
   /** リード。1要素＝1段落 */
   lead: readonly string[];
+  /**
+   * サブコピー（氏名）のすぐ下に置く写真（任意）。
+   * /owner/ で、松井さんの名前の直下にレモンを持った本人写真を置くために使います
+   * （2026-09-17 クライアント指示「名前のすぐ下にレモンの画像」）。
+   */
+  photo?: { image: ImageAsset; caption?: string };
 };
 
 /**
@@ -22,7 +30,7 @@ type PageHeaderProps = {
  * ※ ヘッダー（SiteHeader）が画面上部に固定されているため、
  *   その高さ（h-16 / md:h-20）を上の余白に足しています。
  */
-export function PageHeader({ label, title, sub, lead }: PageHeaderProps) {
+export function PageHeader({ label, title, sub, lead, photo }: PageHeaderProps) {
   return (
     <section className="bg-paper pb-16 pt-28 md:pb-24 md:pt-44">
       <Container width="narrow">
@@ -44,6 +52,23 @@ export function PageHeader({ label, title, sub, lead }: PageHeaderProps) {
             <p className="wrap-phrase mt-7 text-[0.95rem] leading-[2] text-ink-soft md:text-[1.05rem]">
               {sub}
             </p>
+          ) : null}
+
+          {/* 名前のすぐ下の本人写真（/owner/ のみ）。小さめの縦位置で、見出しの流れを切らない大きさにしています */}
+          {photo ? (
+            <figure className="mt-8 max-w-[240px] md:max-w-[280px]">
+              <Photo
+                image={photo.image}
+                ratio="4 / 5"
+                sizes="280px"
+                objectPosition="object-center"
+              />
+              {photo.caption ? (
+                <figcaption className="mt-3 text-[0.72rem] leading-[1.9] text-ink-faint">
+                  {photo.caption}
+                </figcaption>
+              ) : null}
+            </figure>
           ) : null}
 
           <LeafIcon size={22} className="mt-10 text-moss/70" />
