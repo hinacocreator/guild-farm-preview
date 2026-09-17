@@ -45,6 +45,9 @@ const photos: Record<OwnerPhotoKey, ImageAsset> = {
   expSeason: images.expSeason,
   expNature: images.expNature,
   expFarmwork: images.expFarmwork,
+  ownerPlanting: images.ownerPlanting,
+  ownerStraw: images.ownerStraw,
+  ownerTakoyaki: images.ownerTakoyaki,
 };
 
 export function OwnerChapters() {
@@ -54,6 +57,8 @@ export function OwnerChapters() {
         <div className="border-t border-sand">
           {owner.chapters.map((chapter, i) => {
             const photo = chapter.photo ? photos[chapter.photo] : null;
+            const small = "photoSize" in chapter && chapter.photoSize === "small";
+            const caption = "photoCaption" in chapter ? chapter.photoCaption : undefined;
             /* 写真は章ごとに左右を入れ替えます（偶数番の章は写真が左） */
             const photoFirst = i % 2 === 1;
 
@@ -77,13 +82,20 @@ export function OwnerChapters() {
                         photoFirst
                           ? "md:order-1 md:col-start-1"
                           : "md:order-2 md:col-start-9 md:mt-14",
+                        /* 古い小さな写真は、拡大せず小さく添えます */
+                        small && "max-w-[200px] md:max-w-[220px]",
                       )}
                     >
                       <Photo
                         image={photo}
-                        ratio="4 / 5"
-                        sizes="(min-width: 768px) 30vw, 100vw"
+                        ratio={small ? "9 / 16" : "4 / 5"}
+                        sizes={small ? "220px" : "(min-width: 768px) 30vw, 100vw"}
                       />
+                      {caption ? (
+                        <figcaption className="mt-3 text-[0.75rem] leading-[1.8] text-ink-faint">
+                          {caption}
+                        </figcaption>
+                      ) : null}
                     </figure>
                   ) : null}
 

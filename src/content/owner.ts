@@ -67,7 +67,10 @@ export type OwnerPhotoKey =
   | "whyVisual"
   | "expSeason"
   | "expNature"
-  | "expFarmwork";
+  | "expFarmwork"
+  | "ownerPlanting"
+  | "ownerStraw"
+  | "ownerTakoyaki";
 
 export const owner = {
   /** ---------------- ページヘッダー ---------------- */
@@ -105,13 +108,10 @@ export const owner = {
       { year: "今", text: "豊かさや心地よさにフォーカスして動いている", href: "#now" },
     ],
     /**
-     * ★ 松井本人写真差し替え推奨
-     *   本人の写真が素材にないため、稲刈りの写真を置いています。
-     *   代わりに人物の顔が大きく写る写真をあてると「この人が松井さん」と
-     *   誤解されるため、そうした写真は使いません。
-     *   ⚠ 差し替え予定であることは公開文には書きません（写真の説明だけを出します）。
+     * 松井さん本人の写真（2026-09-17 ご提供・移住したてのころ）。
+     * 正面のプロフィール写真（伊予柑を持つ写真）が届いたら差し替え候補です。
      */
-    photoNote: "写真は秋の稲刈り。",
+    photoNote: "移住したてのころ。",
   },
 
   /** ----------------
@@ -127,7 +127,10 @@ export const owner = {
       en: "Ehime",
       title: "愛媛で、農と出会う。",
       sub: "移り住んだあとに食べた、自然栽培の伊予柑。",
-      photo: "expHarvest",
+      photo: "ownerTakoyaki",
+      /** 古い小さな写真なので拡大せず小さく添えます */
+      photoSize: "small",
+      photoCaption: "大阪でたこ焼き屋をしていたころ。",
       blocks: [
         {
           /**
@@ -262,7 +265,7 @@ export const owner = {
       en: "The Village",
       title: "東北と、19世帯の集落での暮らし。",
       sub: "2011年4月と、10年前のこと。",
-      photo: "expSeason",
+      photo: "ownerStraw",
       blocks: [
         {
           kind: "text",

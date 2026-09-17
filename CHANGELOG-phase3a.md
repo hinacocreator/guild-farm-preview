@@ -1452,3 +1452,8 @@ PLANS の最終CTAは指示書9の確定方針に差し替え（「滞在した�
 - docs/pending-facts.md: F章「申し込みフォームの確認事項」を追加（フォーム内容はサイトに転記しない）。
 - 変更していないもの: フォームURL・支払条件・CTA主従・写真の使い回し・英字ラベル・葉アイコン・共通末尾CTA・三津浜。
 
+## 松井さん本人写真の反映（2026-09-17）
+- ご提供写真4枚を追加（public/images/owner-ehime-kaki / owner-ehime-planting / owner-ehime-straw / owner-osaka-takoyaki）。
+- HOME「この場所を、はじめた人。」→ 柿の木の下（ownerKaki）。OWNER 年表横 → 苗を植える（ownerPlanting）。OWNER「愛媛で、農と出会う。」→ 大阪のたこ焼き屋時代（小さく・キャプション付き）。OWNER「東北と、19世帯の集落での暮らし。」→ 稲わらの山（ownerStraw）。
+- 正面のプロフィール写真（伊予柑を持つ写真）は未受領のため、届き次第 OWNER 年表横と差し替え候補。
+

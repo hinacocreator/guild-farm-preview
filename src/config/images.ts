@@ -132,10 +132,27 @@ export const images = {
     alt: "草の茂る土地を歩いて見てまわる人たち",
   },
 
-  /** 6. STORY / OWNER ※ご本人の写真に差し替えてください */
+  /** 6. STORY / OWNER（旧・仮写真。ページでは使っていません） */
   owner: {
     src: "/images/owner.jpg",
     alt: "収穫したさつまいもを持って畑に立つ人",
+  },
+  /** 松井さん本人の写真（2026-09-17 ご提供。移住したてのころ／大阪時代） */
+  ownerKaki: {
+    src: "/images/owner-ehime-kaki.jpg",
+    alt: "柿の木の下で笑う松井さん（移住したてのころ）",
+  },
+  ownerPlanting: {
+    src: "/images/owner-ehime-planting.jpg",
+    alt: "畑で苗を植える松井さん（移住したてのころ）",
+  },
+  ownerStraw: {
+    src: "/images/owner-ehime-straw.jpg",
+    alt: "稲わらの山に寝転んで笑う松井さん（移住したてのころ）",
+  },
+  ownerTakoyaki: {
+    src: "/images/owner-osaka-takoyaki.jpg",
+    alt: "大阪でたこ焼きを焼いていたころの松井さん",
   },
 
   /** 7. JOURNAL / INSTAGRAM（正方形6枚） */

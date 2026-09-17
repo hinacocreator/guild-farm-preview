@@ -74,7 +74,7 @@ export function OwnerTimeline() {
           {/* ★ 松井本人写真差し替え推奨（いまは稲刈りの写真です） */}
           <figure className="reveal md:col-span-4 md:col-start-9 md:mt-16">
             <Photo
-              image={images.hero}
+              image={images.ownerPlanting}
               ratio="4 / 5"
               sizes="(min-width: 768px) 30vw, 100vw"
               objectPosition="object-center"

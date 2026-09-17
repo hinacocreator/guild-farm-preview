@@ -34,7 +34,7 @@ export function HomeOwner() {
           {/* ★ 松井本人写真差し替え推奨（いまは風景写真です） */}
           <figure className="reveal md:col-span-5 md:mt-16">
             <Photo
-              image={images.expSeason}
+              image={images.ownerKaki}
               ratio="1 / 1"
               sizes="(min-width: 768px) 40vw, 100vw"
             />
