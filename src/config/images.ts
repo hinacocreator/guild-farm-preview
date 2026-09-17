@@ -138,6 +138,10 @@ export const images = {
     alt: "収穫したさつまいもを持って畑に立つ人",
   },
   /** 松井さん本人の写真（2026-09-17 ご提供。移住したてのころ／大阪時代） */
+  ownerProfile: {
+    src: "/images/owner-profile.jpg",
+    alt: "畑でレモンを手に笑う松井さん",
+  },
   ownerKaki: {
     src: "/images/owner-ehime-kaki.jpg",
     alt: "柿の木の下で笑う松井さん（移住したてのころ）",

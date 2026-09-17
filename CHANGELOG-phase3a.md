@@ -1456,4 +1456,4 @@ PLANS の最終CTAは指示書9の確定方針に差し替え（「滞在した�
 - ご提供写真4枚を追加（public/images/owner-ehime-kaki / owner-ehime-planting / owner-ehime-straw / owner-osaka-takoyaki）。
 - HOME「この場所を、はじめた人。」→ 柿の木の下（ownerKaki）。OWNER 年表横 → 苗を植える（ownerPlanting）。OWNER「愛媛で、農と出会う。」→ 大阪のたこ焼き屋時代（小さく・キャプション付き）。OWNER「東北と、19世帯の集落での暮らし。」→ 稲わらの山（ownerStraw）。
 - 正面のプロフィール写真（伊予柑を持つ写真）は未受領のため、届き次第 OWNER 年表横と差し替え候補。
-
+- 2026-09-17 追記: 正面のプロフィール写真（レモン）を受領。OWNER年表横＝owner-profile.jpg、苗を植える写真は「肥料を使わない農業へ」の章へ移動。

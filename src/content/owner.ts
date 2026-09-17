@@ -111,7 +111,7 @@ export const owner = {
      * 松井さん本人の写真（2026-09-17 ご提供・移住したてのころ）。
      * 正面のプロフィール写真（伊予柑を持つ写真）が届いたら差し替え候補です。
      */
-    photoNote: "移住したてのころ。",
+    photoNote: "オーナーの松井。",
   },
 
   /** ----------------
@@ -155,7 +155,7 @@ export const owner = {
       en: "No Fertilizer",
       title: "肥料を使わない農業へ。",
       sub: "松井が、どう考えて選んできたか。",
-      photo: "aboutSoil",
+      photo: "ownerPlanting",
       blocks: [
         {
           kind: "text",
