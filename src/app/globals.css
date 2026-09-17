@@ -193,6 +193,13 @@
   }
 }
 
+/* ハッシュ（#〜）で着地した直後は、演出を止めて即時表示にします（RevealOnHash.tsx が属性を付けます） */
+html[data-hash-landing] .reveal {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
 @keyframes reveal-fade {
   from {
     opacity: 0;

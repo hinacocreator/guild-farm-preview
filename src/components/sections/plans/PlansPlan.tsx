@@ -43,7 +43,8 @@ export type PlansPlanContent = {
   priceNote: string;
   stayLabel: string;
   stay: string;
-  photo: PlansPhotoKey;
+  /** 滞在先の代表写真。素材が無い滞在先（三津浜）では undefined にし、写真を出しません */
+  photo?: PlansPhotoKey;
   paragraphs: readonly string[];
   conditionsTitle: string;
   conditions: readonly string[];
@@ -104,12 +105,14 @@ export function PlansPlan({ id, content, tone = "paper" }: PlansPlanProps) {
               </span>
             </p>
 
-            <Photo
-              image={plansPhotos[content.photo]}
-              ratio="3 / 2"
-              sizes="(min-width: 768px) 36vw, 100vw"
-              className="reveal mt-10"
-            />
+            {content.photo ? (
+              <Photo
+                image={plansPhotos[content.photo]}
+                ratio="3 / 2"
+                sizes="(min-width: 768px) 36vw, 100vw"
+                className="reveal mt-10"
+              />
+            ) : null}
           </div>
 
           {/* 右: どんな滞在になるか ＋ 条件 */}

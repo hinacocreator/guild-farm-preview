@@ -3,6 +3,7 @@ import { Fraunces } from "next/font/google";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { StickyCtaBar } from "@/components/StickyCtaBar";
+import { RevealOnHash } from "@/components/RevealOnHash";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
@@ -118,6 +119,8 @@ export default function RootLayout({
         <main>{children}</main>
         <SiteFooter />
         <StickyCtaBar />
+        {/* アンカー着地時に .reveal を即時表示にする（白紙対策。RevealOnHash.tsx 参照） */}
+        <RevealOnHash />
         <script
           type="application/ld+json"
           // 構造化データは静的な定数のみを埋め込んでいます
